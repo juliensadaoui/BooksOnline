@@ -41,5 +41,11 @@ public interface ILibraryService {
 	 */
 	public AuthorDto updateAuthor(AuthorDto in) throws EntityNotFoundException;
 	
-	public void deleteAuthor(AuthorDto in);
+	/**
+	 * 	Delete a author
+	 * 
+	 * @param in - author
+	 * @throws EntityNotFoundException
+	 */
+	public void deleteAuthor(AuthorDto in) throws EntityNotFoundException;
 }
