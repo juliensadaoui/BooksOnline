@@ -10,7 +10,7 @@ import java.util.Set;
  * 
  */
 @Entity
-public class Author extends com.insta.fjee.library.util.jpa.Entity implements Serializable {
+public class Author implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

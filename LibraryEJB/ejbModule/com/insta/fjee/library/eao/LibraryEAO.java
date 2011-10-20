@@ -12,8 +12,6 @@ import javax.persistence.Query;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
-import com.insta.fjee.library.exception.EntityNotFoundException;
-import com.insta.fjee.library.util.jpa.Entity;
 
 /**
  * Session Bean implementation class LibraryEAO
@@ -87,42 +85,6 @@ public class LibraryEAO implements ILibraryEAO
 		Query query = em.createQuery(ejbql, Author.class);
 		query.setParameter("pattern", "%" + bookName + "%");
 		return query.getResultList();
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.insta.formation.countries.eao.ILibraryEAO#findOrFail()
-	 */
-	@Override
-	public <T extends Entity> T findOrFail(Class<T> clazz, Integer id) throws EntityNotFoundException
-	{
-		T e = em.find(clazz, id);
-		if (e == null) {
-			throw new EntityNotFoundException(clazz.getClass(), id);
-		}
-		return e;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.insta.formation.countries.eao.ILibraryEAO#persist()
-	 */
-	@Override
-	public <T extends Entity> void persist(T entity)
-	{
-		em.getTransaction().begin();
-		if (entity.hasId()) {
-			em.merge(entity);
-		}
-		else {
-			em.persist(entity);
-			if (entity.getId() == null) {
-				em.flush();
-			}
-		}
-		em.getTransaction().commit();
 	}
 	
 	/*

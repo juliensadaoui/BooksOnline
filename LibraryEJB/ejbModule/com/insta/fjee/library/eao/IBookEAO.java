@@ -2,16 +2,13 @@ package com.insta.fjee.library.eao;
 
 import java.util.List;
 
-import javax.ejb.Remote;
-
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 
-@Remote
-public interface ILibraryEAO {
-	
+public interface IBookEAO 
+{
 	/** 
 	 * 	Compte le nombre de livres dans la zone de stockage
 	 * 
@@ -20,31 +17,40 @@ public interface ILibraryEAO {
 	public long countBooks();
 	
 	/**
-	 * 	
+	 * 	Save or update a book
 	 * 
-	 * @param firstName
-	 * @return
+	 * @param book 
 	 */
-	public List<Author> findAuthorByFirstName(String firstName);
+	public void saveOrUpdate(Book author);
 	
 	/**
+	 * 	Delete a book
 	 * 
-	 * @param lastName
-	 * @return
+	 * @param bo
 	 */
-	public List<Author> findAuthorByLastName(String lastName);
+	public void delete(Book author);
 	
 	/**
+	 * 	Receive a book 
 	 * 
-	 * 
-	 * @param bookName
+	 * @param id - id of the book
 	 * @return
+	 * @throws EntityNotFoundException
 	 */
-	public List<Author> findAuthorByBookName(String bookName);
+	public Book findOrFail(Integer id) throws EntityNotFoundException;
 	
 	/**
+	 * 	Receive a book 
 	 * 
-	 * @param isbn
+	 * @param id - id of the book
+	 * @return
+	 */
+	public Book find(Integer id);
+	
+	/**
+	 * 	Search a book by isbn
+	 * 
+	 * @param isbn - isbn of the book
 	 * @return
 	 */
 	public Book findBookByISBN(String isbn) throws BookNotFoundException;

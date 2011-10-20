@@ -12,7 +12,6 @@ import com.insta.fjee.library.eao.ILibraryEAO;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.EntityNotFoundException;
-import com.insta.fjee.library.util.jpa.Entity;
 
 @Stateless
 public class Conversion
@@ -75,14 +74,14 @@ public class Conversion
 
 	public Author fromDto(AuthorDto authorDto) throws EntityNotFoundException
 	{
-		Author result;
+		Author result  = new Author();
 		Integer id = authorDto.getId();
-		if (Entity.isId(id)) {
-			result = eao.findOrFail(Author.class, id);
-		}
-		else {
-			result = new Author();
-		}
+//		if (Entity.isId(id)) {
+//			result = eao.findOrFail(Author.class, id);
+//		}
+//		else {
+//			result = new Author();
+//		}
 		result.setLastName(authorDto.getLastName());
 		result.setFirstName(authorDto.getFirstName());
 
@@ -91,14 +90,14 @@ public class Conversion
 	
 	public Book fromDto(BookDto bookDto) throws EntityNotFoundException
 	{
-		Book result;
+		Book result = new Book();
 		Integer id = bookDto.getId();
-		if (Entity.isId(id)) {
-			result = eao.findOrFail(Book.class, id);
-		}
-		else {
-			result = new Book();
-		}
+//		if (Entity.isId(id)) {
+//			result = eao.findOrFail(Book.class, id);
+//		}
+//		else {
+//			result = new Book();
+//		}
 		result.setName(bookDto.getName());
 		result.setGenre(bookDto.getGenre());
 //		result.setCountry(eao.findOrFail(BookDto.class, d.getCountryId()));

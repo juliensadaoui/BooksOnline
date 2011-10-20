@@ -9,6 +9,8 @@ import javax.jws.WebService;
 
 import com.insta.fjee.library.dto.AuthorDto;
 import com.insta.fjee.library.dto.BookDto;
+import com.insta.fjee.library.eao.IAuthorEAO;
+import com.insta.fjee.library.eao.IBookEAO;
 import com.insta.fjee.library.eao.ILibraryEAO;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
@@ -24,8 +26,12 @@ import com.insta.fjee.library.util.Conversion;
 @WebService
 public class LibraryBean implements ILibraryService 
 {
+//	public boolean hasId//(id != null && id > 0);
 	@EJB
-	ILibraryEAO eao;
+	IAuthorEAO authorEAO;
+	
+	@EJB
+	IBookEAO bookEAO;
 
 	@EJB
 	Conversion conv;
@@ -37,16 +43,17 @@ public class LibraryBean implements ILibraryService
 		// TODO Auto-generated constructor stub
 	}
 
-	public LibraryBean(ILibraryEAO eao, Conversion conv) {
+	public LibraryBean(IAuthorEAO authorEAO, IBookEAO bookEAO, Conversion conv) {
 		// for unit test
-		this.eao = eao;
+		this.authorEAO = authorEAO;
+		this.bookEAO = bookEAO;
 		this.conv = conv;
 	}
     
     @Override
 	public long bookCount()
 	{
-		return eao.countBooks();
+		return bookEAO.countBooks();
 	}
 
 
@@ -54,14 +61,14 @@ public class LibraryBean implements ILibraryService
 	public List<AuthorDto> searchAuthorByFirstName(String fistName)
 	{
 		List<Author> authors = null;
-		authors = eao.findAuthorByFirstName(fistName);
+		authors = authorEAO.findAuthorByFirstName(fistName);
 		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
 	public List<BookDto> searchBookByName(String name) {
 		List<Book> books = null;
-		books = eao.findBookByName(name);
+		books = bookEAO.findBookByName(name);
 		return conv.fromEntityBook(books);
 	}
 
@@ -69,7 +76,7 @@ public class LibraryBean implements ILibraryService
 	public BookDto findBookByISBN(String isbn) {
 		Book book = null;
 		try {
-			book = eao.findBookByISBN(isbn);
+			book = bookEAO.findBookByISBN(isbn);
 		} catch (BookNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,29 +87,50 @@ public class LibraryBean implements ILibraryService
 	@Override
 	public List<BookDto> searchBookByAuthor(String lastName, String firstName) {
 		List<Book> books = null;
-		books = eao.findBookByAuthor(firstName, lastName);
+		books = bookEAO.findBookByAuthor(firstName, lastName);
 		return conv.fromEntityBook(books);
 	}
 
 	@Override
 	public List<AuthorDto> searchAuthorByLastName(String lastName) {
 		List<Author> authors = null;
-		authors = eao.findAuthorByLastName(lastName);
+		authors = authorEAO.findAuthorByLastName(lastName);
 		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
 	public List<AuthorDto> searchAuthorByBookName(String bookName) {
 		List<Author> authors = null;
-		authors = eao.findAuthorByBookName(bookName);
+		authors = authorEAO.findAuthorByBookName(bookName);
 		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
-	public AuthorDto storeAuthor(AuthorDto authorDto) throws EntityNotFoundException {
-		Author author = conv.fromDto(authorDto);
-		eao.persist(author);
-		return conv.fromEntity(author);
+	public AuthorDto createAuthor(AuthorDto authorDto)
+	{
+//		Author author;
+//		try {
+//			author = conv.fromDto(authorDto);
+//			eao.persist(author);
+//			return conv.fromEntity(author);
+//		} catch (EntityNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		return null;
 	}
 
+
+	@Override
+	public AuthorDto updateAuthor(AuthorDto in) throws EntityNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAuthor(AuthorDto in) {
+		// TODO Auto-generated method stub
+		
+	}
 }

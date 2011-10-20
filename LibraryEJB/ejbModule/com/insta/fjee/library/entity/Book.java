@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-public class Book extends com.insta.fjee.library.util.jpa.Entity implements Serializable {
+public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
