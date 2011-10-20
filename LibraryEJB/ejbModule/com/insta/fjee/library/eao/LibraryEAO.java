@@ -148,8 +148,11 @@ public class LibraryEAO implements ILibraryEAO
 	 */
 	@Override
 	public List<Book> findBookByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT b FROM Book b WHERE b.name LIKE :pattern";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("pattern", "%" + name + "%");
+		return query.getResultList();
 	}
 
 	/*
@@ -159,8 +162,11 @@ public class LibraryEAO implements ILibraryEAO
 	 */
 	@Override
 	public List<Book> findBookByGenre(String genre) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT b FROM Book b WHERE b.genre LIKE :pattern";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("pattern", "%" + genre + "%");
+		return query.getResultList();
 	}
 
 	/*
@@ -170,7 +176,11 @@ public class LibraryEAO implements ILibraryEAO
 	 */
 	@Override
 	public List<Book> findBookByAuthor(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT b FROM Book b INNER JOIN b.author a WHERE a.firstName LIKE :pattern1 AND a.lastName LIKE :pattern2 ";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("pattern1",  "%" + firstName + "%");
+		query.setParameter("pattern2",  "%" + lastName + "%");
+		return query.getResultList();
 	}
 }
