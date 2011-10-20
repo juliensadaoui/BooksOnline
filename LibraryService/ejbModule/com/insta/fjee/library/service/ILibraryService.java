@@ -12,7 +12,7 @@ public interface ILibraryService {
 	
 	public List<BookDto> searchBookByName(String name);
 
-	public List<BookDto> searchBookByISBN(String isbn);
+	public BookDto findBookByISBN(String isbn);
 	
 	public List<BookDto> searchBookByAuthor(String lastName, String firstName);
 
