@@ -24,6 +24,22 @@ public interface ILibraryService {
 	
 	long bookCount();
 	
-	public AuthorDto storeAuthor(AuthorDto in) throws EntityNotFoundException;
-
+	/**
+	 * 	Create a new author
+	 * 
+	 * @param in - author
+	 * @return author created
+	 */
+	public AuthorDto createAuthor(AuthorDto in);
+	
+	/**
+	 * 	Update a author
+	 * 
+	 * @param in - author
+	 * @return author updated
+	 * @throws EntityNotFoundException
+	 */
+	public AuthorDto updateAuthor(AuthorDto in) throws EntityNotFoundException;
+	
+	public void deleteAuthor(AuthorDto in);
 }
