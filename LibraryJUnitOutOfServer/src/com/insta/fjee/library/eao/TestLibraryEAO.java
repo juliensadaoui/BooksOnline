@@ -1,14 +1,17 @@
 package com.insta.fjee.library.eao;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.insta.fjee.library.entity.Author;
+import com.insta.fjee.library.entity.Book;
+import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.junit.Util;
 
 public class TestLibraryEAO {
@@ -24,7 +27,7 @@ public class TestLibraryEAO {
     }
     
     @Test
-    public void countryCountTest() {
+    public void bookCountTest() {
         long n = eao.countBooks();
         assertEquals(4, n);
     }
@@ -41,5 +44,23 @@ public class TestLibraryEAO {
     {
     	List<Author> authors = eao.findAuthorByLastName("fsqdf");
     	assertEquals(authors.size(), 0);
+    }
+    
+    @Test 
+    public void searchAuthorByBookNameTest()
+    {
+    	List<Author> authors = eao.findAuthorByBookName("Test");
+    	assertEquals(authors.size(), 0);
+    }
+    
+    @Test
+    public void searchBookByISBNTest()
+    {
+    	Book book;
+		try {
+			book = eao.findBookByISBN("test");
+		} catch (BookNotFoundException e) {
+			assertEquals(e.getIsbn(), "test");
+		}
     }
 }
