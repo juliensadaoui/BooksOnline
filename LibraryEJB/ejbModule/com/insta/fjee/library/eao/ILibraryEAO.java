@@ -6,6 +6,7 @@ import javax.ejb.Remote;
 
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
+import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 import com.insta.fjee.library.util.jpa.Entity;
 
@@ -47,7 +48,7 @@ public interface ILibraryEAO {
 	 * @param isbn
 	 * @return
 	 */
-	public Book findBookByISBN(String isbn);
+	public Book findBookByISBN(String isbn) throws BookNotFoundException;
 	
 	/**
 	 * 

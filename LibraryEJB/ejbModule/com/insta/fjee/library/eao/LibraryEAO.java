@@ -5,11 +5,13 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
+import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 import com.insta.fjee.library.util.jpa.Entity;
 
@@ -80,8 +82,11 @@ public class LibraryEAO implements ILibraryEAO
 	 */
 	@Override
 	public List<Author> findAuthorByBookName(String bookName) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.name LIKE :pattern";
+		Query query = em.createQuery(ejbql, Author.class);
+		query.setParameter("pattern", "%" + bookName + "%");
+		return query.getResultList();
 	}
 	
 	/*
@@ -124,9 +129,16 @@ public class LibraryEAO implements ILibraryEAO
 	 * @see com.insta.formation.countries.eao.ILibraryEAO#findBookByISBN()
 	 */
 	@Override
-	public Book findBookByISBN(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+	public Book findBookByISBN(String isbn) throws BookNotFoundException {
+		// run an EJBQL query
+		try {
+			String ejbql = "SELECT b FROM Book b WHERE b.isbn = :isbn";
+			Query query = em.createQuery(ejbql, Book.class);
+			query.setParameter("isbn", isbn);
+			return (Book) query.getSingleResult();
+		} catch (NoResultException e) {
+			throw new BookNotFoundException(isbn);
+		}
 	}
 
 	/*
