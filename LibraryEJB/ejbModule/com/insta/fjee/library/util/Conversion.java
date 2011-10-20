@@ -55,11 +55,20 @@ public class Conversion
 		return result;
 	}
 	
-	public List<AuthorDto> fromEntity(List<Author> authors)
+	public List<AuthorDto> fromEntityAuthor(List<Author> authors)
 	{
 		List<AuthorDto> result = new ArrayList<AuthorDto>();
 		for (Author a : authors) {
 			result.add(fromEntity(a));
+		}
+		return result;
+	}
+	
+	public List<BookDto> fromEntityBook(List<Book> books)
+	{
+		List<BookDto> result = new ArrayList<BookDto>();
+		for (Book b : books) {
+			result.add(fromEntity(b));
 		}
 		return result;
 	}

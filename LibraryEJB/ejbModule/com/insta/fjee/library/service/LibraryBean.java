@@ -11,6 +11,8 @@ import com.insta.fjee.library.dto.AuthorDto;
 import com.insta.fjee.library.dto.BookDto;
 import com.insta.fjee.library.eao.ILibraryEAO;
 import com.insta.fjee.library.entity.Author;
+import com.insta.fjee.library.entity.Book;
+import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 import com.insta.fjee.library.util.Conversion;
 
@@ -53,37 +55,47 @@ public class LibraryBean implements ILibraryService
 	{
 		List<Author> authors = null;
 		authors = eao.findAuthorByFirstName(fistName);
-		return conv.fromEntity(authors);
+		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
 	public List<BookDto> searchBookByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> books = null;
+		books = eao.findBookByName(name);
+		return conv.fromEntityBook(books);
 	}
 
 	@Override
-	public List<BookDto> searchBookByISBN(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+	public BookDto findBookByISBN(String isbn) {
+		Book book = null;
+		try {
+			book = eao.findBookByISBN(isbn);
+		} catch (BookNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return conv.fromEntity(book);
 	}
 
 	@Override
 	public List<BookDto> searchBookByAuthor(String lastName, String firstName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> books = null;
+		books = eao.findBookByAuthor(firstName, lastName);
+		return conv.fromEntityBook(books);
 	}
 
 	@Override
 	public List<AuthorDto> searchAuthorByLastName(String lastName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Author> authors = null;
+		authors = eao.findAuthorByLastName(lastName);
+		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
 	public List<AuthorDto> searchAuthorByBookName(String bookName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Author> authors = null;
+		authors = eao.findAuthorByBookName(bookName);
+		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
