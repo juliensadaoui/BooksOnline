@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="LibraryEJB_junit">
+		<jta-data-source>jdbc/LibraryDB</jta-data-source>
+		<class>com.insta.fjee.library.entity.Author</class>
+		<class>com.insta.fjee.library.entity.Book</class>
+		 <properties>
+            <property name="javax.persistence.jdbc.driver" 
+                      value="org.apache.derby.jdbc.ClientDriver" />
+            <property name="javax.persistence.jdbc.url" 
+                      value="jdbc:derby://localhost:1527/LibraryDB;create=true" />
+            <property name="javax.persistence.jdbc.user" 
+                      value="libraryuser" />
+            <property name="javax.persistence.jdbc.password" 
+                      value="library" />
+ 
+            <property name="eclipselink.logging.level" 
+                      value="FINE" />
+            <property name="eclipselink.target-server" 
+                      value="com.insta.fjee.library.junit.JTATransactionController"/>
+        </properties>
+	</persistence-unit>
+</persistence>
