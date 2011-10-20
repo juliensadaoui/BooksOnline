@@ -24,7 +24,7 @@ public class Author extends com.insta.fjee.library.util.jpa.Entity implements Se
 	private String lastName;
 
 	//bi-directional many-to-one association to Book
-	@OneToMany(mappedBy="author")
+	@OneToMany(mappedBy="author",fetch=FetchType.EAGER)
 	private Set<Book> books;
 
     public Author() {

@@ -76,8 +76,7 @@ public class Conversion
 		}
 		result.setLastName(authorDto.getLastName());
 		result.setFirstName(authorDto.getFirstName());
-		
-//		result.setCountry(eao.findOrFail(BookDto.class, d.getCountryId()));
+
 		return result;
 	}
 	
@@ -92,7 +91,7 @@ public class Conversion
 			result = new Book();
 		}
 		result.setName(bookDto.getName());
-//		result.setGenre()
+		result.setGenre(bookDto.getGenre());
 //		result.setCountry(eao.findOrFail(BookDto.class, d.getCountryId()));
 		return result;
 	}

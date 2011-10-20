@@ -87,9 +87,10 @@ public class LibraryBean implements ILibraryService
 	}
 
 	@Override
-	public AuthorDto storeAuthor(AuthorDto in) throws EntityNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public AuthorDto storeAuthor(AuthorDto authorDto) throws EntityNotFoundException {
+		Author author = conv.fromDto(authorDto);
+		eao.persist(author);
+		return conv.fromEntity(author);
 	}
 
 }
