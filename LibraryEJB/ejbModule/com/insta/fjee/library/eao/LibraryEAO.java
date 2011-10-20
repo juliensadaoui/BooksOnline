@@ -112,6 +112,7 @@ public class LibraryEAO implements ILibraryEAO
 	@Override
 	public <T extends Entity> void persist(T entity)
 	{
+		em.getTransaction().begin();
 		if (entity.hasId()) {
 			em.merge(entity);
 		}
@@ -121,6 +122,7 @@ public class LibraryEAO implements ILibraryEAO
 				em.flush();
 			}
 		}
+		em.getTransaction().commit();
 	}
 	
 	/*
