@@ -8,7 +8,8 @@ import javax.ejb.Stateless;
 
 import com.insta.fjee.library.dto.AuthorDto;
 import com.insta.fjee.library.dto.BookDto;
-import com.insta.fjee.library.eao.ILibraryEAO;
+import com.insta.fjee.library.eao.IAuthorEAO;
+import com.insta.fjee.library.eao.IBookEAO;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.EntityNotFoundException;
@@ -18,14 +19,18 @@ public class Conversion
 {
 
 	@EJB
-	ILibraryEAO eao;
+	IAuthorEAO authorEAO;
+	
+	@EJB
+	IBookEAO bookEAO;
 
 	public Conversion() {
 	}
 
 	// for Unit test
-	public Conversion(ILibraryEAO eao) {
-		this.eao = eao;
+	public Conversion(IAuthorEAO authorEAO, IBookEAO bookEAO) {
+		this.authorEAO = authorEAO;
+		this.bookEAO = bookEAO;
 	}
 
 	public BookDto fromEntity(Book e)
@@ -76,12 +81,12 @@ public class Conversion
 	{
 		Author result  = new Author();
 		Integer id = authorDto.getId();
-//		if (Entity.isId(id)) {
-//			result = eao.findOrFail(Author.class, id);
-//		}
-//		else {
-//			result = new Author();
-//		}
+		if (Entity.isId(id)) {
+			result = authorEAO.findOrFail(id);
+		}
+		else {
+			result = new Author();
+		}
 		result.setLastName(authorDto.getLastName());
 		result.setFirstName(authorDto.getFirstName());
 
@@ -92,15 +97,15 @@ public class Conversion
 	{
 		Book result = new Book();
 		Integer id = bookDto.getId();
-//		if (Entity.isId(id)) {
-//			result = eao.findOrFail(Book.class, id);
-//		}
-//		else {
-//			result = new Book();
-//		}
+		if (Entity.isId(id)) {
+			result = bookEAO.findOrFail(id);
+		}
+		else {
+			result = new Book();
+		}
 		result.setName(bookDto.getName());
 		result.setGenre(bookDto.getGenre());
-//		result.setCountry(eao.findOrFail(BookDto.class, d.getCountryId()));
+		result.setAuthor(authorEAO.findOrFail(bookDto.getAuthorId()));
 		return result;
 	}
 }

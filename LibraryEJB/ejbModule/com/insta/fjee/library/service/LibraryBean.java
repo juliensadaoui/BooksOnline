@@ -25,8 +25,7 @@ import com.insta.fjee.library.util.Conversion;
 @LocalBean
 @WebService
 public class LibraryBean implements ILibraryService 
-{
-//	public boolean hasId//(id != null && id > 0);
+{ 
 	@EJB
 	IAuthorEAO authorEAO;
 	
@@ -117,7 +116,7 @@ public class LibraryBean implements ILibraryService
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		
+		
 		return null;
 	}
 

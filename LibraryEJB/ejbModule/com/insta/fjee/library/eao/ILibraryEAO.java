@@ -7,7 +7,6 @@ import javax.ejb.Remote;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
-import com.insta.fjee.library.exception.EntityNotFoundException;
 
 @Remote
 public interface ILibraryEAO {
