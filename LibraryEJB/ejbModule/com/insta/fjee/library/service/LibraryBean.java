@@ -104,31 +104,31 @@ public class LibraryBean implements ILibraryService
 	}
 
 	@Override
-	public AuthorDto createAuthor(AuthorDto authorDto)
+	public AuthorDto createAuthor(AuthorDto in)
 	{
-//		Author author;
-//		try {
-//			author = conv.fromDto(authorDto);
-//			eao.persist(author);
-//			return conv.fromEntity(author);
-//		} catch (EntityNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		return null;
+		try {
+			in.setId(null); // on ne renseigne pas le id
+			Author author = conv.fromDto(in);
+			authorEAO.saveOrUpdate(author);
+			return conv.fromEntity(author);
+		} catch (EntityNotFoundException e) {
+			// ne doit jamais arriver
+			return null;
+		}		
 	}
 
 
 	@Override
 	public AuthorDto updateAuthor(AuthorDto in) throws EntityNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Author author = conv.fromDto(in);
+		authorEAO.saveOrUpdate(author);
+		return conv.fromEntity(author);
 	}
 
 	@Override
-	public void deleteAuthor(AuthorDto in) {
-		// TODO Auto-generated method stub
-		
+	public void deleteAuthor(AuthorDto in) throws EntityNotFoundException 
+	{
+		Author author = conv.fromDto(in);
+		authorEAO.delete(author);
 	}
 }
