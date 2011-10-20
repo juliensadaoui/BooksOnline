@@ -3,8 +3,11 @@ package com.insta.fjee.library.eao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
@@ -25,56 +28,91 @@ public class BookEAO implements IBookEAO
 	
 	@Override
 	public long countBooks() {
-		// TODO Auto-generated method stub
-		return 0;
+		long result;
+		Query q = em.createQuery("select count(bo) from Book bo");
+		result = (Long) q.getSingleResult();
+		return result;
 	}
 
 	@Override
-	public void saveOrUpdate(Book author) {
-		// TODO Auto-generated method stub
+	public void saveOrUpdate(Book book) {
+		em.getTransaction().begin();
+		if (find(book.getId()) != null) {
+			em.merge(book);
+		}
+		else {
+			em.persist(book);
+			if (book.getId() == null) {
+				em.flush();
+			}
+		}
+		em.getTransaction().commit();
 		
 	}
 
 	@Override
-	public void delete(Book author) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Book book) {
+		em.getTransaction().begin();
+		em.remove(book);
+		em.getTransaction().commit();		
 	}
 
 	@Override
 	public Book findOrFail(Integer id) throws EntityNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Book b = find(id);
+		if (b == null) {
+			throw new EntityNotFoundException(Author.class, id);
+		}
+		return b;
 	}
 
 	@Override
 	public Book find(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String ejbql = "SELECT b FROM Book b WHERE b.id = :id";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("id", id);
+		return (Book) query.getSingleResult();
 	}
 
 	@Override
 	public Book findBookByISBN(String isbn) throws BookNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query
+		try {
+			String ejbql = "SELECT b FROM Book b WHERE b.isbn = :isbn";
+			Query query = em.createQuery(ejbql, Book.class);
+			query.setParameter("isbn", isbn);
+			return (Book) query.getSingleResult();
+		} catch (NoResultException e) {
+			throw new BookNotFoundException(isbn);
+		}
 	}
 
 	@Override
 	public List<Book> findBookByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT b FROM Book b WHERE b.name LIKE :pattern";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("pattern", "%" + name + "%");
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Book> findBookByGenre(String genre) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT b FROM Book b WHERE b.genre LIKE :pattern";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("pattern", "%" + genre + "%");
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Book> findBookByAuthor(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return null;
+		// run an EJBQL query using input parameters
+		String ejbql = "SELECT b FROM Book b INNER JOIN b.author a WHERE a.firstName LIKE :pattern1 AND a.lastName LIKE :pattern2 ";
+		Query query = em.createQuery(ejbql, Book.class);
+		query.setParameter("pattern1",  "%" + firstName + "%");
+		query.setParameter("pattern2",  "%" + lastName + "%");
+		return query.getResultList();
 	}
 
 }
