@@ -11,6 +11,8 @@ import com.insta.fjee.library.dto.BookDto;
 import com.insta.fjee.library.eao.ILibraryEAO;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
+import com.insta.fjee.library.exception.EntityNotFoundException;
+import com.insta.fjee.library.util.jpa.Entity;
 
 @Stateless
 public class Conversion
@@ -46,9 +48,9 @@ public class Conversion
 		result.setFirstName(a.getFirstName());
 		result.setLastName(a.getLastName());
 		List<String> books = new ArrayList<String>();
-//		for (Book book : a.getBooks()){
-//			books.add(book.getName());
-//		}
+		for (Book book : a.getBooks()){
+			books.add(book.getIsbn());
+		}
 		result.setBooks(books);
 		return result;
 	}
@@ -62,19 +64,36 @@ public class Conversion
 		return result;
 	}
 
-//	public Zip fromDto(ZipDto d) throws EntityNotFoundException
-//	{
-//		Zip result;
-//		Integer id = d.getId();
-//		if (Entity.isId(id)) {
-//			result = eao.findOrFail(Zip.class, id);
-//		}
-//		else {
-//			result = new Zip();
-//		}
-//		result.setName(d.getName());
-//		result.setCode(d.getCode());
-//		result.setCountry(eao.findOrFail(Country.class, d.getCountryId()));
-//		return result;
-//	}
+	public Author fromDto(AuthorDto authorDto) throws EntityNotFoundException
+	{
+		Author result;
+		Integer id = authorDto.getId();
+		if (Entity.isId(id)) {
+			result = eao.findOrFail(Author.class, id);
+		}
+		else {
+			result = new Author();
+		}
+		result.setLastName(authorDto.getLastName());
+		result.setFirstName(authorDto.getFirstName());
+		
+//		result.setCountry(eao.findOrFail(BookDto.class, d.getCountryId()));
+		return result;
+	}
+	
+	public Book fromDto(BookDto bookDto) throws EntityNotFoundException
+	{
+		Book result;
+		Integer id = bookDto.getId();
+		if (Entity.isId(id)) {
+			result = eao.findOrFail(Book.class, id);
+		}
+		else {
+			result = new Book();
+		}
+		result.setName(bookDto.getName());
+//		result.setGenre()
+//		result.setCountry(eao.findOrFail(BookDto.class, d.getCountryId()));
+		return result;
+	}
 }

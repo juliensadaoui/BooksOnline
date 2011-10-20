@@ -8,11 +8,10 @@ import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import com.insta.fjee.library.dto.AuthorDto;
-import com.insta.fjee.library.dto.AuthorTypeField;
 import com.insta.fjee.library.dto.BookDto;
-import com.insta.fjee.library.dto.BookTypeField;
 import com.insta.fjee.library.eao.ILibraryEAO;
 import com.insta.fjee.library.entity.Author;
+import com.insta.fjee.library.exception.EntityNotFoundException;
 import com.insta.fjee.library.util.Conversion;
 
 /**
@@ -48,31 +47,49 @@ public class LibraryBean implements ILibraryService
 		return eao.countBooks();
 	}
 
+
 	@Override
-	public List<BookDto> searchBook(BookTypeField typeField, String value) {
+	public List<AuthorDto> searchAuthorByFirstName(String fistName)
+	{
+		List<Author> authors = null;
+		authors = eao.findAuthorByFirstName(fistName);
+		return conv.fromEntity(authors);
+	}
+
+	@Override
+	public List<BookDto> searchBookByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<AuthorDto> searchAuthor(AuthorTypeField typeField, String value) {
+	public List<BookDto> searchBookByISBN(String isbn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		List<Author> authors = null;
-		switch (typeField) 
-		{
-			case FIRST_NAME:
-				authors = eao.findAuthorByFirstName(value);
-				break;
-			case LAST_NAME:
-				break;
-			case BOOK_NAME:
-				break;
-		}
-		
-		if (authors == null) {
-			return null;
-		}
-		return conv.fromEntity(authors);
+	@Override
+	public List<BookDto> searchBookByAuthor(String lastName, String firstName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AuthorDto> searchAuthorByLastName(String lastName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AuthorDto> searchAuthorByBookName(String bookName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AuthorDto storeAuthor(AuthorDto in) throws EntityNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
