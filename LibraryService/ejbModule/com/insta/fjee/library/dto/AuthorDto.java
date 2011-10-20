@@ -15,7 +15,7 @@ public class AuthorDto implements java.io.Serializable
 	
 	private String lastName;
 	
-	private List<String> books;
+	private List<String> booksIsbn;
 
 	public Integer getId() {
 		return id;
@@ -42,16 +42,16 @@ public class AuthorDto implements java.io.Serializable
 	}
 
 	public List<String> getBooks() {
-		return books;
+		return booksIsbn;
 	}
 
 	public void setBooks(List<String> books) {
-		this.books = books;
+		this.booksIsbn = books;
 	}
 
 	@Override
 	public String toString() {
 		return "AuthorDto [id=" + id + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", books=" + books + "]";
+				+ ", lastName=" + lastName + ", books=" + booksIsbn + "]";
 	}
 }
