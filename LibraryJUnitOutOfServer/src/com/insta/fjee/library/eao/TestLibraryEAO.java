@@ -63,4 +63,25 @@ public class TestLibraryEAO {
 			assertEquals(e.getIsbn(), "test");
 		}
     }
+    
+    @Test 
+    public void searchBookByNameTest()
+    {
+    	List<Book> book = eao.findBookByName("Test");
+    	assertEquals(book.size(), 0);
+    }
+    
+    @Test 
+    public void searchBookByGenreTest()
+    {
+    	List<Book> book = eao.findBookByGenre("Test");
+    	assertEquals(book.size(), 0);
+    }
+    
+    @Test 
+    public void searchBookByAuthorTest()
+    {
+    	List<Book> book = eao.findBookByAuthor("test","Test");
+    	assertEquals(book.size(), 0);
+    }
 }
