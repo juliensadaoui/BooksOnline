@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,6 +64,16 @@ public class TestLibraryEAO {
 		} catch (BookNotFoundException e) {
 			assertEquals(e.getIsbn(), "test");
 		}
+    }
+    @Test
+    public void createBookTest() 
+    {
+    	Author a = new Author();
+    	a.setFirstName("Jules");
+    	a.setLastName("Verne");
+    	eao.persist(a);
+    	
+    	Assert.assertNotNull(eao.findAuthorByFirstName("ule"));
     }
     
     @Test 
