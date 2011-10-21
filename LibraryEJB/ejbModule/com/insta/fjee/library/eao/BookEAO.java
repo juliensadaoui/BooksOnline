@@ -2,6 +2,8 @@ package com.insta.fjee.library.eao;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -12,6 +14,8 @@ import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 
+@LocalBean
+@Stateless
 public class BookEAO implements IBookEAO
 {
 	@PersistenceContext
@@ -36,7 +40,6 @@ public class BookEAO implements IBookEAO
 
 	@Override
 	public void saveOrUpdate(Book book) {
-		em.getTransaction().begin();
 		if (find(book.getId()) != null) {
 			em.merge(book);
 		}
@@ -46,15 +49,13 @@ public class BookEAO implements IBookEAO
 				em.flush();
 			}
 		}
-		em.getTransaction().commit();
 		
 	}
 
 	@Override
-	public void delete(Book book) {
-		em.getTransaction().begin();
-		em.remove(book);
-		em.getTransaction().commit();		
+	public void delete(Book book)
+	{
+		em.remove(book);	
 	}
 
 	@Override
@@ -68,10 +69,8 @@ public class BookEAO implements IBookEAO
 
 	@Override
 	public Book find(Integer id) {
-		String ejbql = "SELECT b FROM Book b WHERE b.id = :id";
-		Query query = em.createQuery(ejbql, Book.class);
-		query.setParameter("id", id);
-		return (Book) query.getSingleResult();
+		if (id == null) return null;
+		return em.find(Book.class, id);
 	}
 
 	@Override

@@ -8,10 +8,12 @@ import javax.ejb.Stateless;
 
 import com.insta.fjee.library.dto.AuthorDto;
 import com.insta.fjee.library.dto.BookDto;
-import com.insta.fjee.library.eao.IAuthorEAO;
-import com.insta.fjee.library.eao.IBookEAO;
+import com.insta.fjee.library.dto.ExemplaryDTO;
+import com.insta.fjee.library.eao.AuthorEAO;
+import com.insta.fjee.library.eao.BookEAO;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
+import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 
 @Stateless
@@ -19,16 +21,16 @@ public class Conversion
 {
 
 	@EJB
-	IAuthorEAO authorEAO;
+	AuthorEAO authorEAO;
 	
 	@EJB
-	IBookEAO bookEAO;
+	BookEAO bookEAO;
 
 	public Conversion() {
 	}
 
 	// for Unit test
-	public Conversion(IAuthorEAO authorEAO, IBookEAO bookEAO) {
+	public Conversion(AuthorEAO authorEAO, BookEAO bookEAO) {
 		this.authorEAO = authorEAO;
 		this.bookEAO = bookEAO;
 	}
@@ -93,7 +95,7 @@ public class Conversion
 		return result;
 	}
 	
-	public Book fromDto(BookDto bookDto) throws EntityNotFoundException
+	public Book fromDTO(BookDto bookDto) throws EntityNotFoundException
 	{
 		Book result = new Book();
 		Integer id = bookDto.getId();
@@ -107,5 +109,18 @@ public class Conversion
 		result.setGenre(bookDto.getGenre());
 		result.setAuthor(authorEAO.findOrFail(bookDto.getAuthorId()));
 		return result;
+	}
+	
+	public Book fromDTO(ExemplaryDTO exemplaryDTO) throws BookNotFoundException
+	{
+		return bookEAO.findBookByISBN(exemplaryDTO.getIsbn());
+	}
+	
+	public ExemplaryDTO fromEntityToExemplary(Book book)
+	{
+		ExemplaryDTO exemplaryDTO = new ExemplaryDTO();
+		exemplaryDTO.setIsbn(book.getIsbn());
+		exemplaryDTO.setNb(book.getExemplary());
+		return exemplaryDTO;
 	}
 }

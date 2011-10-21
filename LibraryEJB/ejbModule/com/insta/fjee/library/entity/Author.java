@@ -2,6 +2,8 @@ package com.insta.fjee.library.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -28,6 +30,7 @@ public class Author implements Serializable {
 	private Set<Book> books;
 
     public Author() {
+    	books = new HashSet<Book>();
     }
 
 	public Integer getId() {

@@ -2,7 +2,6 @@ package com.insta.fjee.library.eao;
 
 import java.util.List;
 
-import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
@@ -21,14 +20,14 @@ public interface IBookEAO
 	 * 
 	 * @param book 
 	 */
-	public void saveOrUpdate(Book author);
+	public void saveOrUpdate(Book book);
 	
 	/**
 	 * 	Delete a book
 	 * 
 	 * @param bo
 	 */
-	public void delete(Book author);
+	public void delete(Book book);
 	
 	/**
 	 * 	Receive a book 

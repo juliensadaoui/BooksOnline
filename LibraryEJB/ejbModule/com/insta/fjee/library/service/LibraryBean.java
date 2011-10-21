@@ -9,8 +9,9 @@ import javax.jws.WebService;
 
 import com.insta.fjee.library.dto.AuthorDto;
 import com.insta.fjee.library.dto.BookDto;
-import com.insta.fjee.library.eao.IAuthorEAO;
-import com.insta.fjee.library.eao.IBookEAO;
+import com.insta.fjee.library.dto.ExemplaryDTO;
+import com.insta.fjee.library.eao.AuthorEAO;
+import com.insta.fjee.library.eao.BookEAO;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
 import com.insta.fjee.library.exception.BookNotFoundException;
@@ -26,10 +27,10 @@ import com.insta.fjee.library.util.Conversion;
 public class LibraryBean implements ILibraryService 
 { 
 	@EJB
-	IAuthorEAO authorEAO;
+	AuthorEAO authorEAO;
 	
 	@EJB
-	IBookEAO bookEAO;
+	BookEAO bookEAO;
 
 	@EJB
 	Conversion conv;
@@ -41,7 +42,7 @@ public class LibraryBean implements ILibraryService
 		// TODO Auto-generated constructor stub
 	}
 
-	public LibraryBean(IAuthorEAO authorEAO, IBookEAO bookEAO, Conversion conv) {
+	public LibraryBean(AuthorEAO authorEAO, BookEAO bookEAO, Conversion conv) {
 		// for unit test
 		this.authorEAO = authorEAO;
 		this.bookEAO = bookEAO;
@@ -126,9 +127,53 @@ public class LibraryBean implements ILibraryService
 	}
 
 	@Override
-	public void deleteAuthor(AuthorDto in) throws EntityNotFoundException 
+	public void deleteAuthor(AuthorDto authorDTO) throws EntityNotFoundException 
 	{
-		Author author = conv.fromDto(in);
+		Author author = conv.fromDto(authorDTO);
 		authorEAO.delete(author);
 	}
+
+	@Override
+	public BookDto addBook(BookDto bookDTO, int exemplary) throws EntityNotFoundException {
+		Book book = conv.fromDTO(bookDTO);
+		book.setExemplary(exemplary);
+		bookEAO.saveOrUpdate(book);
+		return conv.fromEntity(book);
+	}
+
+	@Override
+	public ExemplaryDTO addExemplary(ExemplaryDTO exemplaryDTO)
+			throws EntityNotFoundException, BookNotFoundException {
+		Book book = conv.fromDTO(exemplaryDTO);
+		book.setExemplary(book.getExemplary()+exemplaryDTO.getNb());
+		bookEAO.saveOrUpdate(book);
+		return conv.fromEntityToExemplary(book);
+	}
+
+	@Override
+	public ExemplaryDTO deleteExemplary(ExemplaryDTO exemplaryDTO)
+			throws EntityNotFoundException, BookNotFoundException {
+
+		Book book = conv.fromDTO(exemplaryDTO);
+		if (exemplaryDTO.getNb() > book.getExemplary()) {
+			bookEAO.delete(book); //FIXME delete book?
+		}
+		else {
+			book.setExemplary(book.getExemplary()-exemplaryDTO.getNb());
+			bookEAO.saveOrUpdate(book);
+		}
+		return conv.fromEntityToExemplary(book);
+	}
+
+//	@Override
+//	public AuthorDto insert() {
+//    	Author author = new Author();
+//    	
+//    	author.setFirstName("Yann");
+//    	author.setLastName("DUDICOURT");
+//    	authorEAO.saveOrUpdate(author);
+//		return conv.fromEntity(author);
+//	}
+
+
 }

@@ -2,6 +2,8 @@ package com.insta.fjee.library.eao;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -9,6 +11,8 @@ import javax.persistence.Query;
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 
+@LocalBean
+@Stateless
 public class AuthorEAO implements IAuthorEAO
 {
 	@PersistenceContext
@@ -29,6 +33,7 @@ public class AuthorEAO implements IAuthorEAO
 	 */
 	@Override
 	public Author find(Integer id) {
+		if (id == null) return null;
 		return em.find(Author.class, id);
 	}
 	
@@ -53,8 +58,8 @@ public class AuthorEAO implements IAuthorEAO
 	 * @see com.insta.formation.countries.eao.IAuthorEAO#saveOrUpdate()
 	 */
 	@Override
-	public void saveOrUpdate(Author author) {
-		em.getTransaction().begin();
+	public void saveOrUpdate(Author author) 
+	{
 		if (find(author.getId()) != null) {
 			em.merge(author);
 		}
@@ -64,14 +69,12 @@ public class AuthorEAO implements IAuthorEAO
 				em.flush();
 			}
 		}
-		em.getTransaction().commit();
 	}
 
 	@Override
-	public void delete(Author author) {
-		em.getTransaction().begin();
+	public void delete(Author author) 
+	{
 		em.remove(author);
-		em.getTransaction().commit();
 	}
 	
 	/*
