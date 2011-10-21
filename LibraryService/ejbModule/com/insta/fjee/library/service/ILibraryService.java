@@ -5,6 +5,8 @@ import javax.ejb.Remote;
 
 import com.insta.fjee.library.dto.AuthorDto;
 import com.insta.fjee.library.dto.BookDto;
+import com.insta.fjee.library.dto.ExemplaryDTO;
+import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
 
 @Remote
@@ -48,4 +50,36 @@ public interface ILibraryService {
 	 * @throws EntityNotFoundException
 	 */
 	public void deleteAuthor(AuthorDto in) throws EntityNotFoundException;
+
+	/**
+	 * 	Add a book with a number of copies
+	 * 
+	 * @param in - book
+	 * @param nbExemplary
+	 * @return
+	 * @throws EntityNotFoundException
+	 * @throws BookNotFoundException
+	 */
+	public BookDto addBook(BookDto in, int exemplary) throws EntityNotFoundException;
+	
+	/**
+	 * Add a number of copies
+	 * 
+	 * @param in
+	 * @return
+	 * @throws EntityNotFoundException
+	 * @throws BookNotFoundException
+	 */
+	public ExemplaryDTO addExemplary(ExemplaryDTO in) throws EntityNotFoundException, BookNotFoundException;
+
+	
+	/**
+	 * 	Delete a number of copies
+	 * 
+	 * @param in
+	 * @return
+	 * @throws EntityNotFoundException
+	 * @throws BookNotFoundException
+	 */
+	public ExemplaryDTO deleteExemplary(ExemplaryDTO in) throws EntityNotFoundException, BookNotFoundException;
 }
