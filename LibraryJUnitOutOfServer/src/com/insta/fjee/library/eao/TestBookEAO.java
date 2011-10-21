@@ -19,19 +19,19 @@ public class TestBookEAO {
 	
 	private EntityManager _em;
 
-	private BookEAO bookeao;
-	private AuthorEAO authoreao;
+	private BookEAO bookDAO;
+	private AuthorEAO authorEAO;
 	
     @Before
     public void setUp() throws Exception {
         _em = Util.getEntityManager();
-        bookeao = new BookEAO(_em);
-        authoreao = new AuthorEAO(_em);
+        bookDAO = new BookEAO(_em);
+        authorEAO = new AuthorEAO(_em);
     }
     
     @Test
     public void bookCountTest() {
-        long n = bookeao.countBooks();
+        long n = bookDAO.countBooks();
         assertEquals(4, n);
     }
     
@@ -43,7 +43,9 @@ public class TestBookEAO {
     	
     	author.setFirstName("Yann");
     	author.setLastName("DUDICOURT");
-    	authoreao.saveOrUpdate(author);
+    	_em.getTransaction().begin();
+    	authorEAO.saveOrUpdate(author);
+    	_em.getTransaction().commit();
     	
     	book.setAuthor(author);
     	book.setGenre("Test");
@@ -51,11 +53,15 @@ public class TestBookEAO {
     	book.setName("Test de yann");
     	book.setExemplary(1);
     	
-    	bookeao.saveOrUpdate(book);
-    	assertNotNull(bookeao.findBookByName("Test de yann"));
-    	
-    	bookeao.delete(book);
-    	authoreao.delete(author);
+    	_em.getTransaction().begin();
+    	bookDAO.saveOrUpdate(book);
+    	_em.getTransaction().commit();
+    	assertNotNull(bookDAO.findBookByName("Test de yann"));
+    
+       	_em.getTransaction().begin();
+    	bookDAO.delete(book);
+    	authorEAO.delete(author);
+    	_em.getTransaction().commit();
     	
     }
     
@@ -67,19 +73,19 @@ public class TestBookEAO {
     	
     	author.setFirstName("Yann");
     	author.setLastName("DUDICOURT");
-    	authoreao.saveOrUpdate(author);
+    	authorEAO.saveOrUpdate(author);
     	
     	book.setAuthor(author);
     	book.setGenre("Test");
     	book.setIsbn("test01test");
     	book.setName("Test de yann");
     	book.setExemplary(1);
-    	bookeao.saveOrUpdate(book);
+    	bookDAO.saveOrUpdate(book);
     	
-    	bookeao.delete(book);
-    	authoreao.delete(author);
+    	bookDAO.delete(book);
+    	authorEAO.delete(author);
     	
-    	assertTrue(bookeao.findBookByName("Test de yann").isEmpty());
+    	assertTrue(bookDAO.findBookByName("Test de yann").isEmpty());
     	
     }
     
@@ -88,7 +94,7 @@ public class TestBookEAO {
     {
     	Book book;
 		try {
-			book = bookeao.findBookByISBN("test");
+			book = bookDAO.findBookByISBN("test");
 		} catch (BookNotFoundException e) {
 			assertEquals(e.getIsbn(), "test");
 		}
@@ -97,21 +103,21 @@ public class TestBookEAO {
     @Test 
     public void searchBookByNameTest()
     {
-    	List<Book> book = bookeao.findBookByName("Test");
+    	List<Book> book = bookDAO.findBookByName("Test");
     	assertEquals(book.size(), 0);
     }
     
     @Test 
     public void searchBookByGenreTest()
     {
-    	List<Book> book = bookeao.findBookByGenre("Test");
+    	List<Book> book = bookDAO.findBookByGenre("Test");
     	assertEquals(book.size(), 0);
     }
     
     @Test 
     public void searchBookByAuthorTest()
     {
-    	List<Book> book = bookeao.findBookByAuthor("test","Test");
+    	List<Book> book = bookDAO.findBookByAuthor("test","Test");
     	assertEquals(book.size(), 0);
     }
 
