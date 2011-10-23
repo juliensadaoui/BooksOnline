@@ -1,0 +1,174 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.insta.fjee.library.core</groupId>
+  <artifactId>LibraryCore</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>Library Core</name>
+  <url></url>
+  
+    <!-- Dependency properties -->
+<!--     <properties> -->
+<!--         <junit-version>4.10</junit-version> -->
+<!--         <cxf.version>2.2.6</cxf.version> -->
+<!--         <spring-version>3.0.6.RELEASE</spring-version> -->
+<!--         <commons-logging-version>1.1.1</commons-logging-version> -->
+<!--     </properties> -->
+
+    <!-- Plugin configuration -->
+    <build>
+        <finalName>CXFExampleService</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-java2ws-plugin</artifactId>
+                <version>2.2.6</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.cxf</groupId>
+                        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                        <version>2.2.6</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.cxf</groupId>
+                        <artifactId>cxf-rt-frontend-simple</artifactId>
+                        <version>2.2.6</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+<!--                     <execution> -->
+<!--                         <id>process-classes</id> -->
+<!--                         <phase>process-classes</phase> -->
+<!--                         <configuration> -->
+<!--                             <className>com.insta.fjee.library.core.service.ws.UserService</className> -->
+<!--                             <genWsdl>true</genWsdl> -->
+<!--                             <verbose>true</verbose> -->
+<!--                         </configuration> -->
+<!--                         <goals> -->
+<!--                             <goal>java2ws</goal> -->
+<!--                         </goals> -->
+<!--                     </execution> -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+   
+    <!-- Dependency definitions -->
+	<dependencies>
+	
+		<!-- Spring Framework start -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.0.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>3.0.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.0.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>3.0.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.0.6.RELEASE</version>
+		</dependency>
+		<!-- Spring Framework end -->
+	
+		<!-- Hibernate framework dependencies start -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>3.5.4-Final</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>3.1.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.5.6-Final</version>
+		</dependency>
+		<!-- Hibernate framework dependencies end -->
+		
+		<!-- Apache CXF dependencies start -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+		<!-- Apache CXF dependencies end -->
+	
+		<!-- Hibernate library dependecy start -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<!-- Hibernate library dependecy end -->
+		
+	  	<dependency>
+		  	<groupId>org.slf4j</groupId>
+		  	<artifactId>slf4j-log4j12</artifactId>
+		  	<version>1.6.1</version>
+	  	</dependency>
+	  	<dependency>
+		  	<groupId>org.javassist</groupId>
+		  	<artifactId>javassist</artifactId>
+		  	<version>3.15.0-GA</version>
+	  	</dependency>
+	  	
+	  	<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+
+	</dependencies>
+</project>
