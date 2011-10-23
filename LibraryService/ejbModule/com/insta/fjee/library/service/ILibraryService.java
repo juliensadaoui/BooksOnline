@@ -3,8 +3,8 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import com.insta.fjee.library.dto.AuthorDto;
-import com.insta.fjee.library.dto.BookDto;
+import com.insta.fjee.library.dto.AuthorDTO;
+import com.insta.fjee.library.dto.BookDTO;
 import com.insta.fjee.library.dto.ExemplaryDTO;
 import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.exception.EntityNotFoundException;
@@ -12,17 +12,17 @@ import com.insta.fjee.library.exception.EntityNotFoundException;
 @Remote
 public interface ILibraryService { 
 	
-	public List<BookDto> searchBookByName(String name);
+	public List<BookDTO> searchBookByName(String name);
 
-	public BookDto findBookByISBN(String isbn);
+	public BookDTO findBookByISBN(String isbn);
 	
-	public List<BookDto> searchBookByAuthor(String lastName, String firstName);
+	public List<BookDTO> searchBookByAuthor(String lastName, String firstName);
 
-	public List<AuthorDto> searchAuthorByLastName(String lastName);
+	public List<AuthorDTO> searchAuthorByLastName(String lastName);
 	
-	public List<AuthorDto> searchAuthorByFirstName(String firstName);
+	public List<AuthorDTO> searchAuthorByFirstName(String firstName);
 
-	public List<AuthorDto> searchAuthorByBookName(String bookName);
+	public List<AuthorDTO> searchAuthorByBookName(String bookName);
 	
 	long bookCount();
 	
@@ -32,7 +32,7 @@ public interface ILibraryService {
 	 * @param in - author
 	 * @return author created
 	 */
-	public AuthorDto createAuthor(AuthorDto in);
+	public AuthorDTO createAuthor(AuthorDTO authorDTO);
 	
 	/**
 	 * 	Update a author
@@ -41,7 +41,7 @@ public interface ILibraryService {
 	 * @return author updated
 	 * @throws EntityNotFoundException
 	 */
-	public AuthorDto updateAuthor(AuthorDto in) throws EntityNotFoundException;
+	public AuthorDTO updateAuthor(AuthorDTO authorDTO) throws EntityNotFoundException;
 	
 	/**
 	 * 	Delete a author
@@ -49,7 +49,7 @@ public interface ILibraryService {
 	 * @param in - author
 	 * @throws EntityNotFoundException
 	 */
-	public void deleteAuthor(AuthorDto in) throws EntityNotFoundException;
+	public void deleteAuthor(AuthorDTO authorDTO) throws EntityNotFoundException;
 
 	/**
 	 * 	Add a book with a number of copies
@@ -60,7 +60,7 @@ public interface ILibraryService {
 	 * @throws EntityNotFoundException
 	 * @throws BookNotFoundException
 	 */
-	public BookDto addBook(BookDto in, int exemplary) throws EntityNotFoundException;
+	public BookDTO addBook(BookDTO bookDTO, int exemplary) throws EntityNotFoundException;
 	
 	/**
 	 * Add a number of copies
@@ -70,7 +70,7 @@ public interface ILibraryService {
 	 * @throws EntityNotFoundException
 	 * @throws BookNotFoundException
 	 */
-	public ExemplaryDTO addExemplary(ExemplaryDTO in) throws EntityNotFoundException, BookNotFoundException;
+	public ExemplaryDTO addExemplary(ExemplaryDTO exemplaryDTO) throws EntityNotFoundException, BookNotFoundException;
 
 	
 	/**
@@ -81,5 +81,5 @@ public interface ILibraryService {
 	 * @throws EntityNotFoundException
 	 * @throws BookNotFoundException
 	 */
-	public ExemplaryDTO deleteExemplary(ExemplaryDTO in) throws EntityNotFoundException, BookNotFoundException;
+	public ExemplaryDTO deleteExemplary(ExemplaryDTO exemplaryDTO) throws EntityNotFoundException, BookNotFoundException;
 }

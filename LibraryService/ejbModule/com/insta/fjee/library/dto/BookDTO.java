@@ -1,6 +1,6 @@
 package com.insta.fjee.library.dto;
 
-public class BookDto implements java.io.Serializable
+public class BookDTO implements java.io.Serializable
 {
 	/**
 	 * 

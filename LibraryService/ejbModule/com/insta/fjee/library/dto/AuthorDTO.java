@@ -2,7 +2,7 @@ package com.insta.fjee.library.dto;
 
 import java.util.List;
 
-public class AuthorDto implements java.io.Serializable
+public class AuthorDTO implements java.io.Serializable
 {
 	/**
 	 * 
@@ -15,7 +15,7 @@ public class AuthorDto implements java.io.Serializable
 	
 	private String lastName;
 	
-	private List<String> booksIsbn;
+	private List<String> books;
 
 	public Integer getId() {
 		return id;
@@ -42,16 +42,16 @@ public class AuthorDto implements java.io.Serializable
 	}
 
 	public List<String> getBooks() {
-		return booksIsbn;
+		return books;
 	}
 
 	public void setBooks(List<String> books) {
-		this.booksIsbn = books;
+		this.books = books;
 	}
 
 	@Override
 	public String toString() {
 		return "AuthorDto [id=" + id + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", books=" + booksIsbn + "]";
+				+ ", lastName=" + lastName + ", books=" + books + "]";
 	}
 }
