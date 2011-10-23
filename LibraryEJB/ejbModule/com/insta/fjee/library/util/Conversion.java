@@ -6,8 +6,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.insta.fjee.library.dto.AuthorDto;
-import com.insta.fjee.library.dto.BookDto;
+import com.insta.fjee.library.dto.AuthorDTO;
+import com.insta.fjee.library.dto.BookDTO;
 import com.insta.fjee.library.dto.ExemplaryDTO;
 import com.insta.fjee.library.eao.AuthorEAO;
 import com.insta.fjee.library.eao.BookEAO;
@@ -35,9 +35,9 @@ public class Conversion
 		this.bookEAO = bookEAO;
 	}
 
-	public BookDto fromEntity(Book e)
+	public BookDTO fromEntity(Book e)
 	{
-		BookDto result = new BookDto();
+		BookDTO result = new BookDTO();
 		result.setId(e.getId());
 		result.setName(e.getName());
 		result.setGenre(e.getGenre());
@@ -47,9 +47,9 @@ public class Conversion
 		return result;
 	}
 	
-	public AuthorDto fromEntity(Author a)
+	public AuthorDTO fromEntity(Author a)
 	{
-		AuthorDto result = new AuthorDto();
+		AuthorDTO result = new AuthorDTO();
 		result.setId(a.getId());
 		result.setFirstName(a.getFirstName());
 		result.setLastName(a.getLastName());
@@ -61,25 +61,25 @@ public class Conversion
 		return result;
 	}
 	
-	public List<AuthorDto> fromEntityAuthor(List<Author> authors)
+	public List<AuthorDTO> fromEntityAuthor(List<Author> authors)
 	{
-		List<AuthorDto> result = new ArrayList<AuthorDto>();
+		List<AuthorDTO> result = new ArrayList<AuthorDTO>();
 		for (Author a : authors) {
 			result.add(fromEntity(a));
 		}
 		return result;
 	}
 	
-	public List<BookDto> fromEntityBook(List<Book> books)
+	public List<BookDTO> fromEntityBook(List<Book> books)
 	{
-		List<BookDto> result = new ArrayList<BookDto>();
+		List<BookDTO> result = new ArrayList<BookDTO>();
 		for (Book b : books) {
 			result.add(fromEntity(b));
 		}
 		return result;
 	}
 
-	public Author fromDto(AuthorDto authorDto) throws EntityNotFoundException
+	public Author fromDto(AuthorDTO authorDto) throws EntityNotFoundException
 	{
 		Author result  = new Author();
 		Integer id = authorDto.getId();
@@ -95,7 +95,7 @@ public class Conversion
 		return result;
 	}
 	
-	public Book fromDTO(BookDto bookDto) throws EntityNotFoundException
+	public Book fromDTO(BookDTO bookDto) throws EntityNotFoundException
 	{
 		Book result = new Book();
 		Integer id = bookDto.getId();

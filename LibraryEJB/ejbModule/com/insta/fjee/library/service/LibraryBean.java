@@ -7,8 +7,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
-import com.insta.fjee.library.dto.AuthorDto;
-import com.insta.fjee.library.dto.BookDto;
+import com.insta.fjee.library.dto.AuthorDTO;
+import com.insta.fjee.library.dto.BookDTO;
 import com.insta.fjee.library.dto.ExemplaryDTO;
 import com.insta.fjee.library.eao.AuthorEAO;
 import com.insta.fjee.library.eao.BookEAO;
@@ -57,7 +57,7 @@ public class LibraryBean implements ILibraryService
 
 
 	@Override
-	public List<AuthorDto> searchAuthorByFirstName(String fistName)
+	public List<AuthorDTO> searchAuthorByFirstName(String fistName)
 	{
 		List<Author> authors = null;
 		authors = authorEAO.findAuthorByFirstName(fistName);
@@ -65,14 +65,14 @@ public class LibraryBean implements ILibraryService
 	}
 
 	@Override
-	public List<BookDto> searchBookByName(String name) {
+	public List<BookDTO> searchBookByName(String name) {
 		List<Book> books = null;
 		books = bookEAO.findBookByName(name);
 		return conv.fromEntityBook(books);
 	}
 
 	@Override
-	public BookDto findBookByISBN(String isbn) {
+	public BookDTO findBookByISBN(String isbn) {
 		Book book = null;
 		try {
 			book = bookEAO.findBookByISBN(isbn);
@@ -84,28 +84,28 @@ public class LibraryBean implements ILibraryService
 	}
 
 	@Override
-	public List<BookDto> searchBookByAuthor(String lastName, String firstName) {
+	public List<BookDTO> searchBookByAuthor(String lastName, String firstName) {
 		List<Book> books = null;
 		books = bookEAO.findBookByAuthor(firstName, lastName);
 		return conv.fromEntityBook(books);
 	}
 
 	@Override
-	public List<AuthorDto> searchAuthorByLastName(String lastName) {
+	public List<AuthorDTO> searchAuthorByLastName(String lastName) {
 		List<Author> authors = null;
 		authors = authorEAO.findAuthorByLastName(lastName);
 		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
-	public List<AuthorDto> searchAuthorByBookName(String bookName) {
+	public List<AuthorDTO> searchAuthorByBookName(String bookName) {
 		List<Author> authors = null;
 		authors = authorEAO.findAuthorByBookName(bookName);
 		return conv.fromEntityAuthor(authors);
 	}
 
 	@Override
-	public AuthorDto createAuthor(AuthorDto in)
+	public AuthorDTO createAuthor(AuthorDTO in)
 	{
 		try {
 			in.setId(null); // on ne renseigne pas le id
@@ -120,21 +120,21 @@ public class LibraryBean implements ILibraryService
 
 
 	@Override
-	public AuthorDto updateAuthor(AuthorDto in) throws EntityNotFoundException {
+	public AuthorDTO updateAuthor(AuthorDTO in) throws EntityNotFoundException {
 		Author author = conv.fromDto(in);
 		authorEAO.saveOrUpdate(author);
 		return conv.fromEntity(author);
 	}
 
 	@Override
-	public void deleteAuthor(AuthorDto authorDTO) throws EntityNotFoundException 
+	public void deleteAuthor(AuthorDTO authorDTO) throws EntityNotFoundException 
 	{
 		Author author = conv.fromDto(authorDTO);
 		authorEAO.delete(author);
 	}
 
 	@Override
-	public BookDto addBook(BookDto bookDTO, int exemplary) throws EntityNotFoundException {
+	public BookDTO addBook(BookDTO bookDTO, int exemplary) throws EntityNotFoundException {
 		Book book = conv.fromDTO(bookDTO);
 		book.setExemplary(exemplary);
 		bookEAO.saveOrUpdate(book);
