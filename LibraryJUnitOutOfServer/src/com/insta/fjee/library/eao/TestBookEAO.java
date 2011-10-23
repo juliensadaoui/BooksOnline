@@ -1,6 +1,9 @@
 package com.insta.fjee.library.eao;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -17,16 +20,16 @@ import com.insta.fjee.library.junit.Util;
 
 public class TestBookEAO {
 	
-	private EntityManager _em;
+	private EntityManager entityManager;
 
 	private BookEAO bookDAO;
 	private AuthorEAO authorEAO;
 	
     @Before
     public void setUp() throws Exception {
-        _em = Util.getEntityManager();
-        bookDAO = new BookEAO(_em);
-        authorEAO = new AuthorEAO(_em);
+        entityManager = Util.getEntityManager();
+        bookDAO = new BookEAO(entityManager);
+        authorEAO = new AuthorEAO(entityManager);
     }
     
     @Test
@@ -43,9 +46,9 @@ public class TestBookEAO {
     	
     	author.setFirstName("Yann");
     	author.setLastName("DUDICOURT");
-    	_em.getTransaction().begin();
+    	entityManager.getTransaction().begin();
     	authorEAO.saveOrUpdate(author);
-    	_em.getTransaction().commit();
+    	entityManager.getTransaction().commit();
     	
     	book.setAuthor(author);
     	book.setGenre("Test");
@@ -53,15 +56,15 @@ public class TestBookEAO {
     	book.setName("Test de yann");
     	book.setExemplary(1);
     	
-    	_em.getTransaction().begin();
+    	entityManager.getTransaction().begin();
     	bookDAO.saveOrUpdate(book);
-    	_em.getTransaction().commit();
+    	entityManager.getTransaction().commit();
     	assertNotNull(bookDAO.findBookByName("Test de yann"));
     
-       	_em.getTransaction().begin();
+       	entityManager.getTransaction().begin();
     	bookDAO.delete(book);
     	authorEAO.delete(author);
-    	_em.getTransaction().commit();
+    	entityManager.getTransaction().commit();
     	
     }
     

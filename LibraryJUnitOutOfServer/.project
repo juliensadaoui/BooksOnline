@@ -3,6 +3,7 @@
 	<name>LibraryJUnitOutOfServer</name>
 	<comment></comment>
 	<projects>
+		<project>LibraryService</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
