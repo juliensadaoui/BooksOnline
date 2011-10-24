@@ -1,7 +1,12 @@
-package com.insta.fjee.library.dto;
+package com.insta.fjee.library.stock.dto;
 
 public class ExemplaryDTO implements java.io.Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6467019219819859086L;
+
 	private String isbn;
 	
 	private int nb;

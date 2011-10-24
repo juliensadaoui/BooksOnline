@@ -1,4 +1,4 @@
-package com.insta.fjee.library.dto;
+package com.insta.fjee.library.stock.dto;
 
 import java.util.List;
 

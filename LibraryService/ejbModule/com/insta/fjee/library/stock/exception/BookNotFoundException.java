@@ -1,4 +1,4 @@
-package com.insta.fjee.library.exception;
+package com.insta.fjee.library.stock.exception;
 
 import java.awt.print.Book;
 

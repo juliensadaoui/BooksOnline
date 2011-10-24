@@ -1,4 +1,4 @@
-package com.insta.fjee.library.exception;
+package com.insta.fjee.library.stock.exception;
 
 public class EntityNotFoundException extends Exception 
 {
