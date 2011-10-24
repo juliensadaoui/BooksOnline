@@ -1,9 +1,9 @@
-package com.insta.fjee.library.eao;
+package com.insta.fjee.library.stock.eao;
 
 import java.util.List;
 
-import com.insta.fjee.library.entity.Author;
-import com.insta.fjee.library.exception.EntityNotFoundException;
+import com.insta.fjee.library.stock.entity.Author;
+import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 
 public interface IAuthorEAO 
 {

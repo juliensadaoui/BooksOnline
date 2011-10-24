@@ -1,4 +1,4 @@
-package com.insta.fjee.library.util;
+package com.insta.fjee.library.stock.util;
 
 public class Entity {
 	

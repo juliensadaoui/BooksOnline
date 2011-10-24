@@ -1,4 +1,4 @@
-package com.insta.fjee.library.entity;
+package com.insta.fjee.library.stock.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;

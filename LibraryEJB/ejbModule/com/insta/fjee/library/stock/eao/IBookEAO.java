@@ -1,10 +1,10 @@
-package com.insta.fjee.library.eao;
+package com.insta.fjee.library.stock.eao;
 
 import java.util.List;
 
-import com.insta.fjee.library.entity.Book;
-import com.insta.fjee.library.exception.BookNotFoundException;
-import com.insta.fjee.library.exception.EntityNotFoundException;
+import com.insta.fjee.library.stock.entity.Book;
+import com.insta.fjee.library.stock.exception.BookNotFoundException;
+import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 
 public interface IBookEAO 
 {

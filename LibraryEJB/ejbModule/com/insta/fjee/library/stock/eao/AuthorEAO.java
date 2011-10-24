@@ -1,4 +1,4 @@
-package com.insta.fjee.library.eao;
+package com.insta.fjee.library.stock.eao;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.insta.fjee.library.entity.Author;
-import com.insta.fjee.library.exception.EntityNotFoundException;
+import com.insta.fjee.library.stock.entity.Author;
+import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 
 @LocalBean
 @Stateless

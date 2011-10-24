@@ -1,4 +1,4 @@
-package com.insta.fjee.library.util;
+package com.insta.fjee.library.stock.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,15 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.insta.fjee.library.dto.AuthorDTO;
-import com.insta.fjee.library.dto.BookDTO;
-import com.insta.fjee.library.dto.ExemplaryDTO;
-import com.insta.fjee.library.eao.AuthorEAO;
-import com.insta.fjee.library.eao.BookEAO;
-import com.insta.fjee.library.entity.Author;
-import com.insta.fjee.library.entity.Book;
-import com.insta.fjee.library.exception.BookNotFoundException;
-import com.insta.fjee.library.exception.EntityNotFoundException;
+import com.insta.fjee.library.stock.dto.AuthorDTO;
+import com.insta.fjee.library.stock.dto.BookDTO;
+import com.insta.fjee.library.stock.dto.ExemplaryDTO;
+import com.insta.fjee.library.stock.eao.AuthorEAO;
+import com.insta.fjee.library.stock.eao.BookEAO;
+import com.insta.fjee.library.stock.entity.Author;
+import com.insta.fjee.library.stock.entity.Book;
+import com.insta.fjee.library.stock.exception.BookNotFoundException;
+import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 
 @Stateless
 public class Conversion
