@@ -1,4 +1,4 @@
-package com.insta.fjee.library.junit;
+package com.insta.fjee.library.stock.junit;
 
 import javax.transaction.TransactionManager;
 

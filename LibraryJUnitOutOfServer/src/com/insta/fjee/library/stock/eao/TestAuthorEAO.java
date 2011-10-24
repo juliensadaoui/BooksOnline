@@ -1,4 +1,4 @@
-package com.insta.fjee.library.eao;
+package com.insta.fjee.library.stock.eao;
 
 import static org.junit.Assert.*;
 
@@ -12,8 +12,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.insta.fjee.library.entity.Author;
-import com.insta.fjee.library.junit.Util;
+import com.insta.fjee.library.stock.junit.Util;
+import com.insta.fjee.library.stock.eao.AuthorEAO;
+import com.insta.fjee.library.stock.entity.Author;
 
 public class TestAuthorEAO {
 

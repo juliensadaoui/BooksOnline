@@ -1,4 +1,4 @@
-package com.insta.fjee.library.service;
+package com.insta.fjee.library.stock.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,13 +12,14 @@ import org.junit.Test;
 import java.util.List;
 import javax.persistence.EntityManager;
 
-import com.insta.fjee.library.dto.AuthorDTO;
-import com.insta.fjee.library.dto.BookDTO;
-import com.insta.fjee.library.eao.AuthorEAO;
-import com.insta.fjee.library.eao.BookEAO;
-import com.insta.fjee.library.exception.EntityNotFoundException;
-import com.insta.fjee.library.junit.Util;
-import com.insta.fjee.library.util.Conversion;
+import com.insta.fjee.library.stock.dto.AuthorDTO;
+import com.insta.fjee.library.stock.dto.BookDTO;
+import com.insta.fjee.library.stock.exception.EntityNotFoundException;
+import com.insta.fjee.library.stock.junit.Util;
+import com.insta.fjee.library.stock.eao.AuthorEAO;
+import com.insta.fjee.library.stock.eao.BookEAO;
+import com.insta.fjee.library.stock.service.LibraryBean;
+import com.insta.fjee.library.stock.util.Conversion;
 
 public class TestLibraryBean
 {

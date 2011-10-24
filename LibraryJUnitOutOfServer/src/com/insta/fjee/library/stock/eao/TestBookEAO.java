@@ -1,4 +1,4 @@
-package com.insta.fjee.library.eao;
+package com.insta.fjee.library.stock.eao;
 
 
 import static org.junit.Assert.assertEquals;
@@ -15,22 +15,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.insta.fjee.library.entity.Author;
-import com.insta.fjee.library.entity.Book;
-import com.insta.fjee.library.junit.Util;
+import com.insta.fjee.library.stock.junit.Util;
+import com.insta.fjee.library.stock.eao.AuthorEAO;
+import com.insta.fjee.library.stock.eao.BookEAO;
+import com.insta.fjee.library.stock.entity.Author;
+import com.insta.fjee.library.stock.entity.Book;
 
 public class TestBookEAO {
 	
-	private EntityManager entityManager;
+	private static EntityManager entityManager;
 
-	private BookEAO bookEAO;
-	private AuthorEAO authorEAO;
+	private static BookEAO bookEAO;
+	private static AuthorEAO authorEAO;
 	
 	private Author author;
 	private Book book;
 	
     @BeforeClass
-    public void setUpClass() throws Exception {
+    public static void setUpClass() throws Exception {
         entityManager = Util.getEntityManager();
         bookEAO = new BookEAO(entityManager);
         authorEAO = new AuthorEAO(entityManager);
@@ -76,7 +78,7 @@ public class TestBookEAO {
         long n = bookEAO.countBooks();
         assertEquals(5, n);
 //        Si ta basse est vide faire test avec 1
-//        Si crée avec script 4 book sont deja insert +1 en Befaore de Junit
+//        Si crï¿½e avec script 4 book sont deja insert +1 en Befaore de Junit
 //        assertEquals(1, n);
         
     }
