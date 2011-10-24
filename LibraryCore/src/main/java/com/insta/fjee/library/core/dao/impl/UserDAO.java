@@ -12,7 +12,14 @@ import org.springframework.stereotype.Repository;
 import com.insta.fjee.library.core.dao.IUserDAO;
 import com.insta.fjee.library.core.model.User;
 
-
+/***
+ * Data Access Object
+ * 
+ * A Stock DAO interface and implementation. In last tutorial, you DAO classes are directly extends the “HibernateDaoSupport“, but it’s not possible to do it in annotation mode, because you have no way to auto wire the session Factory bean from your DAO class. The workaround is create a custom class (CustomHibernateDaoSupport) and extends the “HibernateDaoSupport” and auto wire the session factory, and your DAO classes extends this class.
+ * 
+ * @author julien
+ *
+ */
 @Repository("userDAO")
 public class UserDAO implements IUserDAO
 {

@@ -1,41 +1,46 @@
 package com.insta.fjee.library.core.bo.impl;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.insta.fjee.library.core.bo.IUserBO;
-import com.insta.fjee.library.service.BookDTO;
-import com.insta.fjee.library.service.LibraryBean;
+import com.insta.fjee.library.core.dao.IUserDAO;
+import com.insta.fjee.library.core.util.CustomWSSupport;
+import com.insta.fjee.library.stock.service.BookDTO;
 
+/**
+ * 
+ * Stock Business Object (BO))
+ * 
+ * Stock business object (BO) interface and implementation, it’s used to store
+ * the project’s business function, the real database operations (CRUD) works 
+ * should not involved in this class, instead it has a DAO (StockDao) class to do it.
+ * 
+ * @author julien
+ *
+ */
+@Service("userBO")
 public class UserBOImpl implements IUserBO
 {
-	public LibraryBean getService()
+	/**
+	 * 	Make this class as a bean “stockBo” in Spring Ioc container, 
+	 * 	and autowire the stock dao class.
+	 */
+	@Autowired
+	private IUserDAO userDAO;
+	
+	public void setUserDAO(IUserDAO userDAO)
 	{
-		// call WS
-		URL url;
-		try {
-			url = new URL("http://localhost:8080/LibraryBeanService/LibraryBean?wsdl");
-			QName qname = new QName("http://service.library.fjee.insta.com/", "LibraryBeanService");
-
-			// Création d'une fabrique pour le WS
-			Service service = Service.create(url, qname);
-
-			// Récupération Proxy pour accéder aux méthodes
-			return service.getPort(LibraryBean.class);
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		this.userDAO = userDAO;
 	}
+	
+	
 	
 	@Override
 	public String getName(String isbn) {
 		BookDTO book;
-		book = getService().findBookByISBN(isbn);
+		book = CustomWSSupport.getLibraryBean().findBookByISBN(isbn);
 		return book.getName();	
 	}
 
