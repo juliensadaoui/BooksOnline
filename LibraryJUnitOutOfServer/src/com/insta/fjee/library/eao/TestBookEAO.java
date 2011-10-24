@@ -10,32 +10,75 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.insta.fjee.library.entity.Author;
 import com.insta.fjee.library.entity.Book;
-import com.insta.fjee.library.exception.BookNotFoundException;
 import com.insta.fjee.library.junit.Util;
 
 public class TestBookEAO {
 	
 	private EntityManager entityManager;
 
-	private BookEAO bookDAO;
+	private BookEAO bookEAO;
 	private AuthorEAO authorEAO;
 	
-    @Before
-    public void setUp() throws Exception {
+	private Author author;
+	private Book book;
+	
+    @BeforeClass
+    public void setUpClass() throws Exception {
         entityManager = Util.getEntityManager();
-        bookDAO = new BookEAO(entityManager);
+        bookEAO = new BookEAO(entityManager);
         authorEAO = new AuthorEAO(entityManager);
     }
     
+    @Before
+    public void setUp() throws Exception {
+        
+		// charge l'auteur en BDD
+		author = new Author();
+		author.setFirstName("Gustave");
+		author.setLastName("Flaubert");
+		
+		entityManager.getTransaction().begin();
+		authorEAO.saveOrUpdate(author);
+		entityManager.getTransaction().commit();
+    	
+		// charge lle book en bdd
+		book = new Book();
+		book.setName("En verve");
+		book.setGenre("Roman");
+		book.setIsbn("FLA1234GUS");
+		book.setAuthor(author);
+		book.setExemplary(2);
+		
+		entityManager.getTransaction().begin();
+		bookEAO.saveOrUpdate(book);
+		entityManager.getTransaction().commit();
+    }
+    
+    @After
+	public void tearDown() 
+	{
+		entityManager.getTransaction().begin();
+		authorEAO.delete(author);
+		bookEAO.delete(book);
+		entityManager.getTransaction().commit();
+	}
+
+    
     @Test
     public void bookCountTest() {
-        long n = bookDAO.countBooks();
-        assertEquals(4, n);
+        long n = bookEAO.countBooks();
+        assertEquals(5, n);
+//        Si ta basse est vide faire test avec 1
+//        Si crée avec script 4 book sont deja insert +1 en Befaore de Junit
+//        assertEquals(1, n);
+        
     }
     
     @Test
@@ -57,12 +100,12 @@ public class TestBookEAO {
     	book.setExemplary(1);
     	
     	entityManager.getTransaction().begin();
-    	bookDAO.saveOrUpdate(book);
+    	bookEAO.saveOrUpdate(book);
     	entityManager.getTransaction().commit();
-    	assertNotNull(bookDAO.findBookByName("Test de yann"));
+    	assertNotNull(bookEAO.findBookByName("Test de yann"));
     
        	entityManager.getTransaction().begin();
-    	bookDAO.delete(book);
+    	bookEAO.delete(book);
     	authorEAO.delete(author);
     	entityManager.getTransaction().commit();
     	
@@ -83,45 +126,41 @@ public class TestBookEAO {
     	book.setIsbn("test01test");
     	book.setName("Test de yann");
     	book.setExemplary(1);
-    	bookDAO.saveOrUpdate(book);
+    	bookEAO.saveOrUpdate(book);
     	
-    	bookDAO.delete(book);
+    	bookEAO.delete(book);
     	authorEAO.delete(author);
     	
-    	assertTrue(bookDAO.findBookByName("Test de yann").isEmpty());
+    	assertTrue(bookEAO.findBookByName("Test de yann").isEmpty());
     	
     }
     
     @Test
     public void searchBookByISBNTest()
     {
-    	Book book;
-		try {
-			book = bookDAO.findBookByISBN("test");
-		} catch (BookNotFoundException e) {
-			assertEquals(e.getIsbn(), "test");
-		}
+//    	List<Book> books = bookEAO.findBookByISBN("FLA1234GUS");
+//    	assertEquals(books.size(), 1);
     }
     
     @Test 
     public void searchBookByNameTest()
     {
-    	List<Book> book = bookDAO.findBookByName("Test");
-    	assertEquals(book.size(), 0);
+    	List<Book> books = bookEAO.findBookByName("En verve");
+    	assertEquals(books.size(), 1);
     }
     
     @Test 
     public void searchBookByGenreTest()
     {
-    	List<Book> book = bookDAO.findBookByGenre("Test");
-    	assertEquals(book.size(), 0);
+    	List<Book> books = bookEAO.findBookByGenre("Roman");
+    	assertEquals(books.size(), 1);
     }
     
     @Test 
     public void searchBookByAuthorTest()
     {
-    	List<Book> book = bookDAO.findBookByAuthor("test","Test");
-    	assertEquals(book.size(), 0);
+    	List<Book> books = bookEAO.findBookByAuthor(author.getFirstName(), author.getLastName());
+    	assertEquals(books.size(), 1);
     }
 
 }
