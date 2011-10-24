@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,13 +20,14 @@ import com.insta.fjee.library.exception.EntityNotFoundException;
 import com.insta.fjee.library.junit.Util;
 import com.insta.fjee.library.util.Conversion;
 
-public class TestLibraryBean 
+public class TestLibraryBean
 {
-//	extends TestSuite {
 	private EntityManager entityManager;
 	
 	private LibraryBean serviceBean;
-
+	
+	private AuthorDTO authorDTO;
+	
 	@Before
 	public void setUp() throws Exception
 	{
@@ -33,35 +35,47 @@ public class TestLibraryBean
 		AuthorEAO authorEAO = new AuthorEAO(entityManager);
 		BookEAO bookEAO = new BookEAO(entityManager);
 		serviceBean = new LibraryBean(authorEAO, bookEAO, new Conversion(authorEAO, bookEAO));
+		
+		// charge la donnée de base
+		authorDTO = new AuthorDTO();
+		authorDTO.setFirstName("Gustave");
+		authorDTO.setLastName("Flaubert");
+		
+		entityManager.getTransaction().begin();
+		authorDTO = serviceBean.createAuthor(authorDTO);
+		entityManager.getTransaction().commit();
 	}
 	
-//	public static Test suite() {
-//		   suite.addTest(new SomeTestCase ("testDoThisFirst";));
-//		   suite.addTest(new SomeTestCase ("testDoThisSecond";));
-//		   return suite;
-//	}
+	@After
+	public void tearDown() 
+	{
+		try {
+			entityManager.getTransaction().begin();
+			serviceBean.deleteAuthor(authorDTO);
+			entityManager.getTransaction().commit();
+		} catch (EntityNotFoundException e) {
+		}
+	}
+	
 	/**
 	 * 	Test le service permettant de créer un auteur dans la
 	 * 		zone de stockage des livres.
 	 */
 	@Test
-	public void createAuthorTest()
+	public void createAuthorTestFail()
 	{
 		// creation d'un auteur
-		AuthorDTO author = new AuthorDTO();
-		author.setFirstName("julien");
-		author.setLastName("sadaoui");
 		entityManager.getTransaction().begin();
-		author = serviceBean.createAuthor(author);
+		authorDTO = serviceBean.createAuthor(authorDTO);
 		entityManager.getTransaction().commit();
-		assertNotNull(author);
+		assertNotNull(authorDTO);
 		
 		// valide l'opération de création
 		List<AuthorDTO> authors = serviceBean.searchAuthorByFirstName("jul");
-		author = authors.get(0);
-		assertNotNull(author);
-		assertEquals(author.getFirstName(), "julien");
-		assertEquals(author.getLastName(), "sadaoui");
+		authorDTO = authors.get(0);
+		assertNotNull(authorDTO);
+		assertEquals(authorDTO.getFirstName(), "julien");
+		assertEquals(authorDTO.getLastName(), "sadaoui");
 		
 	}
 	

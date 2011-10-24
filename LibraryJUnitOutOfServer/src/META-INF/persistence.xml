@@ -18,6 +18,7 @@
                       value="FINE" />
             <property name="eclipselink.target-server" 
                       value="com.insta.fjee.library.junit.JTATransactionController"/>
+
         </properties>
 	</persistence-unit>
 </persistence>
