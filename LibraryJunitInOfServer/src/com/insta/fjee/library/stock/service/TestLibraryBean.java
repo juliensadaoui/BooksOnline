@@ -1,4 +1,4 @@
-package com.insta.fjee.library.service;
+package com.insta.fjee.library.stock.service;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,10 @@ import javax.xml.ws.Service;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
+import com.insta.fjee.library.stock.service.AuthorDTO;
+import com.insta.fjee.library.stock.service.BookDTO;
+import com.insta.fjee.library.stock.service.EntityNotFoundException_Exception;
+import com.insta.fjee.library.stock.service.LibraryBean;
 
 /**
  * 	
@@ -31,7 +34,7 @@ public class TestLibraryBean
 		// call WS
 		try {
 			URL url = new URL("http://localhost:8080/LibraryBeanService/LibraryBean?wsdl");
-			QName qname = new QName("http://service.library.fjee.insta.com/", "LibraryBeanService");
+			QName qname = new QName("http://service.stock.library.fjee.insta.com/", "LibraryBeanService");
 	
 			// Création d'une fabrique pour le WS
 			Service service = Service.create(url, qname);
