@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dao.IUserDAO;
+import com.insta.fjee.library.core.model.User;
 import com.insta.fjee.library.core.util.CustomWSSupport;
 import com.insta.fjee.library.stock.service.BookDTO;
 
@@ -39,6 +40,13 @@ public class UserBOImpl implements IUserBO
 	
 	@Override
 	public String getName(String isbn) {
+		User user = new User();
+		user.setFirstName("kjkj");
+		user.setLastName("lkjlkj");
+		user.setLogin("kljk");
+		user.setPassword("kjkjh"); 
+		userDAO.save(user);
+		
 		BookDTO book;
 		book = CustomWSSupport.getLibraryBean().findBookByISBN(isbn);
 		return book.getName();	

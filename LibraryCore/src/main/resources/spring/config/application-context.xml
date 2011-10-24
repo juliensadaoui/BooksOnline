@@ -16,7 +16,20 @@
    		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
    		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
    		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+ 	
+ 	<context:annotation-config />
  
+ 	<!-- Auto scan the components -->
+	<context:component-scan base-package="com.insta.fjee.library.core.dao.impl" />
+	<context:component-scan base-package="com.insta.fjee.library.core.bo.impl" />
+	<context:component-scan base-package="com.insta.fjee.library.core.service.ws" />
+	
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/LibraryCoreDB"/> 
+
+	<!-- Database Configuration -->
+<!-- 	<import resource="../database/DataSource.xml" /> -->
+	<import resource="classpath:/spring/database/Hibernate.xml" />
+	
     <!-- importer les fichiers d'application context de CXF  -->
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
@@ -24,10 +37,10 @@
        
     <!-- Spring manage ServiceBean -->
     <!-- déclarer le bean de service web avec le schéma jaxws fourni par CXF  -->
-<!--     <bean id="userServ" class="com.insta.fjee.library.service.UserServiceWS" /> -->
+    <bean id="user" class="com.insta.fjee.library.core.service.ws.UserService" />
      
     <!-- JAX-WS Service Endpoint -->    
     <!-- déclarer les dépendances du bean de service web  -->
-<!--     <jaxws:endpoint id="personService" implementor="#userServ" address="/userService" /> -->
+    <jaxws:endpoint id="userService" implementor="#user" address="/userService" />
        
 </beans>

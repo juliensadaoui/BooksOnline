@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.insta.fjee.library.core.dao.IUserDAO;
@@ -25,11 +26,10 @@ public class UserDAO implements IUserDAO
 {
 	// avec spring 3.1+
 
-	private SessionFactory sessionFactory;
-
 	@Autowired
-	public UserDAO(SessionFactory sessionFactory) {
-		super();
+	private SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 

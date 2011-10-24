@@ -17,7 +17,7 @@
 
     <!-- Plugin configuration -->
     <build>
-        <finalName>CXFExampleService</finalName>
+        <finalName>LibraryCore</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -98,22 +98,6 @@
 		<!-- Spring Framework end -->
 	
 		<!-- Hibernate framework dependencies start -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.5.4-Final</version>
-			<type>pom</type>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.1.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.5.6-Final</version>
-		</dependency>
 		<!-- Hibernate framework dependencies end -->
 		
 		<!-- Apache CXF dependencies start -->
@@ -153,11 +137,6 @@
 		<!-- Hibernate library dependecy end -->
 		
 	  	<dependency>
-		  	<groupId>org.slf4j</groupId>
-		  	<artifactId>slf4j-log4j12</artifactId>
-		  	<version>1.6.1</version>
-	  	</dependency>
-	  	<dependency>
 		  	<groupId>org.javassist</groupId>
 		  	<artifactId>javassist</artifactId>
 		  	<version>3.15.0-GA</version>
@@ -170,5 +149,10 @@
 			<version>4.10</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.6.6.Final</version>
+		</dependency>
 	</dependencies>
 </project>

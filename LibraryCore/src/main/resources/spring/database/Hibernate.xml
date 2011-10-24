@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="configLocation">
+			<value>classpath:/spring/database/librarycore.cfg.xml</value>
+		</property>
+<!-- 		<property name="hibernateProperties"> -->
+<!-- 			<value> -->
+<!-- 				SQL dialect -->
+<!-- 				hibernate.dialect=org.hibernate.dialect.DerbyDialect -->
+<!-- 				hibernate.show_sql=true -->
+<!-- 				Drop and re-create the database schema on startup -->
+<!-- 				hibernate.hbm2ddl.auto=update -->
+<!-- 				hibernate.current_session_context_class=thread -->
+<!-- 				hibernate.transaction.factory_class=org.hibernate.transaction.JDBCTransactionFactory -->
+<!-- 				hibernate.connection.pool_size=10 -->
+<!-- 				Enable Hibernate's automatic session context management -->
+<!-- 			    cache.provider_class=org.hibernate.cache.NoCacheProvider -->
+<!-- 			</value> -->
+<!-- 		</property> -->
+	</bean>
+
+	<!-- <bean id="myTxManager" class="org.springframework.transaction.jta.JtaTransactionManager"/> -->
+
+	<!--
+		voir précision pour le TransactionManager 
+	 
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	 -->
+</beans>

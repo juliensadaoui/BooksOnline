@@ -2,7 +2,8 @@ package com.insta.fjee.library.core.service.ws;
 
 import javax.jws.WebService;
 
-import com.insta.fjee.library.core.bo.impl.UserBOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.service.IUserService;
 
 //@WebService(endpointInterface = "com.insta.fjee.library.service.UserServiceWS")
@@ -10,8 +11,11 @@ import com.insta.fjee.library.core.service.IUserService;
 //by wsdl2java), which is incorrect--they are supposed to go with the SEI *implementation* 
 //(the class that implements it). 
 @WebService
-public class UserService implements IUserService {
-
+public class UserService implements IUserService 
+{
+	@Autowired
+	private IUserBO userBO;
+	
 	@Override
 	public String hello(String name) {
 		
@@ -20,7 +24,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public String getBookName(String isbn) {
-		return (new UserBOImpl()).getName(isbn);
+		return userBO.getName(isbn);
 	}
 	
 	
