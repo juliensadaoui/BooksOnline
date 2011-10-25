@@ -12,27 +12,13 @@ import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 @Remote
 public interface ILibraryService { 
 	
-	public List<BookDTO> searchBookByName(String name);
-
-	public BookDTO findBookByISBN(String isbn);
-	
-	public List<BookDTO> searchBookByAuthor(String lastName, String firstName);
-
-	public List<AuthorDTO> searchAuthorByLastName(String lastName);
-	
-	public List<AuthorDTO> searchAuthorByFirstName(String firstName);
-
-	public List<AuthorDTO> searchAuthorByBookName(String bookName);
-	
-	long bookCount();
-	
 	/**
 	 * 	Create a new author
 	 * 
 	 * @param in - author
 	 * @return author created
 	 */
-	public AuthorDTO createAuthor(AuthorDTO authorDTO);
+	public AuthorDTO addAuthor(AuthorDTO authorDTO);
 	
 	/**
 	 * 	Update a author
@@ -50,7 +36,14 @@ public interface ILibraryService {
 	 * @throws EntityNotFoundException
 	 */
 	public void deleteAuthor(AuthorDTO authorDTO) throws EntityNotFoundException;
+	
+	public List<AuthorDTO> searchAuthorByLastName(String lastName);
+	
+	public List<AuthorDTO> searchAuthorByFirstName(String firstName);
 
+	public List<AuthorDTO> searchAuthorByBookName(String bookName);
+	
+	
 	/**
 	 * 	Add a book with a number of copies
 	 * 
@@ -82,4 +75,21 @@ public interface ILibraryService {
 	 * @throws BookNotFoundException
 	 */
 	public ExemplaryDTO deleteExemplary(ExemplaryDTO exemplaryDTO) throws EntityNotFoundException, BookNotFoundException;
+
+	/**
+	 * 	Return the number of books
+	 * 
+	 * @return - number of books
+	 */
+	public long getCountBook();
+	
+	public BookDTO findBookByISBN(String isbn) throws BookNotFoundException;
+
+	public List<BookDTO> searchBookByISBN(String isbn);
+	
+	public List<BookDTO> searchBookByName(String name);
+	
+	public List<BookDTO> searchBookByGenre(String genre);
+	
+	public List<BookDTO> searchBookByAuthor(String lastName, String firstName);
 }
