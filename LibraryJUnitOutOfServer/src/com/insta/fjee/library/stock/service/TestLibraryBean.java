@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 
 import com.insta.fjee.library.stock.dto.AuthorDTO;
 import com.insta.fjee.library.stock.dto.BookDTO;
+import com.insta.fjee.library.stock.exception.BookNotFoundException;
 import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 import com.insta.fjee.library.stock.junit.Util;
 import com.insta.fjee.library.stock.eao.AuthorEAO;
@@ -43,7 +44,7 @@ public class TestLibraryBean
 		authorDTO.setLastName("Flaubert");
 		
 		entityManager.getTransaction().begin();
-		authorDTO = serviceBean.createAuthor(authorDTO);
+		authorDTO = serviceBean.addAuthor(authorDTO);
 		entityManager.getTransaction().commit();
 	}
 	
@@ -67,7 +68,7 @@ public class TestLibraryBean
 	{
 		// creation d'un auteur
 		entityManager.getTransaction().begin();
-		authorDTO = serviceBean.createAuthor(authorDTO);
+		authorDTO = serviceBean.addAuthor(authorDTO);
 		entityManager.getTransaction().commit();
 		assertNotNull(authorDTO);
 		
@@ -105,8 +106,13 @@ public class TestLibraryBean
 	@Test
 	public void findBookByISBNTest()
 	{
-		BookDTO book = serviceBean.findBookByISBN("ZOL568EMI");
-		assertEquals("LA CUREE", book.getName());
-		assertEquals("ZOL568EMI", book.getIsbn());
+		BookDTO book;
+		try {
+			book = serviceBean.findBookByISBN("ZOL568EMI");
+			assertEquals("LA CUREE", book.getName());
+			assertEquals("ZOL568EMI", book.getIsbn());
+		} catch (BookNotFoundException e) {
+			fail();
+		}
 	}
 }
