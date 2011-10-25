@@ -6,6 +6,7 @@
 		<class>com.insta.fjee.library.stock.entity.Book</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
+			<property name="eclipselink.orm.validate.schema" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>

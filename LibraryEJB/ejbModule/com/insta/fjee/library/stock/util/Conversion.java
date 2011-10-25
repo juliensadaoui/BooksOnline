@@ -35,15 +35,15 @@ public class Conversion
 		this.bookEAO = bookEAO;
 	}
 
-	public BookDTO fromEntity(Book e)
+	public BookDTO fromEntity(Book book)
 	{
 		BookDTO result = new BookDTO();
-		result.setId(e.getId());
-		result.setName(e.getName());
-		result.setGenre(e.getGenre());
-		result.setIsbn(e.getIsbn());
+		result.setId(book.getId());
+		result.setName(book.getName());
+		result.setGenre(book.getGenre());
+		result.setIsbn(book.getIsbn());
 		
-		result.setAuthorId(e.getAuthor().getId());
+		result.setAuthorId(book.getAuthor().getId());
 		return result;
 	}
 	
