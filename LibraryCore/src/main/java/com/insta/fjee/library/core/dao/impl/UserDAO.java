@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.insta.fjee.library.core.dao.IUserDAO;
@@ -36,26 +35,50 @@ public class UserDAO implements IUserDAO
 	// @Transactional
 	@Override
 	public void save(User user) {
-		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		session.saveOrUpdate(user);
-		tx.commit();	
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			session.saveOrUpdate(user);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
 	}
 
 	@Override
 	public void update(User user) {
-		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		session.update(user);
-		tx.commit();
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			session.update(user);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
 	}
 
 	@Override
 	public void delete(User user) {
-		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		session.delete(user);
-		tx.commit();
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			session.delete(user);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
 		
 	}
 
