@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.AssertTrue;
 
 
 import org.junit.After;
@@ -20,6 +22,7 @@ import com.insta.fjee.library.stock.eao.AuthorEAO;
 import com.insta.fjee.library.stock.eao.BookEAO;
 import com.insta.fjee.library.stock.entity.Author;
 import com.insta.fjee.library.stock.entity.Book;
+import com.insta.fjee.library.stock.exception.BookNotFoundException;
 
 public class TestBookEAO {
 	
@@ -116,6 +119,8 @@ public class TestBookEAO {
     @Test
     public void deleatBookTest()
     {
+    	
+       	entityManager.getTransaction().begin();
     	Book book = new Book();
     	Author author = new Author();
     	
@@ -134,15 +139,26 @@ public class TestBookEAO {
     	authorEAO.delete(author);
     	
     	assertTrue(bookEAO.findBookByName("Test de yann").isEmpty());
+    	entityManager.getTransaction().commit();
     	
     }
     
     @Test
     public void searchBookByISBNTest()
     {
-//    	List<Book> books = bookEAO.findBookByISBN("FLA1234GUS");
-//    	assertEquals(books.size(), 1);
+    	Book book = null;
+		try {
+			book = bookEAO.findBookByISBN("FLA1234GUS");
+	    	assertNotNull(book);
+		} catch (BookNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			assertTrue(false);
+		}
+
     }
+    
+//    Test quand l'element existe en BDD
     
     @Test 
     public void searchBookByNameTest()
@@ -163,6 +179,30 @@ public class TestBookEAO {
     {
     	List<Book> books = bookEAO.findBookByAuthor(author.getFirstName(), author.getLastName());
     	assertEquals(books.size(), 1);
+    }
+    
+   
+//    Test quand l'element est inéxistant en BDD
+    
+    @Test 
+    public void searchBookByNameTestFalse()
+    {
+    	List<Book> books = bookEAO.findBookByName("bhgr");
+    	assertTrue(books.isEmpty());
+    }
+    
+    @Test 
+    public void searchBookByGenreTestFalse()
+    {
+    	List<Book> books = bookEAO.findBookByGenre("SF");
+    	assertTrue(books.isEmpty());
+    }
+
+    @Test 
+    public void searchBookByAuthorTestFalse()
+    {
+    	List<Book> books = bookEAO.findBookByAuthor("prénom", "nom");
+    	assertTrue(books.isEmpty());
     }
 
 }

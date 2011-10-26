@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 
 import com.insta.fjee.library.stock.dto.AuthorDTO;
 import com.insta.fjee.library.stock.dto.BookDTO;
+import com.insta.fjee.library.stock.dto.ExemplaryDTO;
 import com.insta.fjee.library.stock.exception.BookNotFoundException;
 import com.insta.fjee.library.stock.exception.EntityNotFoundException;
 import com.insta.fjee.library.stock.junit.Util;
@@ -29,6 +30,7 @@ public class TestLibraryBean
 	private LibraryBean serviceBean;
 	
 	private AuthorDTO authorDTO;
+	private BookDTO bookDTO;
 	
 	@Before
 	public void setUp() throws Exception
@@ -45,6 +47,16 @@ public class TestLibraryBean
 		
 		entityManager.getTransaction().begin();
 		authorDTO = serviceBean.addAuthor(authorDTO);
+		entityManager.getTransaction().commit();
+		
+		//charge le book en base de donnée
+		bookDTO.setGenre("Drame");
+		bookDTO.setAuthorId(authorDTO.getId());
+		bookDTO.setIsbn("GUS9878FLA");
+		bookDTO.setName("Madame Bovary");
+		
+		entityManager.getTransaction().begin();
+		bookDTO = serviceBean.addBook(bookDTO, 4);
 		entityManager.getTransaction().commit();
 	}
 	
@@ -103,6 +115,50 @@ public class TestLibraryBean
 		assertTrue(serviceBean.searchAuthorByFirstName("jul").isEmpty());
 	}
 	
+	/**
+	 * 
+	 * Test la recherche d'autheur 
+	 * en FCT (firstname/lastname)
+	 * 
+	 */
+	@Test
+	public void findAuthorByFirstNameTest()
+	{
+		List<AuthorDTO> authors;
+			authors = serviceBean.searchAuthorByFirstName("Gustave");
+			AuthorDTO author = authors.get(0);
+			assertEquals(author.getFirstName(),"Gustave");
+			assertEquals(author.getLastName(),"Flaubert");
+
+	}
+	
+	@Test
+	public void searchAuthorByLastNameTest()
+	{
+		List<AuthorDTO> authors;
+		authors = serviceBean.searchAuthorByLastName("Flaubert");
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(),"Gustave");
+		assertEquals(author.getLastName(),"Flaubert");
+	}
+	
+	@Test
+	public void searchAuthorByBookNameTest()
+	{
+		List<AuthorDTO> authors;
+		authors = serviceBean.searchAuthorByBookName("Madame Bovary");
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(),"Gustave");
+		assertEquals(author.getLastName(),"Flaubert");
+	}
+	
+	/**
+	 * 
+	 * Test sur les recherche de Book
+	 * Fct (Genre/Author/ISBN/Titre)
+	 * 
+	 */
+	
 	@Test
 	public void findBookByISBNTest()
 	{
@@ -114,5 +170,74 @@ public class TestLibraryBean
 		} catch (BookNotFoundException e) {
 			fail();
 		}
+	}
+	
+	@Test
+	public void searchBookByNameTest()
+	{
+		List<BookDTO> books;
+		books = serviceBean.searchBookByName("Madame Bovary");
+		BookDTO book = books.get(0);
+		assertEquals(book.getName(),"Madame Bovary");
+	}
+	
+	@Test
+	public void searchBookByGenreTest()
+	{
+		List<BookDTO> books;
+		books = serviceBean.searchBookByGenre("Drame");
+		BookDTO book = books.get(0);
+		assertEquals(book.getName(),"Madame Bovary");
+	}
+	
+	@Test
+	public void searchBookByAuthorTest()
+	{
+		List<BookDTO> books;
+		books = serviceBean.searchBookByAuthor(authorDTO.getLastName(), authorDTO.getFirstName());
+		BookDTO book = books.get(0);
+		assertEquals(book.getName(),"Madame Bovary");
+	}
+	
+	@Test
+	public void addExemplaryTest()
+	{
+		ExemplaryDTO exemplaryDTOsend=null;
+		exemplaryDTOsend.setIsbn(bookDTO.getIsbn());
+		exemplaryDTOsend.setNb(1);
+
+		try {
+			ExemplaryDTO exemplaryDTO = serviceBean.addExemplary(exemplaryDTOsend);
+			//permet de ne plus dependre du sens d'execution des methode de test
+			assertEquals(exemplaryDTO.getNb(),(exemplaryDTO.getNb()+1));
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BookNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test 
+	public void deleteExemplaryTest()
+	{
+		ExemplaryDTO exemplaryDTOsend=null;
+		exemplaryDTOsend.setIsbn(bookDTO.getIsbn());
+		exemplaryDTOsend.setNb(1);
+		
+		try {
+			ExemplaryDTO exemplaryDTO = serviceBean.deleteExemplary(exemplaryDTOsend);
+			//permet de ne plus dependre du sens d'execution des methode de test
+			assertEquals(exemplaryDTO.getNb(),(exemplaryDTO.getNb()-1));
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BookNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
