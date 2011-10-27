@@ -4,7 +4,7 @@ import javax.jws.WebService;
 
 import com.insta.fjee.library.stock.service.BookDTO;
 
-@WebService
+//@WebService
 public interface ISubscriberService {
 //	public void rentBook(BookDTO bookDTO);
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dao.IUserDAO;
 import com.insta.fjee.library.core.model.User;
-import com.insta.fjee.library.core.util.CustomWSSupport;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
 import com.insta.fjee.library.stock.service.BookNotFoundException;
@@ -39,33 +38,6 @@ public class UserBOImpl implements IUserBO
 		this.userDAO = userDAO;
 	}
 	
-	
-	
-	@Override
-	public String getName(String isbn) {
-//		User user = new User();
-//		user.setFirstName("kjkj");
-//		user.setLastName("lkjlkj");
-//		user.setLogin("kljk");
-//		user.setPassword("kjkjh"); 
-//		userDAO.save(user);
-		
-//		BookDTO book;
-//		book = CustomWSSupport.getLibraryBean().findBookByISBN(isbn);
-		
-		BookDTO book = new BookDTO();
-		book.setAuthorId(23);
-		book.setName("LA CUREE");
-		book.setIsbn("ZOOI33O");
-		book.setGenre("Policier");
-		try {
-			CustomWSSupport.getLibraryBean().addBook(book, 8);
-		} catch (EntityNotFoundException_Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return book.getName();	
-	}
+
 
 }

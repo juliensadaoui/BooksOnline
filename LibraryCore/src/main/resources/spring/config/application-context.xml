@@ -17,10 +17,12 @@
    		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
    		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
  	
- 	<context:annotation-config />
- 
  	<!-- Auto scan the components -->
 	<context:component-scan base-package="com.insta.fjee.library.core" />
+	
+ 	<context:annotation-config />
+ 	
+ 	<bean id="libraryBeanService" class="com.insta.fjee.library.stock.service.LibraryBeanService" />
 	
 	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/LibraryCoreDB"/> 
 
@@ -36,9 +38,11 @@
     <!-- Spring manage ServiceBean -->
     <!-- déclarer le bean de service web avec le schéma jaxws fourni par CXF  -->
     <bean id="user" class="com.insta.fjee.library.core.service.ws.UserService" />
+<!--     <bean id="subscriber" class="com.insta.fjee.library.core.service.ws.SubscriberService" /> -->
      
     <!-- JAX-WS Service Endpoint -->    
     <!-- déclarer les dépendances du bean de service web  -->
     <jaxws:endpoint id="userService" implementor="#user" address="/userService" />
+<!--     <jaxws:endpoint id="subscriberService" implementor="#subscriber" address="/subscriberService" /> -->
        
 </beans>
