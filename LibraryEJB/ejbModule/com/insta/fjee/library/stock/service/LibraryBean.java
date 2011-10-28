@@ -49,6 +49,9 @@ public class LibraryBean implements ILibraryService
 		this.conv = conv;
 	}
  
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public AuthorDTO addAuthor(AuthorDTO authorDTO)
 	{
@@ -132,57 +135,54 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityToExemplary(book);
 	}
 	
+	@Override
+	public ExemplaryDTO getExemplary(String isbn) throws BookNotFoundException 
+	{
+		Book book = bookEAO.findBookByISBN(isbn);
+		return conv.fromEntityToExemplary(book);
+	}
+
+	@Override
+	public long getExemplaryNumber(String isbn) 
+	{
+		return bookEAO.countBooks(isbn);
+	}
+	
     @Override
 	public long getCountBook()
 	{
 		return bookEAO.countBooks();
 	}
     
-	@Override
-	public BookDTO findBookByISBN(String isbn)  throws BookNotFoundException
-	{
-		Book book = bookEAO.findBookByISBN(isbn);
-		return conv.fromEntity(book);
-	}
+    @Override 
+    public BookDTO findBookByISBN(String isbn) throws BookNotFoundException
+    {
+    	Book book = bookEAO.findBookByISBN(isbn);
+    	return conv.fromEntity(book);
+    }
 
 	@Override
-	public List<BookDTO> searchBookByName(String name) {
+	public List<BookDTO> searchBookByName(String name) 
+	{
 		List<Book> books = null;
 		books = bookEAO.findBookByName(name);
 		return conv.fromEntityBook(books);
 	}
 	
 	@Override
-	public List<BookDTO> searchBookByISBN(String isbn)
+	public List<BookDTO> searchBookByGenre(String genre)
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public List<BookDTO> searchBookByGenre(String genre) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> books = null;
+		books = bookEAO.findBookByGenre(genre);
+		return conv.fromEntityBook(books);
 	}
 
 	
 	@Override
-	public List<BookDTO> searchBookByAuthor(String lastName, String firstName) {
+	public List<BookDTO> searchBookByAuthor(String lastName, String firstName) 
+	{
 		List<Book> books = null;
 		books = bookEAO.findBookByAuthor(firstName, lastName);
 		return conv.fromEntityBook(books);
 	}
-
-
-//	@Override
-//	public AuthorDto insert() {
-//    	Author author = new Author();
-//    	
-//    	author.setFirstName("Yann");
-//    	author.setLastName("DUDICOURT");
-//    	authorEAO.saveOrUpdate(author);
-//		return conv.fromEntity(author);
-//	}
-
-
 }

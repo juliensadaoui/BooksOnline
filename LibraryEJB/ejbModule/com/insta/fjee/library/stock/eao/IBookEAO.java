@@ -16,6 +16,14 @@ public interface IBookEAO
 	public long countBooks();
 	
 	/**
+	 * 	Compte le nombre d'exemplaire d'un livre
+	 * 
+	 * @param isbn
+	 * @return
+	 */
+	public long countBooks(String isbn);
+	
+	/**
 	 * 	Save or update a book
 	 * 
 	 * @param book 
