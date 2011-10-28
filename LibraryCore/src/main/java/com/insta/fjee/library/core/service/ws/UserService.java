@@ -30,7 +30,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
 	public UserDTO createUser(UserDTO userDTO) {
 		// TODO Auto-generated method stub
 		return null;
@@ -40,7 +39,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
 	public List<AuthorDTO> searchAuthorByLastName(String lastName) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchAuthorByLastName(lastName);
@@ -50,7 +48,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
 	public List<AuthorDTO> searchAuthorByFirstName(String firstName) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchAuthorByFirstName(firstName);
@@ -60,7 +57,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
 	public List<AuthorDTO> searchAuthorByBookName(String bookName) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchAuthorByBookName(bookName);
@@ -70,17 +66,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
-	public List<BookDTO> searchBookByISBN(String isbn) 
-	{
-		return libraryBeanService.getLibraryBeanPort().searchBookByISBN(isbn);
-	}
-
-	/**
-	 *  @See {@link IUserService}
-	 */
-	@Override
-	@WebMethod
 	public List<BookDTO> searchBookByName(String name) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchBookByName(name);
@@ -90,7 +75,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
 	public List<BookDTO> searchBookByGenre(String genre) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchBookByGenre(genre);
@@ -100,7 +84,6 @@ public class UserService implements IUserService
 	 *  @See {@link IUserService}
 	 */
 	@Override
-	@WebMethod
 	public List<BookDTO> searchBookByAuthor(String lastName, String firstName) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchBookByAuthor(lastName, firstName);

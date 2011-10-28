@@ -44,14 +44,6 @@ public interface IUserService {
 	public List<AuthorDTO> searchAuthorByBookName(String bookName);
 	
 	/**
-	 * 	Search a book by isbn
-	 * 
-	 * @param isbn - isbn of the book
-	 * @return list of books
-	 */
-	public List<BookDTO> searchBookByISBN(String isbn);
-	
-	/**
 	 * 	Search a book by name
 	 * 
 	 * @param name - name of the book
