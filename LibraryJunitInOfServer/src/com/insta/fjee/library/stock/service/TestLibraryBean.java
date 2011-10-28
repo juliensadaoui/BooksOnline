@@ -2,13 +2,10 @@ package com.insta.fjee.library.stock.service;
 
 import static org.junit.Assert.*;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,39 +22,99 @@ import com.insta.fjee.library.stock.service.LibraryBean;
  */
 public class TestLibraryBean 
 {
-//	extends TestSuite {
 	private static LibraryBean serviceBean;
+	
+	private static List<AuthorDTO> authors;
+	
+	private static List<BookDTO> books;
 
 	@BeforeClass
 	public static void setUp() throws Exception
 	{
-		// call WS
-		try {
-			URL url = new URL("http://localhost:8080/LibraryBeanService/LibraryBean?wsdl");
-			QName qname = new QName("http://service.stock.library.fjee.insta.com/", "LibraryBeanService");
-	
-			// Création d'une fabrique pour le WS
-			Service service = Service.create(url, qname);
-	
-			// Récupération Proxy pour accéder aux méthodes
-			serviceBean = service.getPort(LibraryBean.class);
-	
-			BookDTO book;
-			book = serviceBean.findBookByISBN("ZOL568EMI");
-			System.out.println(book.getName());	
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		serviceBean = (new LibraryBeanService()).getLibraryBeanPort();
+		setUpResources() ;
 	}
 	
-//	public static Test suite() {
-//		   suite.addTest(new SomeTestCase ("testDoThisFirst";));
-//		   suite.addTest(new SomeTestCase ("testDoThisSecond";));
-//		   return suite;
-//	}
+    /**
+     * 	Configure les ressources (injecte des données dans la base)
+     * 		pour les tests unitaites.
+     */
+    public static void setUpResources() 
+    {   
+    	String [] authorsList = { "Gustave", "Flaubert",
+    						  "Victor", "Hugo",
+    						  "Jules", "Verne",
+    						  "Henri", "Beyle" };
+    	
+    	authors = new ArrayList<AuthorDTO>();
+    	books = new ArrayList<BookDTO>();
+    		
+		for (int i = 0 ; i < authorsList.length ; i=i+2)
+		{
+			// charge la donnée de base
+			AuthorDTO author = new AuthorDTO();
+			author.setFirstName(authorsList[i]);
+			author.setLastName(authorsList[i+1]);
+			authors.add(serviceBean.addAuthor(author));
+		}
 	
+		String [] booksList = 
+			{
+				"ZOL569EMI","Le rouge et le noir","ROMAN",
+				"ZOL570EMI","Le tour du monde en 80 jours","ROMAN",
+				"ZOL571EMI","Les misérables","ROMAN",
+				"ZOL572EMI","La Débâcle","ROMAN",
+				"ZOL573EMI","La Terre","ROMAN"
+			};
+		
+		for (int i = 0 ; i < authorsList.length ; i=i+3)
+		{
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setIsbn(booksList[i]);
+			bookDTO.setName(booksList[i+1]);
+			bookDTO.setGenre(booksList[i+2]);
+			bookDTO.setAuthorId(authors.get(1).getId());
+			try {
+				books.add(serviceBean.addBook(bookDTO, 2));
+			} catch (EntityNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+		}
+    		
+    }
+    
+    /**
+     * 	Supprime les ressources ajouter en base de données
+     */
+    @AfterClass
+    public static void tearDown()
+    {
+    	for (BookDTO bookDTO : books) 
+    	{
+			try {
+				ExemplaryDTO exemplaryDTO = new ExemplaryDTO();
+				exemplaryDTO.setIsbn(bookDTO.getIsbn());
+				exemplaryDTO.setNb(2);
+				serviceBean.deleteExemplary(exemplaryDTO);
+				
+			} catch (BookNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+			catch (EntityNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+    	}
+    	
+		for (AuthorDTO authorDTO : authors)
+		{
+			try {
+				serviceBean.deleteAuthor(authorDTO);
+			} catch (EntityNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+		}
+    }
+    
 	/**
 	 * 	Test le service permettant de créer un auteur dans la
 	 * 		zone de stockage des livres.
@@ -66,18 +123,19 @@ public class TestLibraryBean
 	public void createAuthorTest()
 	{
 		// creation d'un auteur
-		AuthorDTO author = new AuthorDTO();
-		author.setFirstName("julien");
-		author.setLastName("sadaoui");
-		author = serviceBean.createAuthor(author);
-		assertNotNull(author);
+		AuthorDTO authorDTO = new AuthorDTO();
+		authorDTO.setFirstName("Guy");
+		authorDTO.setLastName("Maupassant");
+		authorDTO = serviceBean.addAuthor(authorDTO);
+		assertNotNull(authorDTO);
+		authors.add(authorDTO);
 		
 		// valide l'opération de création
-		List<AuthorDTO> authors = serviceBean.searchAuthorByFirstName("jul");
-		author = authors.get(0);
-		assertNotNull(author);
-		assertEquals(author.getFirstName(), "julien");
-		assertEquals(author.getLastName(), "sadaoui");
+		List<AuthorDTO> authors = serviceBean.searchAuthorByFirstName("uy");
+		authorDTO = authors.get(0);
+		assertNotNull(authorDTO);
+		assertEquals(authorDTO.getFirstName(), "Guy");
+		assertEquals(authorDTO.getLastName(), "Maupassant");
 		
 	}
 	
@@ -88,18 +146,21 @@ public class TestLibraryBean
 	@Test
 	public void deleteAuthorTest()
 	{
-		// Recupere l'auteur
-		List<AuthorDTO> authors = serviceBean.searchAuthorByFirstName("jul");
-		assertNotNull(authors.get(0));
+		// recupere un auteur dans la liste
+		AuthorDTO authorDTO = authors.get(0);
+		assertNotNull(authorDTO);
+		assertEquals(authorDTO.getFirstName(), "Gustave");
+		assertEquals(authorDTO.getLastName(), "Flaubert");
 		
 		// supprime l'auteur
 		try {
-			serviceBean.deleteAuthor(authors.get(0));
+			serviceBean.deleteAuthor(authorDTO);
+			authors.remove(authorDTO);
 		} catch (EntityNotFoundException_Exception e) {
 			fail(e.getMessage());
 		}
 
-		assertTrue(serviceBean.searchAuthorByFirstName("jul").isEmpty());
+		assertTrue(serviceBean.searchAuthorByFirstName("Gustave").isEmpty());
 	}
 	
 	/**
@@ -110,16 +171,56 @@ public class TestLibraryBean
 	public void findBookByISBNTest()
 	{
 		// recherche du livre à partir du web services
-		BookDTO book = serviceBean.findBookByISBN("ZOL568EMI");
-		
-		
-		assertEquals("LA CUREE", book.getName());
-		assertEquals("ZOL568EMI", book.getIsbn());
+		BookDTO book;
+		try {
+			book = serviceBean.findBookByISBN("ZOL568EMI");
+			assertEquals("LA CUREE", book.getName());
+			assertEquals("ZOL568EMI", book.getIsbn());
+			
+		} catch (BookNotFoundException_Exception e) {
+			fail(e.getMessage());
+		}
 	}
 	
-//	List<AuthorDto> authors = serviceBean.searchAuthorByFirstName("Jea");
-//	assertEquals(authors.size(), 1);
-//	for (AuthorDto a : authors) {
-//		System.out.println(a.getBooks().get(0));
-//	}
+	/**
+	 * 	Test la méthode du web services permettant de rechercher un author
+	 * 		par son nom
+	 */
+	@Test
+	public void searchAuthorByLastNameTest()
+	{
+		List<AuthorDTO> authors = serviceBean.searchAuthorByLastName("Hugo");
+		assertEquals(authors.size(), 1);
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(), "Victor");
+		assertEquals(author.getLastName(), "Hugo");		
+	}
+	
+	/**
+	 * 	Test la méthode du web services permettant de rechercher un author
+	 * 		par son prenom
+	 */
+	@Test
+	public void searchAuthorByFirstNameTest()
+	{
+		List<AuthorDTO> authors = serviceBean.searchAuthorByFirstName("Henri");
+		assertEquals(authors.size(), 1);
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(), "Henri");
+		assertEquals(author.getLastName(), "Beyle");		
+	}
+	
+	/**
+	 * 	Test la méthode du web services permettant de rechercher un author
+	 * 		par un livre
+	 */
+	@Test
+	public void searchAuthorByBookNameTest()
+	{
+		List<AuthorDTO> authors = serviceBean.searchAuthorByBookName("tour du monde en 80 jo");
+		assertEquals(authors.size(), 1);
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(), "Victor");
+		assertEquals(author.getLastName(), "Hugo");	
+	}
 }
