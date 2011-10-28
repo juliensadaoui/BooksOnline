@@ -1,12 +1,14 @@
 package com.insta.fjee.library.core.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.insta.fjee.library.core.dao.impl.UserDAO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.model.User;
 
+@Component("conv")
 public class Conversion 
 {
 	@Autowired

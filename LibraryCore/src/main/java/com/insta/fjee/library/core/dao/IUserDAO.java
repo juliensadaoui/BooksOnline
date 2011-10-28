@@ -47,5 +47,12 @@ public interface IUserDAO
 	 */
 	User findByLoginAndPassword(String login, String password);
 
+	/**
+	 * 	Read a user with exception if not exist
+	 * 
+	 * @param id
+	 * @return
+	 * @throws EntityNotFoundException
+	 */
 	User findOrFail(Integer id) throws EntityNotFoundException;
 }

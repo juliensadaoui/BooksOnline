@@ -18,13 +18,15 @@ public class RentBookBOImpl implements IRentBookBO {
 	@Autowired
 	private LibraryBeanService libraryBeanService;
 	
+	@Autowired
 	private Conversion conv;
 	
 
 	@Override
 	public boolean rentBook(BookDTO bookDTO) 
 	{
-		// TODO Auto-generated method stub
+		String isbn = bookDTO.getIsbn();
+		long exemplaryNumber = libraryBeanService.getLibraryBeanPort().getExemplaryNumber(isbn);
 		return false;
 	}
 

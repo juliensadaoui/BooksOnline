@@ -4,7 +4,26 @@ import com.insta.fjee.library.core.model.RentBook;
 
 public interface IRentBookDAO {
 	
-	public RentBook rentBook(RentBook rentBook);
-	public RentBook returnBook(RentBook rentBook);
+	/**
+	 * 	Create a new rent book
+	 * 
+	 * @param rentBook - new rent book
+	 * @return
+	 */
+	RentBook save(RentBook rentBook);
 	
+	/**
+	 * 	Update a rent book
+	 * 
+	 * @param rentBook
+	 * @return 
+	 */
+	RentBook update(RentBook rentBook);
+	
+	/**	
+	 * 	Delete a rent book
+	 * 
+	 * @param rentBook - rentbook to delete
+	 */
+	void delete(RentBook rentBook);
 }
