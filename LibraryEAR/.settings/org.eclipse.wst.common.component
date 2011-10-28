@@ -6,7 +6,7 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="LibraryService.jar" deploy-path="/" handle="module:/resource/LibraryService/LibraryService">
+        <dependent-module archiveName="LibraryService.jar" deploy-path="/lib" handle="module:/resource/LibraryService/LibraryService">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
