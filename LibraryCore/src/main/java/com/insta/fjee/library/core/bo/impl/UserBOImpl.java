@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dao.IUserDAO;
+import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.model.User;
+import com.insta.fjee.library.core.service.IUserService;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
 import com.insta.fjee.library.stock.service.BookNotFoundException;
@@ -36,6 +38,15 @@ public class UserBOImpl implements IUserBO
 	public void setUserDAO(IUserDAO userDAO)
 	{
 		this.userDAO = userDAO;
+	}
+
+	/**
+	 *  @See {@link IUserBO}
+	 */
+	@Override
+	public UserDTO createUser(UserDTO user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
