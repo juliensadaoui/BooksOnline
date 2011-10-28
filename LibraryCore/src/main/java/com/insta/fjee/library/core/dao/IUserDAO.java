@@ -1,5 +1,6 @@
 package com.insta.fjee.library.core.dao;
 
+import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.model.User;
 
 public interface IUserDAO 
@@ -10,7 +11,7 @@ public interface IUserDAO
 	 * @param newInstance - new user
 	 * @return - identifier of the user
 	 */
-	void save(User user);
+	User save(User user);
 	
 	/**
 	 * 	Update a new user in the database
@@ -18,7 +19,7 @@ public interface IUserDAO
 	 * @param user - user
 	 * @return - identifier of the user
 	 */
-	void update(User user);
+	User update(User user);
 	
 	/**
 	 * 	Delete a user in the database
@@ -35,6 +36,7 @@ public interface IUserDAO
 	 * @return user of the database, null if not exists
 	 */
 	User find(Integer id);
+	User findByLogin(String login);
 	
 	/**
 	 * 	Read a user
@@ -44,4 +46,6 @@ public interface IUserDAO
 	 * @return
 	 */
 	User findByLoginAndPassword(String login, String password);
+
+	User findOrFail(Integer id) throws EntityNotFoundException;
 }

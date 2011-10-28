@@ -1,6 +1,7 @@
 package com.insta.fjee.library.core.bo;
 
 import com.insta.fjee.library.core.dto.UserDTO;
+import com.insta.fjee.library.core.exception.UserAlreadyExistException;
 
 public interface IUserBO
 {
@@ -10,5 +11,6 @@ public interface IUserBO
 	 * @param user - new user
 	 * @return user created
 	 */
-	public UserDTO createUser(UserDTO user);
+	public UserDTO createUser(UserDTO user) throws UserAlreadyExistException;
+	public UserDTO updateUser(UserDTO user); 
 }
