@@ -105,6 +105,7 @@ public class Conversion
 		else {
 			result = new Book();
 		}
+		result.setIsbn(bookDto.getIsbn());
 		result.setName(bookDto.getName());
 		result.setGenre(bookDto.getGenre());
 		result.setAuthor(authorEAO.findOrFail(bookDto.getAuthorId()));

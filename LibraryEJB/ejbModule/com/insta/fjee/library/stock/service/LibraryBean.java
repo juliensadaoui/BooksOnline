@@ -66,14 +66,20 @@ public class LibraryBean implements ILibraryService
 		}		
 	}
 
-
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
-	public AuthorDTO updateAuthor(AuthorDTO authorDTO) throws EntityNotFoundException {
+	public AuthorDTO updateAuthor(AuthorDTO authorDTO) throws EntityNotFoundException 
+	{
 		Author author = conv.fromDto(authorDTO);
 		authorEAO.saveOrUpdate(author);
 		return conv.fromEntity(author);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public void deleteAuthor(AuthorDTO authorDTO) throws EntityNotFoundException 
 	{
@@ -81,6 +87,9 @@ public class LibraryBean implements ILibraryService
 		authorEAO.delete(author);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public List<AuthorDTO> searchAuthorByFirstName(String fistName)
 	{
@@ -89,13 +98,20 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityAuthor(authors);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
-	public List<AuthorDTO> searchAuthorByLastName(String lastName) {
+	public List<AuthorDTO> searchAuthorByLastName(String lastName)
+	{
 		List<Author> authors = null;
 		authors = authorEAO.findAuthorByLastName(lastName);
 		return conv.fromEntityAuthor(authors);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public List<AuthorDTO> searchAuthorByBookName(String bookName) {
 		List<Author> authors = null;
@@ -103,29 +119,41 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityAuthor(authors);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
-	public BookDTO addBook(BookDTO bookDTO, int exemplary) throws EntityNotFoundException {
+	public BookDTO addBook(BookDTO bookDTO, int exemplary) throws EntityNotFoundException
+	{
 		Book book = conv.fromDTO(bookDTO);
 		book.setExemplary(exemplary);
 		bookEAO.saveOrUpdate(book);
 		return conv.fromEntity(book);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public ExemplaryDTO addExemplary(ExemplaryDTO exemplaryDTO)
-			throws EntityNotFoundException, BookNotFoundException {
+			throws EntityNotFoundException, BookNotFoundException 
+	{
 		Book book = conv.fromDTO(exemplaryDTO);
 		book.setExemplary(book.getExemplary()+exemplaryDTO.getNb());
 		bookEAO.saveOrUpdate(book);
 		return conv.fromEntityToExemplary(book);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public ExemplaryDTO deleteExemplary(ExemplaryDTO exemplaryDTO)
-			throws EntityNotFoundException, BookNotFoundException {
+			throws EntityNotFoundException, BookNotFoundException 
+	{
 
 		Book book = conv.fromDTO(exemplaryDTO);
-		if (exemplaryDTO.getNb() > book.getExemplary()) {
+		if (exemplaryDTO.getNb() >= book.getExemplary()) {
 			bookEAO.delete(book); //FIXME delete book?
 		}
 		else {
@@ -135,6 +163,9 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityToExemplary(book);
 	}
 	
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public ExemplaryDTO getExemplary(String isbn) throws BookNotFoundException 
 	{
@@ -142,18 +173,27 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityToExemplary(book);
 	}
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public long getExemplaryNumber(String isbn) 
 	{
 		return bookEAO.countBooks(isbn);
 	}
 	
+	/**
+	 * 	@see {ILibraryService}
+	 */
     @Override
 	public long getCountBook()
 	{
 		return bookEAO.countBooks();
 	}
     
+	/**
+	 * 	@see {ILibraryService}
+	 */
     @Override 
     public BookDTO findBookByISBN(String isbn) throws BookNotFoundException
     {
@@ -161,6 +201,9 @@ public class LibraryBean implements ILibraryService
     	return conv.fromEntity(book);
     }
 
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public List<BookDTO> searchBookByName(String name) 
 	{
@@ -169,6 +212,9 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityBook(books);
 	}
 	
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public List<BookDTO> searchBookByGenre(String genre)
 	{
@@ -177,7 +223,9 @@ public class LibraryBean implements ILibraryService
 		return conv.fromEntityBook(books);
 	}
 
-	
+	/**
+	 * 	@see {ILibraryService}
+	 */
 	@Override
 	public List<BookDTO> searchBookByAuthor(String lastName, String firstName) 
 	{
