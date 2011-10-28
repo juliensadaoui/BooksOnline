@@ -65,7 +65,23 @@ public interface ILibraryService {
 	 */
 	public ExemplaryDTO addExemplary(ExemplaryDTO exemplaryDTO) throws EntityNotFoundException, BookNotFoundException;
 
+	/**
+	 * 
+	 * @param isbn
+	 * @return
+	 * @throws EntityNotFoundException
+	 * @throws BookNotFoundException
+	 */
+	public ExemplaryDTO getExemplary(String isbn) throws BookNotFoundException;
 	
+	/**
+	 * 	Return the number of exemplary of book
+	 * 
+	 * @param isbn
+	 * @return
+	 */
+	public long getExemplaryNumber(String isbn);
+
 	/**
 	 * 	Delete a number of copies
 	 * 
@@ -84,8 +100,6 @@ public interface ILibraryService {
 	public long getCountBook();
 	
 	public BookDTO findBookByISBN(String isbn) throws BookNotFoundException;
-
-	public List<BookDTO> searchBookByISBN(String isbn);
 	
 	public List<BookDTO> searchBookByName(String name);
 	
