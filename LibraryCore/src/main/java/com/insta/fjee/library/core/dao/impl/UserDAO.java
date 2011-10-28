@@ -113,7 +113,8 @@ public class UserDAO implements IUserDAO
 
 
 	@Override
-	public User findByLoginAndPassword(String login, String password) {
+	public User findByLoginAndPassword(String login, String password) 
+	{
 		Session session = sessionFactory.getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		Query query = session.createQuery("from User where login=? and password=?");

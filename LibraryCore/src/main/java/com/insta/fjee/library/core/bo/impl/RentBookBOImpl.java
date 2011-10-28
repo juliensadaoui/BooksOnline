@@ -1,22 +1,38 @@
 package com.insta.fjee.library.core.bo.impl;
 
-import com.insta.fjee.library.core.bo.IRentBookBO;
-import com.insta.fjee.library.stock.service.BookDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.insta.fjee.library.core.bo.IRentBookBO;
+import com.insta.fjee.library.core.dao.IRentBookDAO;
+import com.insta.fjee.library.core.util.Conversion;
+import com.insta.fjee.library.stock.service.BookDTO;
+import com.insta.fjee.library.stock.service.LibraryBeanService;
+
+@Service("rentBookBO")
 public class RentBookBOImpl implements IRentBookBO {
+	
+	@Autowired
+	private IRentBookDAO rentBookDAO;
+	
+	@Autowired
+	private LibraryBeanService libraryBeanService;
+	
+	private Conversion conv;
+	
 
 	@Override
-	public BookDTO rentBook(BookDTO bookDTO) 
+	public boolean rentBook(BookDTO bookDTO) 
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public BookDTO returnBook(BookDTO bookDTO) 
+	public boolean returnBook(BookDTO bookDTO) 
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 }

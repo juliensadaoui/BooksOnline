@@ -10,7 +10,8 @@ public class SubscriberService implements ISubscriberService
 {
 
 	@Override
-	public boolean rentBook(BookDTO bookDTO) {
+	public boolean rentBook(BookDTO bookDTO) 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
