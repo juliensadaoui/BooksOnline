@@ -40,11 +40,11 @@ public class BookEAO implements IBookEAO
 	
 	@Override
 	public long countBooks(String isbn) {
-		long result;
-		Query q = em.createQuery("select count(bo) from Book bo where bo.isbn= :isbn");
+		Integer result;
+		Query q = em.createQuery("select book.exemplary from Book book where book.isbn= :isbn");
 		q.setParameter("isbn", isbn);
-		result = (Long) q.getSingleResult();
-		return result;
+		result = (Integer) q.getSingleResult();
+		return result.longValue();
 	}
 
 	@Override
