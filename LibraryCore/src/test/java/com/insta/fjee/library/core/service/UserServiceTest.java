@@ -220,4 +220,152 @@ public class UserServiceTest
 			assertTrue(true);
 		}
     }
+    
+	/**
+	 * 	Test la méthode du services web permettant de récuperer une
+	 * 		liste de livres à partir du genre du livre.
+	 */
+	@Test
+	public void searchBookByGenreTestSuccess()
+	{
+		List<BookDTO> books = userService.searchBookByGenre("ROMAN2");
+		assertEquals(books.size(), 4);
+		
+		BookDTO book = books.get(1);
+		assertNotNull(book);
+		assertEquals("ZOL387EMI",book.getIsbn());
+		assertEquals("GERMINAL", book.getName());
+		assertEquals("ROMAN2", book.getGenre());
+		
+		book = books.get(2);
+		assertNotNull(book);
+		assertEquals("ZOL897EMI",book.getIsbn());
+		assertEquals("LA DEBACLE", book.getName());
+		assertEquals("ROMAN2", book.getGenre());
+	}
+	
+	/**
+	 * 	Test la méthode du services web permettant de récuperer une
+	 * 		liste de livres à partir du genre du livre.
+	 */
+	@Test
+	public void searchBookByGenreTestFail()
+	{
+		List<BookDTO> books = userService.searchBookByGenre("POLICIER");
+		assertNotNull(books);
+		assertTrue(books.isEmpty());
+	}
+	
+	/**
+	 * 	Test la méthode du services web permettant de récuperer une
+	 * 		liste de livres à partir du nom du livre
+	 */
+	@Test
+	public void searchBookByNameSuccess()
+	{
+		List<BookDTO> books = userService.searchBookByName("a Terr");
+		assertNotNull(books);
+		assertEquals(books.size(), 1);
+		
+		BookDTO book = books.get(0);
+		assertNotNull(book);
+		assertEquals("ZOL573EMI",book.getIsbn());
+		assertEquals("La Terre", book.getName());
+		assertEquals("ROMAN", book.getGenre());
+	}
+	
+	/**
+	 * 	Test la méthode du services web permettant de récuperer une
+	 * 		liste de livres à partir du nom du livre
+	 * 	Recherche d'un livre qui n'existe pas
+	 */
+	@Test
+	public void searchBookByNameFail()
+	{
+		List<BookDTO> books = userService.searchBookByName("Voyage au centre de la terre");
+		assertNotNull(books);
+		assertTrue(books.isEmpty());
+	}
+	
+	/**
+	 * 	Test la méthode du services web permettant de récuperer une
+	 * 		liste de livres à partir de son auteur
+	 */
+	@Test
+	public void searchBookByAuthorSuccess()
+	{
+		List<BookDTO> books = userService.searchBookByAuthor("Hugo", "Victor");
+		assertNotNull(books);
+		assertEquals(books.size(), 5);
+		
+		BookDTO book = books.get(0);
+		assertNotNull(book);
+		assertEquals("ZOL569EMI",book.getIsbn());
+		assertEquals("Le rouge et le noir", book.getName());
+		assertEquals("ROMAN", book.getGenre());
+		
+		
+		book = books.get(2);
+		assertNotNull(book);
+		assertEquals("ZOL571EMI",book.getIsbn());
+		assertEquals("Les misérables", book.getName());
+		assertEquals("ROMAN", book.getGenre());
+		
+	}
+	
+	/**
+	 * 	Test la méthode du services web permettant de récuperer une
+	 * 		liste de livres à partir de son auteur
+	 * 	Recherche de livres qui n'existent pas
+	 */
+	@Test
+	public void searchBookByAuthorFail()
+	{
+		List<BookDTO> books = userService.searchBookByAuthor("Lamartine", "Alphonse");
+		assertNotNull(books);
+		assertTrue(books.isEmpty());
+	}
+	
+	
+	/**
+	 * 	Test la méthode du web services permettant de rechercher un author
+	 * 		par son nom
+	 */
+	@Test
+	public void searchAuthorByLastNameTest()
+	{
+		List<AuthorDTO> authors = serviceBean.searchAuthorByLastName("Hugo");
+		assertEquals(authors.size(), 1);
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(), "Victor");
+		assertEquals(author.getLastName(), "Hugo");		
+	}
+	
+	/**
+	 * 	Test la méthode du web services permettant de rechercher un author
+	 * 		par son prenom
+	 */
+	@Test
+	public void searchAuthorByFirstNameTest()
+	{
+		List<AuthorDTO> authors = serviceBean.searchAuthorByFirstName("Henri");
+		assertEquals(authors.size(), 1);
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(), "Henri");
+		assertEquals(author.getLastName(), "Beyle");		
+	}
+	
+	/**
+	 * 	Test la méthode du web services permettant de rechercher un author
+	 * 		par un livre
+	 */
+	@Test
+	public void searchAuthorByBookNameTest()
+	{
+		List<AuthorDTO> authors = serviceBean.searchAuthorByBookName("tour du monde en 80 jo");
+		assertEquals(authors.size(), 1);
+		AuthorDTO author = authors.get(0);
+		assertEquals(author.getFirstName(), "Victor");
+		assertEquals(author.getLastName(), "Hugo");	
+	}
 }
