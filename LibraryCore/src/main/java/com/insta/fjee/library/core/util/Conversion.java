@@ -37,6 +37,14 @@ public class Conversion
 		return userDTO;
 	}
 	
+	/**
+	 * 	Transforme un objet DTO (objet transmis par les services web)
+	 * 		en objet persistant (hibernante)
+	 * 
+	 * @param userDTO - objet DTO
+	 * @return
+	 * @throws EntityNotFoundException
+	 */
 	public User fromDTO(UserDTO userDTO) throws EntityNotFoundException
 	{
 		User user = new User();
@@ -48,12 +56,16 @@ public class Conversion
 		else 
 		{
 			user = new User();
+			/**
+			 * 	L'identifiant et le login ne peut pas 
+			 * 		etre modifié
+			 */
+			user.setID(userDTO.getID());
+			user.setLogin(userDTO.getLogin());
 		}
 		
 		user.setFirstName(userDTO.getFirstName());
-		user.setID(userDTO.getID());
 		user.setLastName(userDTO.getLastName());
-		user.setLogin(userDTO.getLogin());
 		user.setPassword(userDTO.getPassword());
 		return user;
 

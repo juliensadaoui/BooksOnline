@@ -33,6 +33,9 @@ public class UserDAO implements IUserDAO
 		this.sessionFactory = sessionFactory;
 	}
 
+	/**
+	 * @See {@link IUserDAO}
+	 */
 	// @Transactional
 	@Override
 	public User save(User user) {
@@ -55,6 +58,9 @@ public class UserDAO implements IUserDAO
 		}
 	}
 
+	/**
+	 * @See {@link IUserDAO}
+	 */
 	@Override
 	public User update(User user) {
 		Transaction tx= null;
@@ -72,6 +78,9 @@ public class UserDAO implements IUserDAO
 		}
 	}
 
+	/**
+	 * @See {@link IUserDAO}
+	 */
 	@Override
 	public void delete(User user) {
 		Transaction tx= null;
@@ -89,17 +98,32 @@ public class UserDAO implements IUserDAO
 		
 	}
 
+	/**
+	 * @See {@link IUserDAO}
+	 */
 	@Override
 	public User find(Integer id) 
 	{
-		Session session = sessionFactory.getCurrentSession();
-		return (User) session.get(User.class, id);
+		User user = null;
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			user = (User) session.get(User.class, id);
+			tx.commit();
+		} 
+		catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
+		
+		return user;		
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.insta.formation.countries.eao.IAuthorEAO#findOrFail()
+	/**
+	 * @See {@link IUserDAO}
 	 */
 	@Override
 	public User findOrFail(Integer id) throws EntityNotFoundException
@@ -111,29 +135,66 @@ public class UserDAO implements IUserDAO
 		return u;
 	}
 
-
+	/**
+	 * @See {@link IUserDAO}
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public User findByLoginAndPassword(String login, String password) 
 	{
-		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		Query query = session.createQuery("from User where login=? and password=?");
-		query.setString(0, login);
-		query.setString(1, password);
-		List<User> list = query.list();
-		tx.commit();
-		return list.get(0);
+		User user = null;
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from User u where u.login=? and u.password=?");
+			query.setString(0, login);
+			query.setString(1, password);
+			List<User> list = query.list();
+			if (! list.isEmpty()) { // fix
+				user = list.get(0);
+			}
+			tx.commit();
+			
+		} catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
+		
+		return user;
 	}
 
+	/**
+	 * @See {@link IUserDAO}
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public User findByLogin(String login) {
-		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		Query query = session.createQuery("from User where login=? ");
-		query.setString(0, login);
-		List<User> list = query.list();
-		tx.commit();
-		return list.get(0);
+	public User findByLogin(String login) 
+	{
+		User user = null;
+		Transaction tx = null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from User u where u.login=? ");
+			query.setString(0, login);
+			List<User> list = query.list();
+			if (! list.isEmpty()) { // fix
+				user = list.get(0);
+			}
+			tx.commit();
+
+		} 
+		catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
+		
+		return user;
 	}
 
 }

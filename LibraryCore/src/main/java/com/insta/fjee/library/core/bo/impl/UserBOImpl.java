@@ -2,21 +2,15 @@ package com.insta.fjee.library.core.bo.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Conventions;
 import org.springframework.stereotype.Service;
 
 import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dao.IUserDAO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
-import com.insta.fjee.library.core.exception.UserAlreadyExistException;
+import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
 import com.insta.fjee.library.core.model.User;
-import com.insta.fjee.library.core.service.IUserService;
 import com.insta.fjee.library.core.util.Conversion;
-import com.insta.fjee.library.stock.service.AuthorDTO;
-import com.insta.fjee.library.stock.service.BookDTO;
-import com.insta.fjee.library.stock.service.BookNotFoundException;
-import com.insta.fjee.library.stock.service.EntityNotFoundException_Exception;
 
 /**
  * 
@@ -39,50 +33,81 @@ public class UserBOImpl implements IUserBO
 	@Autowired
 	private IUserDAO userDAO;
 	
+	@Autowired
 	private Conversion conv;
 	
 	public void setUserDAO(IUserDAO userDAO)
 	{
 		this.userDAO = userDAO;
 	}
-
+	
 	/**
-	 *  @throws UserAlreadyExistException 
-	 * @throws EntityNotFoundException 
 	 * @See {@link IUserBO}
 	 */
 	@Override
-	public UserDTO createUser(UserDTO user) throws UserAlreadyExistException
+	public UserDTO authenticate(String login, String password) 
 	{
-		if (userDAO.findByLogin(user.getLogin()) != null) 
-		{
-			throw new UserAlreadyExistException(user);
-		}
-		User result;
-		try {
-			result = conv.fromDTO(user);
-		} catch (EntityNotFoundException e) {
-			throw new UserAlreadyExistException(user);
-		}
-			
-		result = userDAO.save(result);
-		return user;
+		User user = userDAO.findByLoginAndPassword(login, password);
+		return conv.fromEntity(user);
 	}
 
+	/**
+	 * @See {@link IUserBO}
+	 */
 	@Override
-	public UserDTO updateUser(UserDTO user) 
+	public UserDTO createUser(UserDTO userDTO) throws LoginAlreadyExistException 
 	{
-		User result = null;
-		try 
+		/*
+		 *	Verifie que le login n'est pas deja utilise par un
+		 *		autre utilisateur de la librairie 
+		 */
+		String login = userDTO.getLogin();
+		if (userDAO.findByLogin(login) != null) 
 		{
-			result = conv.fromDTO(user);
-		} catch (EntityNotFoundException e) {
-			e.printStackTrace();		
+			throw new LoginAlreadyExistException(login);
 		}
-		result = userDAO.update(result);
-		return user;
+		
+		/*
+		 * 	Ajoute l'utilisateur dans la base de données 
+		 */
+		try {
+			userDTO.setID(0); 
+			User user = conv.fromDTO(userDTO);
+			user = userDAO.save(user);
+			return conv.fromEntity(user);
+		} catch (EntityNotFoundException e) {
+			/*
+			 * 	Cas particulier 
+			 * 
+			 * 	Il ne doit pas avoir d'identifiant de créer avant la création
+			 * 	de l'utilisateur dans la base de données.
+			 * 	Pour des raisons de sécurité, l'identifiant est toujours mis à zero.
+			 * 	Si une exception se produit lors de la création de l'utilisateur, il y a
+			 * 	un probleme quelque part ...
+			 */
+			 throw new RuntimeException();
+		}
 	}
-	
 
-
+	/**
+	 * @See {@link IUserBO}
+	 */
+	@Override
+	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException 
+	{
+		User user = conv.fromDTO(userDTO);
+		/*
+		 *	On verifie que le login n'a pas ete modifier par l'utilisateur 
+		 */
+		if (! user.getLogin().equals(userDTO.getLogin()))
+		{
+			throw new LoginAlreadyExistException(userDTO.getLogin());
+		}
+		
+		/*
+		 *	Mise à jour de l'utilisateur 
+		 */
+		user = userDAO.update(user);
+		return conv.fromEntity(user);
+	}
 }

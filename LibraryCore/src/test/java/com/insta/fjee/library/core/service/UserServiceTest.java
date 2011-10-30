@@ -1,0 +1,223 @@
+package com.insta.fjee.library.core.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+
+import com.insta.fjee.library.core.service.ws.LoginAlreadyExistException;
+import com.insta.fjee.library.core.service.ws.UserServiceService;
+import com.insta.fjee.library.stock.service.AuthorDTO;
+import com.insta.fjee.library.stock.service.BookDTO;
+import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
+import com.insta.fjee.library.stock.service.EntityNotFoundException_Exception;
+import com.insta.fjee.library.stock.service.ExemplaryDTO;
+import com.insta.fjee.library.stock.service.LibraryBean;
+import com.insta.fjee.library.stock.service.LibraryBeanService;
+
+//mvn install:install-file -Dfile=library-core.jar -DgroupId=library -DartifactId=library-core -Dversion=1.0 -Dpackaging=jar
+//mvn install:install-file -Dfile=library-stock.jar -DgroupId=library -DartifactId=library-stock -Dversion=1.0 -Dpackaging=jar
+/**
+ * 	Tests unitaires réalisés sur le service web de la librarie Core 
+ * 		accessible par les visiteurs anonymes
+ * 
+ * @author julien
+ *
+ */
+public class UserServiceTest 
+{
+	// service web de l'application de stock de la librairie
+	private static LibraryBean serviceBean;
+
+	// service web des visiteurs anonymes
+	private static com.insta.fjee.library.core.service.ws.IUserService userService;
+	
+	// jeu d'auteurs utilisés pour les tests unitaires
+	private static List<AuthorDTO> authors;
+	
+	// jeu de livres utilisés pour les tests unitaires
+	private static List<BookDTO> books;
+
+	@BeforeClass
+	public static void setUp() throws Exception
+	{
+		serviceBean = (new LibraryBeanService()).getLibraryBeanPort();
+		userService = (new UserServiceService()).getUserServicePort();
+		setUpResources() ;
+	}
+	
+    /**
+     * 	Configure les ressources (injecte des données dans la base)
+     * 		pour les tests unitaites.
+     */
+    public static void setUpResources() 
+    {   
+    	authors = new ArrayList<AuthorDTO>();
+    	books = new ArrayList<BookDTO>();
+    	
+    	String [] authorsList = { "Gustave", "Flaubert",
+				  "Victor", "Hugo",
+				  "Jules", "Verne",
+				  "Henri", "Beyle",
+				  "Emile", "ZOLA",
+				  "Jean", "Voltaire"};
+    	
+    	/**
+    	 * 	Ajout des auteurs
+    	 */
+		for (int i = 0 ; i < authorsList.length ; i=i+2)
+		{
+			// charge la donnée de base
+			AuthorDTO author = new AuthorDTO();
+			author.setFirstName(authorsList[i]);
+			author.setLastName(authorsList[i+1]);
+			authors.add(serviceBean.addAuthor(author));
+		}
+
+		String [] booksList = 
+			{
+				"ZOL569EMI","Le rouge et le noir","ROMAN",
+				"ZOL570EMI","Le tour du monde en 80 jours","ROMAN",
+				"ZOL571EMI","Les misérables","ROMAN",
+				"ZOL572EMI","La Débâcle","ROMAN",
+				"ZOL573EMI","La Terre","ROMAN",
+				"ZOL568EMI","LA CUREE","ROMAN2",
+				"ZOL387EMI","GERMINAL","ROMAN2",
+				"ZOL897EMI","LA DEBACLE","ROMAN2",
+				"VOL765JEA","CANDIDE","ROMAN2"
+			};
+
+		/*
+		 * 	Ajout des livres
+		 */
+		for (int i = 0 ; i < booksList.length ; i=i+3)
+		{
+			
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setIsbn(booksList[i]);
+			bookDTO.setName(booksList[i+1]);
+			bookDTO.setGenre(booksList[i+2]);
+			if (i < 15) {
+				bookDTO.setAuthorId(authors.get(1).getId());
+			}
+			else {
+				
+				bookDTO.setAuthorId(authors.get(4).getId());
+			}
+			try {
+				books.add(serviceBean.addBook(bookDTO, 2));
+			} catch (EntityNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+		}
+    		
+		/*
+		 * 	Ajout d'un utilisateur
+		 */
+    	try {
+    		UserDTO userDTO = new UserDTO();
+	    	userDTO.setLogin("ydudicourt");
+	    	userDTO.setFirstName("yann");
+	    	userDTO.setLastName("dudicourt");
+	    	userDTO.setPassword("pass");
+	    	userDTO = userService.createUser(userDTO);
+		} catch (LoginAlreadyExistException e) {
+			fail(e.getMessage());
+		}
+    }
+    
+    /**
+     * 	Supprime les ressources ajouter en base de données
+     */
+    @AfterClass
+    public static void tearDown()
+    {
+    	for (BookDTO bookDTO : books) 
+    	{
+			try {
+				ExemplaryDTO exemplaryDTO = new ExemplaryDTO();
+				exemplaryDTO.setIsbn(bookDTO.getIsbn());
+				exemplaryDTO.setNb(2);
+				serviceBean.deleteExemplary(exemplaryDTO);
+				
+			} catch (BookNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+			catch (EntityNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+    	}
+    	
+		for (AuthorDTO authorDTO : authors)
+		{
+			try {
+				serviceBean.deleteAuthor(authorDTO);
+			} catch (EntityNotFoundException_Exception e) {
+				fail(e.getMessage());
+			}
+		}
+    }
+    
+    /**
+     * 	Test la méthode permettant d'ajouter un nouveau
+     * 		utilisateur
+     */
+    @Test
+    public void createUserTestSuccess()
+    {
+    	/*
+    	 *	Ajout de l'utilisateur en base
+    	 */
+    	UserDTO userDTO = null;
+    	try {
+	    	userDTO = new UserDTO();
+	    	userDTO.setLogin("jsadaoui");
+	    	userDTO.setFirstName("julien");
+	    	userDTO.setLastName("sadaoui");
+	    	userDTO.setPassword("pass");
+	    	userDTO = userService.createUser(userDTO);
+		} catch (LoginAlreadyExistException e) {
+			fail(e.getMessage());
+		}
+    	
+    	// vérification de la mise en base de l'utilisateur
+    	assertNotNull(userDTO);
+    	assertTrue(userDTO.getID()>0);
+    	assertEquals(userDTO.getLogin(), "jsadaoui");
+    	assertEquals(userDTO.getPassword(), "pass");
+    	assertEquals(userDTO.getFirstName(), "julien");
+    	assertEquals(userDTO.getLastName(), "sadaoui");
+    }
+ 
+    /**
+     * 	Test la méthode permettant d'ajouter un nouveau
+     * 		utilisateur. On essaye d'ajouter un nouveau
+     * 		utilisateur avec un login existant
+     */
+    @Test
+    public void createUserTestFail()
+    {
+		/*
+		 * 	Ajout d'un utilisateur
+		 */
+    	try {
+    		UserDTO userDTO = new UserDTO();
+	    	userDTO.setLogin("ydudicourt");
+	    	userDTO.setFirstName("francois");
+	    	userDTO.setLastName("cardenas");
+	    	userDTO.setPassword("password");
+	    	userDTO = userService.createUser(userDTO);
+	    	fail("Attention deux utilisateurs avec le meme login!");
+		} catch (LoginAlreadyExistException e) {
+			assertTrue(true);
+		}
+    }
+}

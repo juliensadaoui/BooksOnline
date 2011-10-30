@@ -154,5 +154,15 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>3.6.6.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>library</groupId>
+			<artifactId>library-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>library</groupId>
+			<artifactId>library-stock</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>

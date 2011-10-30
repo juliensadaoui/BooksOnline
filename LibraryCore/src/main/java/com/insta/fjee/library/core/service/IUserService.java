@@ -5,9 +5,18 @@ import java.util.List;
 import javax.jws.WebService;
 
 import com.insta.fjee.library.core.dto.UserDTO;
+import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
 
+/**
+ * 	Services web de l'application accessible par les visiteurs anonymes.
+ * 		- création d'un compte utilisateur
+ * 		- effectuer des recherches sur les livres et les auteurs
+ *  
+ * @author julien
+ *
+ */
 @WebService
 public interface IUserService {
 
@@ -17,7 +26,7 @@ public interface IUserService {
 	 * @param userDTO - new user
 	 * @return user
 	 */
-	public UserDTO createUser(UserDTO userDTO);
+	public UserDTO createUser(UserDTO userDTO) throws LoginAlreadyExistException;
 	
 	/**
 	 * 	Search a author by lastname

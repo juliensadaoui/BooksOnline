@@ -8,6 +8,9 @@
         <dependent-module archiveName="library-stock.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/LibraryCore/src/main/webapp/WEB-INF/lib/library-stock.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="library-core.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/LibraryCore/src/main/webapp/WEB-INF/lib/library-core.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="LibraryCore"/>
         <property name="java-output-path" value="/LibraryCore/target/classes"/>
     </wb-module>

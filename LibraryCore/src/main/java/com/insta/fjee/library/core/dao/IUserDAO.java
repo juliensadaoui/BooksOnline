@@ -46,7 +46,7 @@ public interface IUserDAO
 	 * @return
 	 */
 	User findByLoginAndPassword(String login, String password);
-
+	
 	/**
 	 * 	Read a user with exception if not exist
 	 * 

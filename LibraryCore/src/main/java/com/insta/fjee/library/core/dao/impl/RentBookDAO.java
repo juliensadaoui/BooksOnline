@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.insta.fjee.library.core.dao.IRentBookDAO;
 import com.insta.fjee.library.core.model.RentBook;
@@ -17,6 +18,7 @@ import com.insta.fjee.library.core.service.IUserService;
  * @author julien
  *
  */
+@Repository("rentBookDAO")
 public class RentBookDAO implements IRentBookDAO
 {
 
