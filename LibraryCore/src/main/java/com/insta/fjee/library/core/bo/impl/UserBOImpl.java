@@ -108,6 +108,10 @@ public class UserBOImpl implements IUserBO
 	@Override
 	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException 
 	{
+		// fix lorsque l'identifiant est inferieur à 1
+		if (userDTO.getID() < 1) {
+			throw new EntityNotFoundException(User.class, userDTO.getID());
+		}
 		User user = conv.fromDTO(userDTO);
 		/*
 		 *	On verifie que le login n'a pas ete modifier par l'utilisateur 
@@ -130,6 +134,10 @@ public class UserBOImpl implements IUserBO
 	@Override
 	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException
 	{
+		// fix lorsque l'identifiant est inferieur à 1
+		if (userDTO.getID() < 1) {
+			throw new EntityNotFoundException(User.class, userDTO.getID());
+		}
 		User user = conv.fromDTO(userDTO);
 		userDAO.delete(user);
 	}
@@ -140,6 +148,10 @@ public class UserBOImpl implements IUserBO
 	@Override
 	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException
 	{
+		// fix lorsque l'identifiant est inferieur à 1
+		if (userDTO.getID() < 1) {
+			throw new EntityNotFoundException(User.class, userDTO.getID());
+		}
 		User user = conv.fromDTO(userDTO);
 		if (user.isAdmin()) {
 			return true;

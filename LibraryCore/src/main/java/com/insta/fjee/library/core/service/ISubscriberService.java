@@ -1,10 +1,15 @@
 package com.insta.fjee.library.core.service;
 
+import java.util.List;
+
 import javax.jws.WebService;
 
+import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
+import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
+import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
 /**
  * 	Services web de l'application accessible par les abonnés
@@ -35,6 +40,27 @@ public interface ISubscriberService
 	 */
 	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException;
 	
-//	public boolean rentBook(BookDTO bookDTO);
+	/**
+	 * 	Ajoute d'une nouvelle location d'un livre
+	 * 	
+	 * @param userDTO
+	 * @param isbn - isbn du livre
+	 * @return
+	 * @throws BookNotFoundException_Exception
+	 * @throws NotEnoughtExemplaryException
+	 * @throws EntityNotFoundException
+	 */
+	public RentBookDTO rentBook(UserDTO userDTO, String isbn)
+		throws BookNotFoundException_Exception, NotEnoughtExemplaryException, EntityNotFoundException;
+
+	/**
+	 * 	Retourne toutes les locations d'un utilisateur
+	 * 
+	 * @param userDTO - informations sur l'utilisateur
+	 * @return
+	 * @throws EntityNotFoundException
+	 */
+    public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException;
+	//	public boolean rentBook(BookDTO bookDTO);
 //	public boolean returnBook(BookDTO bookDTO);
 }

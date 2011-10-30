@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jws.WebService;
 
 
+import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.exception.UserNotAdminException;
@@ -34,7 +35,16 @@ public interface IAdminService
 	 * @return all users
 	 * @throws UserNotAdminException
 	 */
-	public List<UserDTO> getAllUser(UserDTO adminDTO) throws UserNotAdminException;
+	public List<UserDTO> getAllUsers(UserDTO adminDTO) throws UserNotAdminException;
+	
+	/**
+	 * 	Retourne toutes les locations de la base de données
+	 * 
+	 * @param adminDTO - user admin
+	 * @return
+	 * @throws UserNotAdminException
+	 */
+	public List<RentBookDTO> getAllRents(UserDTO adminDTO)	throws UserNotAdminException;
 	
 	/**
 	 * 	Delete a user 
@@ -45,13 +55,12 @@ public interface IAdminService
 	 * @throws EntityNotFoundException
 	 */
 	public void deleteUser(UserDTO userDTO, UserDTO adminDTO) throws UserNotAdminException, EntityNotFoundException;
-//	
-//	/**
-//	 * 	Dele
-//	 * 
-//	 * @param userDTO
-//	 */
-//	public void deleteRentBook(Ren userDTO);
 	
-	
+	/**
+	 * 	Delete a rental
+	 * 
+	 * @param rentBookDTO - rent book 
+	 * @param adminDTO - user admin
+	 */
+	public void deleteRentBook(RentBookDTO rentBookDTO, UserDTO adminDT) throws UserNotAdminException, EntityNotFoundException;
 }

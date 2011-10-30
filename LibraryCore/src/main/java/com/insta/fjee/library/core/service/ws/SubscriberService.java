@@ -1,25 +1,29 @@
 package com.insta.fjee.library.core.service.ws;
 
-import javax.annotation.Resource;
+import java.util.List;
+
 import javax.jws.WebService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.insta.fjee.library.core.bo.IRentBookBO;
 import com.insta.fjee.library.core.bo.IUserBO;
+import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
+import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
 import com.insta.fjee.library.core.service.ISubscriberService;
+import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
 @WebService
 public class SubscriberService implements ISubscriberService
 {
 	@Autowired
 	private IUserBO userBO;
+	
+	@Autowired
+	private IRentBookBO rentBookBO;
 	
 	/**
 	 *  @See {@link ISubscriberService}
@@ -39,13 +43,27 @@ public class SubscriberService implements ISubscriberService
 		return userBO.updateUser(userDTO);
 	}
 
-//	@Override
-//	public boolean rentBook(UserDTO userDTO, String isbn) 
-//	{
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
+	/**
+	 * @See {@link ISubscriberService}
+	 */
+	@Override
+	public RentBookDTO rentBook(UserDTO userDTO, String isbn)
+			throws BookNotFoundException_Exception, NotEnoughtExemplaryException, EntityNotFoundException
+	{
+		return rentBookBO.rentBook(userDTO, isbn);
+	}
+
+	/**
+	 * @See {@link ISubscriberService}
+	 */
+	@Override
+	public List<RentBookDTO> getAllRents(UserDTO userDTO)
+			throws EntityNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 //	@Override
 //	public boolean returnBook(BookDTO bookDTO) {
 //		// TODO Auto-generated method stub

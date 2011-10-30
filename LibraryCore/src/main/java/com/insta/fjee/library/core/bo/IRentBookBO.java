@@ -1,10 +1,42 @@
 package com.insta.fjee.library.core.bo;
 
+import java.util.List;
+
+import com.insta.fjee.library.core.dto.RentBookDTO;
+import com.insta.fjee.library.core.dto.UserDTO;
+import com.insta.fjee.library.core.exception.EntityNotFoundException;
+import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
 import com.insta.fjee.library.stock.service.BookDTO;
+import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
 public interface IRentBookBO {
 	
-	public boolean rentBook(BookDTO bookDTO);
-	public boolean returnBook(BookDTO bookDTO);
-
+	/**
+	 * 	Ajoute une nouvelle location
+	 * 
+	 * @param userDTO - utilisateur réalisant la location
+	 * @param isbn - isbn du livre à louer
+	 * @return
+	 * @throws EntityNotFoundException
+	 * @throws NotEnoughtExemplaryException
+	 * @throws BookNotFoundException_Exception
+	 */
+	public RentBookDTO rentBook(UserDTO userDTO, String isbn) throws EntityNotFoundException, NotEnoughtExemplaryException, BookNotFoundException_Exception;
+	
+	/**
+	 * 	Supprime une location
+	 * 
+	 * @param rentBookDTO - location à supprimer
+	 * @throws EntityNotFoundException
+	 */
+	public void deleteRentBook(RentBookDTO rentBookDTO) throws EntityNotFoundException;
+	
+	/**
+	 * 	Retourne toutes les locations d'un utilisateur
+	 * 
+	 * @param userDTO - utilisateur
+	 * @return locations d'un utilisateur
+	 * @throws EntityNotFoundException
+	 */
+	public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException;
 }

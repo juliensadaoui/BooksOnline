@@ -1,5 +1,8 @@
 package com.insta.fjee.library.core.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -7,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.insta.fjee.library.core.dao.IRentBookDAO;
+import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.model.RentBook;
-import com.insta.fjee.library.core.service.IUserService;
 
 /***
  * Data Access Object
@@ -92,4 +95,95 @@ public class RentBookDAO implements IRentBookDAO
 		}
 	}
 
+	/**
+	 *  @See {@link IRentBookDAO}
+	 */
+	@Override
+	public long countRentBooks(String isbn)
+	{
+		Long result = null;
+		Transaction tx = null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("select count(*) from RentBook rent where rent.isbn=? and rent.endDate is null");
+			query.setString(0, isbn);
+			result = (Long) query.uniqueResult();
+			tx.commit();
+			return result.longValue();
+		} 
+		catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
+	}
+	
+	/**
+	 *  @See {@link IRentBookDAO}
+	 */
+	@Override
+	public RentBook find(Integer id) 
+	{
+		RentBook rent = null;
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			rent = (RentBook) session.get(RentBook.class, id);
+			tx.commit();
+		} 
+		catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
+		
+		return rent;		
+	}
+	
+	/**
+	 *  @See {@link IRentBookDAO}
+	 */
+	@Override
+	public RentBook findOrFail(Integer id) throws EntityNotFoundException 
+	{
+		RentBook rent = find(id);
+		if (rent == null) {
+			throw new EntityNotFoundException(RentBook.class, id);
+		}
+		return rent;
+	}
+
+	/**
+	 *  @See {@link IRentBookDAO}
+	 */
+	@Override
+	public List<RentBook> getAllRents(String login) {
+		
+//		Transaction tx= null;
+//		try {
+//			Session session = sessionFactory.getCurrentSession();
+//			tx = session.beginTransaction();
+//		String query = "select rent " +
+//				"from RentBook rent inner join calendar.events event " +
+//				"where calendar.name=:calendar_name and event.name=:event_name";
+//			Query q = session.createQuery(query);
+//			q.setString("user_login", login);
+//
+//			List<RentBook> rentBooks = q.list();
+//
+////		return ((!events.isEmpty()) ? events.get(0) : null);
+//		tx.commit();
+//		} 
+//		catch (RuntimeException e) {
+//			if(tx!=null){
+//				tx.rollback();
+//			}
+//			throw e;
+//		}
+		return null;
+	}
 }
