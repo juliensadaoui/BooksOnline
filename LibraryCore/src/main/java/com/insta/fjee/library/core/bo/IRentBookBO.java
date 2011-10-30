@@ -5,8 +5,8 @@ import java.util.List;
 import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
-import com.insta.fjee.library.stock.service.BookDTO;
 import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
 public interface IRentBookBO {
@@ -21,7 +21,7 @@ public interface IRentBookBO {
 	 * @throws NotEnoughtExemplaryException
 	 * @throws BookNotFoundException_Exception
 	 */
-	public RentBookDTO rentBook(UserDTO userDTO, String isbn) throws EntityNotFoundException, NotEnoughtExemplaryException, BookNotFoundException_Exception;
+	public RentBookDTO rentBook(UserDTO userDTO, String isbn) throws EntityNotFoundException, NotEnoughtExemplaryException, BookNotFoundException_Exception, LoginInvalidException;
 	
 	/**
 	 * 	Supprime une location
@@ -29,7 +29,7 @@ public interface IRentBookBO {
 	 * @param rentBookDTO - location à supprimer
 	 * @throws EntityNotFoundException
 	 */
-	public void deleteRentBook(RentBookDTO rentBookDTO) throws EntityNotFoundException;
+	public void deleteRentBook(RentBookDTO rentBookDTO) throws EntityNotFoundException, LoginInvalidException;
 	
 	/**
 	 * 	Retourne toutes les locations d'un utilisateur
@@ -38,5 +38,5 @@ public interface IRentBookBO {
 	 * @return locations d'un utilisateur
 	 * @throws EntityNotFoundException
 	 */
-	public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException;
+	public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException;
 }

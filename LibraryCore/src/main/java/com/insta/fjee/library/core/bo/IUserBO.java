@@ -3,6 +3,7 @@ package com.insta.fjee.library.core.bo;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 
 /**
  * User business object (BO) interface.
@@ -47,7 +48,7 @@ public interface IUserBO
 	 * @throws EntityNotFoundException
 	 * @throws LoginAlreadyExistException
 	 */
-	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException;
+	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException;
 
 	/**
 	 * 	Delete a user (for admin)
@@ -55,12 +56,12 @@ public interface IUserBO
 	 * @param userDTO - user to delete
 	 * @throws EntityNotFoundException
 	 */
-	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException;
+	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException;
 	
 	/**
 	 * 	Check if a user is admin
 	 * 
 	 * @return true if admin
 	 */
-	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException;
+	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException;
 }

@@ -10,6 +10,7 @@ import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.exception.UserNotAdminException;
 import com.insta.fjee.library.core.service.IAdminService;
 
@@ -37,7 +38,7 @@ public class AdminService implements IAdminService
 	 *  @See {@link IAdminService}
 	 */
 	@Override
-	public void deleteUser(UserDTO userDTO, UserDTO adminDTO) throws UserNotAdminException, EntityNotFoundException
+	public void deleteUser(UserDTO userDTO, UserDTO adminDTO) throws UserNotAdminException, EntityNotFoundException, LoginInvalidException
 	{
 		if (userBO.isAdmin(adminDTO)) {
 			userBO.deleteUser(userDTO);
@@ -52,7 +53,7 @@ public class AdminService implements IAdminService
 	 */
 	@Override
 	public void deleteRentBook(RentBookDTO rentBookDTO, UserDTO adminDTO) 
-		throws UserNotAdminException, EntityNotFoundException
+		throws UserNotAdminException, EntityNotFoundException, LoginInvalidException
 	{
 		if (userBO.isAdmin(adminDTO)) {
 			rentBookBO.deleteRentBook(rentBookDTO);

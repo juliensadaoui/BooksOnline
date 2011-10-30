@@ -9,6 +9,7 @@ import com.insta.fjee.library.core.dao.IUserDAO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.model.User;
 import com.insta.fjee.library.core.util.Conversion;
 
@@ -68,7 +69,7 @@ public class UserBOImpl implements IUserBO
 	 * @See {@link IUserBO}
 	 */
 	@Override
-	public UserDTO createUser(UserDTO userDTO) throws LoginAlreadyExistException 
+	public UserDTO createUser(UserDTO userDTO) throws LoginAlreadyExistException
 	{
 		/*
 		 *	Verifie que le login n'est pas deja utilise par un
@@ -88,7 +89,7 @@ public class UserBOImpl implements IUserBO
 			User user = conv.fromDTO(userDTO);
 			user = userDAO.save(user);
 			return conv.fromEntity(user);
-		} catch (EntityNotFoundException e) {
+		} catch (Exception e) {
 			/*
 			 * 	Cas particulier 
 			 * 
@@ -106,20 +107,13 @@ public class UserBOImpl implements IUserBO
 	 * @See {@link IUserBO}
 	 */
 	@Override
-	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException 
+	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException 
 	{
 		// fix lorsque l'identifiant est inferieur à 1
 		if (userDTO.getID() < 1) {
 			throw new EntityNotFoundException(User.class, userDTO.getID());
 		}
 		User user = conv.fromDTO(userDTO);
-		/*
-		 *	On verifie que le login n'a pas ete modifier par l'utilisateur 
-		 */
-		if (! user.getLogin().equals(userDTO.getLogin()))
-		{
-			throw new LoginAlreadyExistException(userDTO.getLogin());
-		}
 		
 		/*
 		 *	Mise à jour de l'utilisateur 
@@ -132,7 +126,7 @@ public class UserBOImpl implements IUserBO
 	 * @See {@link IUserBO}
 	 */
 	@Override
-	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException
+	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException
 	{
 		// fix lorsque l'identifiant est inferieur à 1
 		if (userDTO.getID() < 1) {
@@ -146,7 +140,7 @@ public class UserBOImpl implements IUserBO
 	 * @See {@link IUserBO}
 	 */
 	@Override
-	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException
+	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException
 	{
 		// fix lorsque l'identifiant est inferieur à 1
 		if (userDTO.getID() < 1) {

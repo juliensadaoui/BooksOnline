@@ -1,5 +1,8 @@
 package com.insta.fjee.library.core.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +11,7 @@ import com.insta.fjee.library.core.dao.impl.UserDAO;
 import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.model.RentBook;
 import com.insta.fjee.library.core.model.User;
 
@@ -56,14 +60,22 @@ public class Conversion
 	 * @param userDTO - objet DTO
 	 * @return
 	 * @throws EntityNotFoundException
+	 * @throws LoginInvalidException 
 	 */
-	public User fromDTO(UserDTO userDTO) throws EntityNotFoundException
+	public User fromDTO(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException
 	{
 		User user = new User();
 		Integer id = userDTO.getID();
 		if (id>0) 
 		{
 			user = userDAO.findOrFail(id);
+			/*
+			 *	On verifie que le login n'a pas ete modifier par l'utilisateur 
+			 */
+			if (! user.getLogin().equals(userDTO.getLogin()))
+			{
+				throw new LoginInvalidException(userDTO.getLogin());
+			}
 		}
 		else 
 		{
@@ -126,6 +138,15 @@ public class Conversion
 		}
 		result.setEndDate(rentBookDTO.getEndDate());
 		
+		return result;
+	}
+	
+	public List<RentBookDTO> fromEntity(List<RentBook> rentBooks)
+	{
+		List<RentBookDTO> result = new ArrayList<RentBookDTO>();
+		for (RentBook rent : rentBooks) {
+			result.add(fromEntity(rent));
+		}
 		return result;
 	}
 }

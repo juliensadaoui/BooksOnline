@@ -161,29 +161,24 @@ public class RentBookDAO implements IRentBookDAO
 	 *  @See {@link IRentBookDAO}
 	 */
 	@Override
-	public List<RentBook> getAllRents(String login) {
-		
-//		Transaction tx= null;
-//		try {
-//			Session session = sessionFactory.getCurrentSession();
-//			tx = session.beginTransaction();
-//		String query = "select rent " +
-//				"from RentBook rent inner join calendar.events event " +
-//				"where calendar.name=:calendar_name and event.name=:event_name";
-//			Query q = session.createQuery(query);
-//			q.setString("user_login", login);
-//
-//			List<RentBook> rentBooks = q.list();
-//
-////		return ((!events.isEmpty()) ? events.get(0) : null);
-//		tx.commit();
-//		} 
-//		catch (RuntimeException e) {
-//			if(tx!=null){
-//				tx.rollback();
-//			}
-//			throw e;
-//		}
-		return null;
+	public List<RentBook> getAllRents(String login)
+	{
+		List<RentBook> rentBooks = null;
+		Transaction tx= null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			Query q = session.createQuery("from RentBook rent where rent.user.login=:user_login");
+			q.setString("user_login", login);
+			rentBooks = q.list();
+			tx.commit();
+		} 
+		catch (RuntimeException e) {
+			if(tx!=null){
+				tx.rollback();
+			}
+			throw e;
+		}
+		return rentBooks;
 	}
 }

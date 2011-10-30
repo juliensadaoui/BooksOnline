@@ -8,6 +8,7 @@ import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
 import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
 import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
@@ -38,7 +39,7 @@ public interface ISubscriberService
 	 * @throws EntityNotFoundException
 	 * @throws LoginAlreadyExistException
 	 */
-	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException;
+	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException, LoginInvalidException;
 	
 	/**
 	 * 	Ajoute d'une nouvelle location d'un livre
@@ -51,7 +52,7 @@ public interface ISubscriberService
 	 * @throws EntityNotFoundException
 	 */
 	public RentBookDTO rentBook(UserDTO userDTO, String isbn)
-		throws BookNotFoundException_Exception, NotEnoughtExemplaryException, EntityNotFoundException;
+		throws BookNotFoundException_Exception, NotEnoughtExemplaryException, EntityNotFoundException, LoginInvalidException;
 
 	/**
 	 * 	Retourne toutes les locations d'un utilisateur
@@ -60,7 +61,7 @@ public interface ISubscriberService
 	 * @return
 	 * @throws EntityNotFoundException
 	 */
-    public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException;
+    public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException;
 	//	public boolean rentBook(BookDTO bookDTO);
 //	public boolean returnBook(BookDTO bookDTO);
 }

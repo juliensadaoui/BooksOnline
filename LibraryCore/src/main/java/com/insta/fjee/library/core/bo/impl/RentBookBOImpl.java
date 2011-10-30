@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.insta.fjee.library.core.bo.IRentBookBO;
-import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dao.IRentBookDAO;
 import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
+import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
 import com.insta.fjee.library.core.model.RentBook;
 import com.insta.fjee.library.core.model.User;
@@ -38,7 +38,7 @@ public class RentBookBOImpl implements IRentBookBO {
 	 */
 	@Override
 	public RentBookDTO rentBook(UserDTO userDTO, String isbn)
-		throws EntityNotFoundException, NotEnoughtExemplaryException, BookNotFoundException_Exception 
+		throws EntityNotFoundException, NotEnoughtExemplaryException, BookNotFoundException_Exception, LoginInvalidException
 	{
 		// recupere le nombre total d'exemplaires d'un livre
 		ExemplaryDTO exemplaryDTO = libraryBeanService.getLibraryBeanPort().getExemplary(isbn);
@@ -65,7 +65,7 @@ public class RentBookBOImpl implements IRentBookBO {
 	 * @See {@link IRentBookBO}
 	 */
 	@Override
-	public void deleteRentBook(RentBookDTO rentBookDTO) throws EntityNotFoundException
+	public void deleteRentBook(RentBookDTO rentBookDTO) throws EntityNotFoundException, LoginInvalidException
 	{
 		// fix lorsque l'identifiant est inferieur à 1
 		if (rentBookDTO.getID() < 1) {
@@ -76,13 +76,14 @@ public class RentBookBOImpl implements IRentBookBO {
 	}
 
 	/**
+	 * @throws LoginInvalidException 
 	 * @See {@link IRentBookBO}
 	 */
 	@Override
-	public List<RentBookDTO> getAllRents(UserDTO userDTO)
-			throws EntityNotFoundException {
+	public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException 
+	{
 		User user = conv.fromDTO(userDTO);
-		
-		return null;
+		List<RentBook> rentBooks = rentBookDAO.getAllRents(user.getLogin());
+		return conv.fromEntity(rentBooks);	
 	}
 }
