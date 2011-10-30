@@ -251,6 +251,28 @@ public class UserServiceTest
 		}
     }
     
+    /**
+     * 	Test la méthode permettant d'ajouter un nouveau utilisateur
+     * 		Version avec echec: login non renseigné
+     */
+    @Test
+    public void createUserTestFail2()
+    {
+		/*
+		 * 	Ajout d'un utilisateur
+		 */
+    	try {
+    		UserDTO userDTO = new UserDTO();
+	    	userDTO.setLogin("");
+	    	userDTO.setFirstName("echec1");
+	    	userDTO.setLastName("echec2");
+	    	userDTO = userService.createUser(userDTO);
+	    	fail("Attention Login non renseigné");
+		} catch (LoginAlreadyExistException e) {
+			assertTrue(true);
+		}
+    }
+    
 	/**
 	 * 	Test la méthode du services web permettant de récuperer une
 	 * 		liste de livres à partir du genre du livre.

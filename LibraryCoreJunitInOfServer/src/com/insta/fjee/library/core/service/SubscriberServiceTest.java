@@ -31,6 +31,12 @@ import com.insta.fjee.library.stock.service.ExemplaryDTO;
 import com.insta.fjee.library.stock.service.LibraryBean;
 import com.insta.fjee.library.stock.service.LibraryBeanService;
 
+/**
+ * 	Test les méthodes du services web des abonnés
+ * 
+ * @author julien
+ *
+ */
 public class SubscriberServiceTest 
 {
 	// service web de l'application de stock de la librairie
@@ -100,7 +106,8 @@ public class SubscriberServiceTest
 				"ZOL570EMI","Le tour du monde en 80 jours","ROMAN",
 				"ZOL571EMI","Les misérables","ROMAN",
 				"ZOL572EMI","Voyage au centre de la terre","ROMAN",
-				"ZOL573EMI","Le dernier jour d'un condanne","ROMAN"
+				"ZOL573EMI","Le dernier jour d'un condanne","ROMAN",
+				"ZOL574EMI","Les fleurs du mal","ROMAN"
 			};
 
 		/*
@@ -134,6 +141,8 @@ public class SubscriberServiceTest
 				"jsadaoui", "password", "julien", "sadaoui", null,
 				"pmallet", "s3cr3t", "paul", "mallet", null,
 				"shor", "s3cr3t", "steven", "hor", null,
+				"kwilson", "s3cr3t", "kevin", "wilson", null,
+				"mmarchois", "s3cr3t", "mattieu", "marchois", null
 			};
 		
 		for (int i = 0 ; i < usersList.length ; i=i+5)
@@ -597,5 +606,30 @@ public class SubscriberServiceTest
     	{
     		fail(e.getMessage());
     	}
+    }
+    
+    /**
+     * 	Test la méthode permettant de rendre un livre
+     */
+    @Test
+    public void returnBookTestSuccess()
+    {	
+    	try {
+    		// loue deux exemplaires du livre -> plus d'exemplaires disponible
+	    	rentBooks.add(subscriberService.rentBook(users.get(4), "ZOL574EMI")); // kwsilon
+	    	rentBooks.add(subscriberService.rentBook(users.get(5), "ZOL574EMI")); // mmarchois
+	    	
+	    	// on rend un exemplaire du livre
+	    	List<RentBookDTO> rentBookDTOList = subscriberService.getAllRents(users.get(4));
+	    	assertEquals(rentBookDTOList.size(), 1);
+	    	RentBookDTO rentBookDTO = subscriberService.returnBook(rentBookDTOList.get(0));
+	    	assertNotNull(rentBookDTO.getEndDate());
+	    	
+	    	// on loue le livre pour verifier que l'exemplaire est bien rendu
+	    	rentBooks.add(subscriberService.rentBook(users.get(3), "ZOL574EMI")); // mmarchois
+    	}
+    	catch (Exception e) {
+			fail(e.getMessage());
+		}
     }
 }
