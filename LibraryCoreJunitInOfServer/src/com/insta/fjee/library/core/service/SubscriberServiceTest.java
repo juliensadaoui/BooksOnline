@@ -8,15 +8,19 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.insta.fjee.library.core.service.ws.AdminServiceService;
+import com.insta.fjee.library.core.service.ws.BookNotFoundExceptionException;
 import com.insta.fjee.library.core.service.ws.EntityNotFoundException;
-import com.insta.fjee.library.core.service.ws.LoginAlreadyExistException;
+import com.insta.fjee.library.core.service.ws.LoginInvalidException;
+import com.insta.fjee.library.core.service.ws.NotEnoughtExemplaryException;
 import com.insta.fjee.library.core.service.ws.SubscriberServiceService;
 import com.insta.fjee.library.core.service.ws.UserServiceService;
 import com.insta.fjee.library.stock.service.AuthorDTO;
@@ -94,7 +98,9 @@ public class SubscriberServiceTest
 			{
 				"ZOL569EMI","Le rouge et le noir","ROMAN",
 				"ZOL570EMI","Le tour du monde en 80 jours","ROMAN",
-				"ZOL571EMI","Les misérables","ROMAN"
+				"ZOL571EMI","Les misérables","ROMAN",
+				"ZOL572EMI","Voyage au centre de la terre","ROMAN",
+				"ZOL573EMI","Le dernier jour d'un condanne","ROMAN"
 			};
 
 		/*
@@ -115,7 +121,7 @@ public class SubscriberServiceTest
 				bookDTO.setAuthorId(authors.get(1).getId());
 			}
 			try {
-				books.add(serviceBean.addBook(bookDTO, 4));
+				books.add(serviceBean.addBook(bookDTO, 2));
 			} catch (EntityNotFoundException_Exception e) {
 				fail(e.getMessage());
 			}
@@ -127,6 +133,7 @@ public class SubscriberServiceTest
 				"fcardenas","password","francois","cardenas", null,
 				"jsadaoui", "password", "julien", "sadaoui", null,
 				"pmallet", "s3cr3t", "paul", "mallet", null,
+				"shor", "s3cr3t", "steven", "hor", null,
 			};
 		
 		for (int i = 0 ; i < usersList.length ; i=i+5)
@@ -357,7 +364,7 @@ public class SubscriberServiceTest
 	    	fail("identifiant non correct !");
 		} catch (EntityNotFoundException e) {
 			assertTrue(true);
-		} catch (LoginAlreadyExistException e) {
+		} catch (Exception e) {
 			fail(e.getMessage());
 		}
     }
@@ -381,16 +388,21 @@ public class SubscriberServiceTest
     	try {
 	    	userDTO = subscriberService.updateUser(userDTO);
 	    	fail("login non correct !");
-		} catch (EntityNotFoundException e) {
-			fail(e.getMessage());
-		} catch (LoginAlreadyExistException e) {
+		} catch (LoginInvalidException e) {
 			assertTrue(true);
+		} catch (Exception e) {
+			fail(e.getMessage());
 		}
     }
     
+    /**
+     * 	Test la méthode du services web permettant d'ajouter une location
+     * 	Version sans echec
+     */
     @Test
-    public void rentBookSuccess()
+    public void rentBookTestSuccess()
     {
+    	RentBookDTO rentBookDTO = null;
     	try {
     		// recupere le book
 			BookDTO bookDTO = serviceBean.findBookByISBN("ZOL569EMI");
@@ -406,13 +418,184 @@ public class SubscriberServiceTest
 	    	assertEquals(userDTO.getFirstName(),"paul");
 	    	assertEquals(userDTO.getLastName(),"mallet");
 			
-			
-			RentBookDTO rentBookDTO = subscriberService.rentBook(userDTO, bookDTO.getIsbn());
+	    	// ajout de la location
+			rentBookDTO = subscriberService.rentBook(userDTO, bookDTO.getIsbn());
+			assertNotNull(rentBookDTO);
 			rentBooks.add(rentBookDTO);
 			
 		} catch (Exception e) {
 			fail(e.getMessage());
 		} 
-    	
+    	// verification de l'ajout de la location
+    	assertTrue(rentBookDTO.getID()>0);
+    	assertEquals(rentBookDTO.getIsbn(), "ZOL569EMI");
+    	assertEquals(rentBookDTO.getLogin(), "pmallet");
+    	assertNotNull(rentBookDTO.getStartDate());
+    	assertNull(rentBookDTO.getEndDate());
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant d'ajouter une location
+     * 	Version avec echec: isbn non valide -> le livre n'existe pas dans le stock
+     */
+    @Test
+    public void rentBookTestFail1()
+    {
+    	try {
+			// recupere l'utilisateur
+			UserDTO userDTO = users.get(2);
+			
+	    	// ajout de la location
+			subscriberService.rentBook(userDTO, "ZOL56LDLMI");
+			fail("Attention!! Ajout d'une location avec un mauvais isbn");
+			
+    	} catch (BookNotFoundExceptionException e) {
+    		assertTrue(true);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		} 
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant d'ajouter une location
+     * 	Version avec echec: identifiant de l'utilisateur incorrecte
+     */
+    @Test
+    public void rentBookTestFail2()
+    {
+    	try {
+			// recupere l'utilisateur
+			UserDTO userDTO = new UserDTO();
+			userDTO.setID(44544);
+			userDTO.setLogin("pmallet");
+			userDTO.setPassword("ppas");
+			userDTO.setFirstName("paul");
+			userDTO.setLastName("mallet");
+			
+	    	// ajout de la location
+			subscriberService.rentBook(userDTO, "ZOL569EMI");
+			fail("Attention!! Ajout d'une location avec un mauvais identifiant de l'utilisateur");
+			
+    	} catch (EntityNotFoundException e) {
+    		assertTrue(true);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		} 
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant d'ajouter une location
+     * 	Version avec echec: mauvais login
+     */
+    @Test
+    public void rentBookTestFail3()
+    {
+    	try {
+			// recupere l'utilisateur
+			UserDTO userDTO = new UserDTO();
+			userDTO.setID(users.get(0).getID());
+			userDTO.setLogin("mauvaislogin");
+			
+	    	// ajout de la location
+			subscriberService.rentBook(userDTO, "ZOL569EMI");
+			fail("Attention!! Ajout d'une location avec un mauvais identifiant de l'utilisateur");
+			
+    	} catch (LoginInvalidException e) {
+    		assertTrue(true);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		} 
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant d'ajouter une location
+     * 	Version avec echec: exemplaire non disponible
+     */
+    @Test
+    public void rentBookTestFail4()
+    {
+    	// on verifie les preconditions du test
+    	BookDTO bookDTO = books.get(1);
+    	assertEquals(bookDTO.getIsbn(), "ZOL570EMI");
+    	assertEquals(serviceBean.getExemplaryNumber("ZOL570EMI"),2);
+    	assertTrue(users.size()>2);
+		
+    	try {   	
+	    	for (UserDTO userDTO : users)
+	    	{
+				RentBookDTO rentBookDTO = subscriberService.rentBook(userDTO, "ZOL570EMI");
+				rentBooks.add(rentBookDTO);
+	    	}
+	    	fail("Attention!! Location avec des exemplaires non disponible");
+    	}
+    	catch (NotEnoughtExemplaryException e) {
+			assertTrue(true);
+		}
+		catch (Exception e) {
+			fail(e.getMessage());
+		}
+    }
+    
+    /**
+     * 	Test la méthode permettant de retourne les locations
+     * 		d'un utilisateur
+     */
+    @Test
+    public void getAllRentsTest()
+    {
+    	assertTrue(users.size()>2);
+    	UserDTO userDTO = users.get(3);
+    	assertEquals(userDTO.getLogin(),"shor");
+
+		Set<String> isbnBooks = new HashSet<String>();
+		isbnBooks.add("ZOL571EMI");
+		isbnBooks.add("ZOL572EMI");
+		isbnBooks.add("ZOL573EMI");
+    	try {
+    		
+	    	for (String isbn : isbnBooks)
+	    	{
+				RentBookDTO rentBookDTO = subscriberService.rentBook(userDTO, isbn);
+				rentBooks.add(rentBookDTO);
+	    	}
+	    	
+	    	List<RentBookDTO> results = subscriberService.getAllRents(userDTO);
+	    	for (RentBookDTO rentBookDTO : results)
+	    	{
+	    		assertTrue(isbnBooks.contains(rentBookDTO.getIsbn()));
+	    		assertEquals(rentBookDTO.getLogin(),userDTO.getLogin());
+	    	}
+    	} 
+    	catch (Exception e)
+    	{
+    		fail(e.getMessage());
+    	}
+    }
+    
+    /**
+     * 	Test la méthode permettant de retourne les locations
+     * 		d'un utilisateur
+     * 	Version avec echec: mauvais correspondant identifiant/login
+     */
+    @Test
+    public void getAllRentsTestFail()
+    {
+    	assertTrue(users.size()>2);
+    	UserDTO userDTO = new UserDTO();
+    	userDTO.setID(users.get(3).getID());
+    	userDTO.setLogin("jpmaldudi");
+
+    	try {
+    		subscriberService.getAllRents(userDTO);
+    		fail("Attention!! correspondance login/identifiant incorrect pour GetAllRents");
+    	} 
+    	catch (LoginInvalidException e) 
+    	{
+    		assertTrue(true);
+    	}
+    	catch (Exception e)
+    	{
+    		fail(e.getMessage());
+    	}
     }
 }
