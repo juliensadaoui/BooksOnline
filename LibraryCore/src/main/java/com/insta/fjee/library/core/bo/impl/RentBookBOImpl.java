@@ -76,7 +76,6 @@ public class RentBookBOImpl implements IRentBookBO {
 	}
 
 	/**
-	 * @throws LoginInvalidException 
 	 * @See {@link IRentBookBO}
 	 */
 	@Override
@@ -85,5 +84,17 @@ public class RentBookBOImpl implements IRentBookBO {
 		User user = conv.fromDTO(userDTO);
 		List<RentBook> rentBooks = rentBookDAO.getAllRents(user.getLogin());
 		return conv.fromEntity(rentBooks);	
+	}
+
+	@Override
+	public RentBookDTO returnBook(RentBookDTO rentBookDTO) throws EntityNotFoundException
+	{
+		RentBook rentBook = conv.fromDTO(rentBookDTO);
+		// si le livre à deja était rendu, on ne prend pas en compte la demande
+		if (rentBook.getEndDate() == null) {
+			rentBook.setEndDate(new Date());
+			rentBookDAO.update(rentBook);
+		}
+		return conv.fromEntity(rentBook);
 	}
 }

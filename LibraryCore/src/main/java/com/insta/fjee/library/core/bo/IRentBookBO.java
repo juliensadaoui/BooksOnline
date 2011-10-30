@@ -24,6 +24,14 @@ public interface IRentBookBO {
 	public RentBookDTO rentBook(UserDTO userDTO, String isbn) throws EntityNotFoundException, NotEnoughtExemplaryException, BookNotFoundException_Exception, LoginInvalidException;
 	
 	/**
+	 * 	Rend un livre loué
+	 * 
+	 * @param rentBookDTO - location 
+	 * @throws EntityNotFoundException
+	 */
+	public RentBookDTO returnBook(RentBookDTO rentBookDTO) throws EntityNotFoundException;
+	
+	/**
 	 * 	Supprime une location
 	 * 
 	 * @param rentBookDTO - location à supprimer

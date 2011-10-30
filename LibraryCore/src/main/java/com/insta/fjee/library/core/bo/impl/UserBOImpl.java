@@ -72,10 +72,18 @@ public class UserBOImpl implements IUserBO
 	public UserDTO createUser(UserDTO userDTO) throws LoginAlreadyExistException
 	{
 		/*
+		 *	Verification de la validité du login
+		 */
+		String login = userDTO.getLogin();
+		login = (login == null) ? "" : login;
+		if (login.isEmpty()) {
+			throw new LoginAlreadyExistException("<empty>");
+		}
+		
+		/*
 		 *	Verifie que le login n'est pas deja utilise par un
 		 *		autre utilisateur de la librairie 
 		 */
-		String login = userDTO.getLogin();
 		if (userDAO.findByLogin(login) != null) 
 		{
 			throw new LoginAlreadyExistException(login);

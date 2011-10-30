@@ -11,12 +11,18 @@ import com.insta.fjee.library.core.bo.IUserBO;
 import com.insta.fjee.library.core.dto.RentBookDTO;
 import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.EntityNotFoundException;
-import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
 import com.insta.fjee.library.core.exception.LoginInvalidException;
 import com.insta.fjee.library.core.exception.NotEnoughtExemplaryException;
 import com.insta.fjee.library.core.service.ISubscriberService;
 import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
+/**
+ * 	Implémentation du service web des abonnés
+ * 		
+ * 
+ * @author julien
+ *
+ */
 @WebService
 public class SubscriberService implements ISubscriberService
 {
@@ -63,11 +69,12 @@ public class SubscriberService implements ISubscriberService
 		return rentBookBO.getAllRents(userDTO);
 	}
 
-
-//	@Override
-//	public boolean returnBook(BookDTO bookDTO) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-
+	/**
+	 * @See {@link ISubscriberService}
+	 */
+	@Override
+	public RentBookDTO returnBook(RentBookDTO rentBookDTO)
+			throws EntityNotFoundException {
+		return rentBookBO.returnBook(rentBookDTO);
+	}
 }

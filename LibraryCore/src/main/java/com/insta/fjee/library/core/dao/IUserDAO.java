@@ -36,6 +36,13 @@ public interface IUserDAO
 	 * @return user of the database, null if not exists
 	 */
 	User find(Integer id);
+	
+	/**
+	 * 	Read a user
+	 * 
+	 * @param login - login of the user
+	 * @return user of the database, null if not exists
+	 */
 	User findByLogin(String login);
 	
 	/**

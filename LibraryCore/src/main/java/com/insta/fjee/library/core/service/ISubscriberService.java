@@ -62,6 +62,13 @@ public interface ISubscriberService
 	 * @throws EntityNotFoundException
 	 */
     public List<RentBookDTO> getAllRents(UserDTO userDTO) throws EntityNotFoundException, LoginInvalidException;
-	//	public boolean rentBook(BookDTO bookDTO);
-//	public boolean returnBook(BookDTO bookDTO);
+
+	/**
+	 * 	Rend un livre loué
+	 * 
+	 * @param rentBookDTO - location 
+	 * @throws EntityNotFoundException
+	 */
+	public RentBookDTO returnBook(RentBookDTO rentBookDTO) throws EntityNotFoundException;
+
 }

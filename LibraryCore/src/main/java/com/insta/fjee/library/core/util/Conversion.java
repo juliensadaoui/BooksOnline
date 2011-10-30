@@ -136,7 +136,6 @@ public class Conversion
 			result.setStartDate(rentBookDTO.getStartDate());
 			result.setUser(userDAO.findByLogin(rentBookDTO.getLogin()));
 		}
-		result.setEndDate(rentBookDTO.getEndDate());
 		
 		return result;
 	}
