@@ -17,6 +17,8 @@ public class UserDTO
 	private String firstName;
 	
 	private String lastName;
+	
+	private boolean admin;
 
 	/**
 	 * 	Return the identifier of the user
@@ -106,6 +108,24 @@ public class UserDTO
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	/**
+	 * 	Check if the user is admin
+	 * 
+	 * @return true if admin
+	 */
+	public boolean isAdmin() 
+	{
+		return admin;
+	}
+
+	/**
+	 * 
+	 * @param admin
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	@Override

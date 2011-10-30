@@ -19,7 +19,16 @@ public interface IUserBO
 	 * @param password - password of the user
 	 * @return
 	 */
-	public UserDTO authenticate(String login, String password);
+	public UserDTO authentificate(String login, String password);
+	
+	/**
+	 * 	Authentificate a admin
+	 * 
+	 * @param login - login of the admin
+	 * @param password - password of the admin
+	 * @return
+	 */
+	public UserDTO authentificateAdmin(String login, String password);
 	
 	/**
 	 * 	Create a new user
@@ -39,4 +48,19 @@ public interface IUserBO
 	 * @throws LoginAlreadyExistException
 	 */
 	public UserDTO updateUser(UserDTO userDTO) throws EntityNotFoundException, LoginAlreadyExistException;
+
+	/**
+	 * 	Delete a user (for admin)
+	 * 
+	 * @param userDTO - user to delete
+	 * @throws EntityNotFoundException
+	 */
+	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException;
+	
+	/**
+	 * 	Check if a user is admin
+	 * 
+	 * @return true if admin
+	 */
+	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException;
 }

@@ -39,10 +39,12 @@
     <!-- déclarer le bean de service web avec le schéma jaxws fourni par CXF  -->
     <bean id="user" class="com.insta.fjee.library.core.service.ws.UserService" />
     <bean id="subscriber" class="com.insta.fjee.library.core.service.ws.SubscriberService" />
+	<bean id="admin" class="com.insta.fjee.library.core.service.ws.AdminService" />
      
     <!-- JAX-WS Service Endpoint -->    
     <!-- déclarer les dépendances du bean de service web  -->
-    <jaxws:endpoint id="userService" implementor="#user" address="/userService" />
-    <jaxws:endpoint id="subscriberService" implementor="#subscriber" address="/subscriberService" />
+    <jaxws:endpoint id="userService" implementor="#user" name="UserService" address="/userService" />
+    <jaxws:endpoint id="subscriberService" implementor="#subscriber" name="SubscriberService" address="/subscriberService" />
+    <jaxws:endpoint id="adminService" implementor="#admin" name="AdminService" address="/adminService" />
        
 </beans>

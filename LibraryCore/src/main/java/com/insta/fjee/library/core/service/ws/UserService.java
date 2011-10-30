@@ -1,8 +1,6 @@
 package com.insta.fjee.library.core.service.ws;
 
 import java.util.List;
-
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;

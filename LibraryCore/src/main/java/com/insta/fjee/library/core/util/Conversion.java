@@ -34,6 +34,7 @@ public class Conversion
 		userDTO.setPassword(user.getPassword());
 		userDTO.setFirstName(user.getFirstName());
 		userDTO.setLastName(user.getLastName());
+		userDTO.setAdmin(user.isAdmin());
 		return userDTO;
 	}
 	
@@ -67,6 +68,7 @@ public class Conversion
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
 		user.setPassword(userDTO.getPassword());
+		user.setAdmin(userDTO.isAdmin());
 		return user;
 
 	}

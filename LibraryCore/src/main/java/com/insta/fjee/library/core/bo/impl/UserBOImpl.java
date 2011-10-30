@@ -45,10 +45,23 @@ public class UserBOImpl implements IUserBO
 	 * @See {@link IUserBO}
 	 */
 	@Override
-	public UserDTO authenticate(String login, String password) 
+	public UserDTO authentificate(String login, String password) 
 	{
 		User user = userDAO.findByLoginAndPassword(login, password);
-		return conv.fromEntity(user);
+		return (user != null) ? conv.fromEntity(user) : null;
+	}
+	
+	/**
+	 * @See {@link IUserBO}
+	 */
+	@Override
+	public UserDTO authentificateAdmin(String login, String password) 
+	{
+		User user = userDAO.findByLoginAndPassword(login, password);
+		if ((user != null) && (user.isAdmin())) {
+			return conv.fromEntity(user);
+		}
+		return null;
 	}
 
 	/**
@@ -109,5 +122,28 @@ public class UserBOImpl implements IUserBO
 		 */
 		user = userDAO.update(user);
 		return conv.fromEntity(user);
+	}
+	
+	/**
+	 * @See {@link IUserBO}
+	 */
+	@Override
+	public void deleteUser(UserDTO userDTO) throws EntityNotFoundException
+	{
+		User user = conv.fromDTO(userDTO);
+		userDAO.delete(user);
+	}
+	
+	/**
+	 * @See {@link IUserBO}
+	 */
+	@Override
+	public boolean isAdmin(UserDTO userDTO) throws EntityNotFoundException
+	{
+		User user = conv.fromDTO(userDTO);
+		if (user.isAdmin()) {
+			return true;
+		}		
+		return false;
 	}
 }
