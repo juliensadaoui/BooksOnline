@@ -1,6 +1,10 @@
 package com.insta.fjee.library.core.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -12,8 +16,8 @@ import org.junit.Test;
 
 import com.insta.fjee.library.core.service.ws.AdminServiceService;
 import com.insta.fjee.library.core.service.ws.EntityNotFoundException;
+import com.insta.fjee.library.core.service.ws.LoginAlreadyExistException;
 import com.insta.fjee.library.core.service.ws.SubscriberServiceService;
-import com.insta.fjee.library.core.service.ws.UserNotAdminException;
 import com.insta.fjee.library.core.service.ws.UserServiceService;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
@@ -47,6 +51,9 @@ public class SubscriberServiceTest
 	private static List<UserDTO> users;
 	private static UserDTO admin;
 
+	// jeu de locations pour les tests unitaires
+	private static List<RentBookDTO> rentBooks;
+	
 	@BeforeClass
 	public static void setUp() throws Exception
 	{
@@ -66,6 +73,7 @@ public class SubscriberServiceTest
     	authors = new ArrayList<AuthorDTO>();
     	books = new ArrayList<BookDTO>();
     	users = new ArrayList<UserDTO>();
+    	rentBooks = new ArrayList<RentBookDTO>();
     	
     	String [] authorsList = { "Gustave", "Flaubert",
 				  "Victor", "Hugo"};
@@ -117,7 +125,8 @@ public class SubscriberServiceTest
 			{	
 				"ydudicourt","pass","yann","dudicourt","true",
 				"fcardenas","password","francois","cardenas", null,
-				"jsadaoui", "password", "julien", "sadaoui", null
+				"jsadaoui", "password", "julien", "sadaoui", null,
+				"pmallet", "s3cr3t", "paul", "mallet", null,
 			};
 		
 		for (int i = 0 ; i < usersList.length ; i=i+5)
@@ -128,7 +137,7 @@ public class SubscriberServiceTest
 		    	userDTO.setPassword(usersList[i+1]);
 		    	userDTO.setFirstName(usersList[i+2]);
 		    	userDTO.setLastName(usersList[i+3]);
-		    	if (usersList[i+1] == null) {
+		    	if (usersList[i+4] == null) {
 		    		userDTO.setAdmin(false);
 		    	}
 		    	else {
@@ -184,6 +193,17 @@ public class SubscriberServiceTest
 			}
 		}
 		
+		// supprime les locations ajoutés dans la base
+		for (RentBookDTO rentBookDTO : rentBooks)
+		{
+			try {
+				adminService.deleteRentBook(rentBookDTO, admin);
+			} 
+			catch (Exception e) {
+				fail(e.getMessage());
+			}
+		}
+		
 		// supprime les utilisateurs ajoutés dans la base pour les tests
 		for (UserDTO userDTO : users)
 		{
@@ -203,21 +223,196 @@ public class SubscriberServiceTest
 		}
     }
     
+    /**
+     * 	Test ma méthode du services web permettant à un
+     * 		utilisateur de s'authentifier
+     * 	Version sans échec
+     */
     @Test
-    public void updateUserTest()
+    public void authentificateTestSuccess()
     {
+    	UserDTO userDTO = subscriberService.authentificate("ydudicourt", "pass");
+    	assertNotNull(userDTO);
+    	assertEquals(userDTO.getLogin(),"ydudicourt");
+    	assertEquals(userDTO.getPassword(),"pass");
+    	assertEquals(userDTO.getFirstName(),"yann");
+    	assertEquals(userDTO.getLastName(),"dudicourt");
+    	assertTrue(userDTO.isAdmin());
+    }
+    
+    /**
+     * 	Test ma méthode du services web permettant à un
+     * 		utilisateur de s'authentifier
+     * 	Version avec échec (login incorrecte)
+     */
+    @Test
+    public void authentificateTestFail1()
+    {
+    	UserDTO userDTO = subscriberService.authentificate("ydudi", "pass");
+    	assertNull(userDTO);
+    }
+    
+    /**
+     * 	Test ma méthode du services web permettant à un
+     * 		utilisateur de s'authentifier
+     * 	Version avec échec (password incorrecte)
+     */
+    @Test
+    public void authentificateTestFail2()
+    {
+    	UserDTO userDTO = subscriberService.authentificate("ydudicourt", "password");
+    	assertNull(userDTO);
+    }
+    
+    
+    /**
+     * 	Test la méthode du services web permettant de mettre à jour
+     * 		les données d'un utilisateur
+     * 	Version sans echec: modif firstname, lastname and password
+     */
+    @Test
+    public void updateUserTestSuccess1()
+    {
+    	// verifie que le jeu de tests est correcte
+    	UserDTO userDTO = users.get(1);
+    	assertNotNull(userDTO);
+    	assertEquals(userDTO.getLogin(),"jsadaoui");
+    	assertEquals(userDTO.getPassword(),"password");
+    	assertEquals(userDTO.getFirstName(),"julien");
+    	assertEquals(userDTO.getLastName(),"sadaoui");
+    	assertFalse(userDTO.isAdmin());
+    	
     	try {
-    		UserDTO userDTO = new UserDTO();
-	    	userDTO.setLogin("ydudicourt");
-	    	userDTO.setFirstName("yann");
-	    	userDTO.setLastName("dudicourt");
-	    	userDTO.setPassword("pass");
-	    	userDTO = subscriberService.authentificate("ydudicourt", "pass");
+	    	userDTO.setFirstName("malik");
+	    	userDTO.setLastName("sadaoui1");
+	    	userDTO.setPassword("pass2");
+	    	userDTO = subscriberService.updateUser(userDTO);
 	    	assertNotNull(userDTO);
-			subscriberService.updateUser(userDTO);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			fail(e.getMessage());
 		}
+    	
+    	userDTO = subscriberService.authentificate("jsadaoui", "pass2");
+    	assertNotNull(userDTO);
+    	assertEquals(userDTO.getLogin(),"jsadaoui");
+    	assertEquals(userDTO.getPassword(),"pass2");
+    	assertEquals(userDTO.getFirstName(),"malik");
+    	assertEquals(userDTO.getLastName(),"sadaoui1");
+    	assertFalse(userDTO.isAdmin());
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant de mettre à jour
+     * 		les données d'un utilisateur
+     * 	Version sans echec: modif admin
+     */
+    @Test
+    public void updateUserTestSuccess2()
+    {
+    	// verifie que le jeu de tests est correcte
+    	UserDTO userDTO = users.get(0);
+    	assertNotNull(userDTO);
+    	assertEquals(userDTO.getLogin(),"fcardenas");
+    	assertEquals(userDTO.getPassword(),"password");
+    	assertEquals(userDTO.getFirstName(),"francois");
+    	assertEquals(userDTO.getLastName(),"cardenas");
+    	assertFalse(userDTO.isAdmin());
+    	
+    	try {
+    		userDTO.setAdmin(true);
+	    	userDTO = subscriberService.updateUser(userDTO);
+	    	assertNotNull(userDTO);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+    	
+    	userDTO = subscriberService.authentificate("fcardenas", "password");
+    	assertNotNull(userDTO);
+    	assertEquals(userDTO.getLogin(),"fcardenas");
+    	assertEquals(userDTO.getPassword(),"password");
+    	assertEquals(userDTO.getFirstName(),"francois");
+    	assertEquals(userDTO.getLastName(),"cardenas");
+    	assertTrue(userDTO.isAdmin());
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant de mettre à jour
+     * 		les données d'un utilisateur
+     * 	Version avec echec: modif avec des données fausses 
+     * 		-> identifiant non correcte
+     */
+    @Test
+    public void updateUserTestFail1()
+    {
+    	// injection de données fausses
+    	UserDTO userDTO = new UserDTO();
+    	userDTO.setID(3345543);
+    	userDTO.setLogin("fcardenas");
+    	userDTO.setPassword("password");
+    	userDTO.setFirstName("francois");
+    	userDTO.setLastName("cardenas");
+    	
+    	try {
+	    	userDTO = subscriberService.updateUser(userDTO);
+	    	fail("identifiant non correct !");
+		} catch (EntityNotFoundException e) {
+			assertTrue(true);
+		} catch (LoginAlreadyExistException e) {
+			fail(e.getMessage());
+		}
+    }
+    
+    /**
+     * 	Test la méthode du services web permettant de mettre à jour
+     * 		les données d'un utilisateur
+     * 	Version avec echec: modif avec des données fausses 
+     * 		-> identifiant non correcte
+     */
+    @Test
+    public void updateUserTestFail2()
+    {
+    	// injection de données fausses
+    	UserDTO userDTO = new UserDTO();
+    	userDTO.setID(admin.getID());
+    	userDTO.setLogin("yduduci");
+    	userDTO.setFirstName("yann2");
+    	userDTO.setLastName("dudicourt22");
+    	
+    	try {
+	    	userDTO = subscriberService.updateUser(userDTO);
+	    	fail("login non correct !");
+		} catch (EntityNotFoundException e) {
+			fail(e.getMessage());
+		} catch (LoginAlreadyExistException e) {
+			assertTrue(true);
+		}
+    }
+    
+    @Test
+    public void rentBookSuccess()
+    {
+    	try {
+    		// recupere le book
+			BookDTO bookDTO = serviceBean.findBookByISBN("ZOL569EMI");
+			assertNotNull(bookDTO);
+			assertEquals(bookDTO.getIsbn(),"ZOL569EMI");
+			assertEquals(bookDTO.getName(),"Le rouge et le noir");
+			assertEquals(bookDTO.getGenre(),"ROMAN");
+			
+			// recupere l'utilisateur
+			UserDTO userDTO = users.get(2);
+	    	assertEquals(userDTO.getLogin(),"pmallet");
+	    	assertEquals(userDTO.getPassword(),"s3cr3t");
+	    	assertEquals(userDTO.getFirstName(),"paul");
+	    	assertEquals(userDTO.getLastName(),"mallet");
+			
+			
+			RentBookDTO rentBookDTO = subscriberService.rentBook(userDTO, bookDTO.getIsbn());
+			rentBooks.add(rentBookDTO);
+			
+		} catch (Exception e) {
+			fail(e.getMessage());
+		} 
+    	
     }
 }
