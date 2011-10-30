@@ -41,7 +41,7 @@ public class UserServiceTest
 	// service web des visiteurs anonymes
 	private static com.insta.fjee.library.core.service.ws.IUserService userService;
 	
-	// service web des visiteurs anonymes
+	// service web des administrateurs
 	private static com.insta.fjee.library.core.service.ws.IAdminService adminService;
 	
 	// jeu d'auteurs utilisés pour les tests unitaires

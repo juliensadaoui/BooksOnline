@@ -10,7 +10,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.insta.fjee.library.core.service.ws.AdminServiceService;
+import com.insta.fjee.library.core.service.ws.EntityNotFoundException;
 import com.insta.fjee.library.core.service.ws.SubscriberServiceService;
+import com.insta.fjee.library.core.service.ws.UserNotAdminException;
 import com.insta.fjee.library.core.service.ws.UserServiceService;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
@@ -31,11 +34,18 @@ public class SubscriberServiceTest
 	// service web des abonnées
 	private static com.insta.fjee.library.core.service.ws.ISubscriberService subscriberService;
 	
+	// service web des administrateurs
+	private static com.insta.fjee.library.core.service.ws.IAdminService adminService;
+
 	// jeu d'auteurs utilisés pour les tests unitaires
 	private static List<AuthorDTO> authors;
 	
 	// jeu de livres utilisés pour les tests unitaires
 	private static List<BookDTO> books;
+	
+	// jeu d'utilisateurs pour les tests unitaires
+	private static List<UserDTO> users;
+	private static UserDTO admin;
 
 	@BeforeClass
 	public static void setUp() throws Exception
@@ -43,6 +53,7 @@ public class SubscriberServiceTest
 		serviceBean = (new LibraryBeanService()).getLibraryBeanPort();
 		userService = (new UserServiceService()).getUserServicePort();
 		subscriberService = (new SubscriberServiceService()).getSubscriberServicePort();
+		adminService = (new AdminServiceService()).getAdminServicePort();
 		setUpResources() ;
 	}
 	
@@ -54,6 +65,7 @@ public class SubscriberServiceTest
     {   
     	authors = new ArrayList<AuthorDTO>();
     	books = new ArrayList<BookDTO>();
+    	users = new ArrayList<UserDTO>();
     	
     	String [] authorsList = { "Gustave", "Flaubert",
 				  "Victor", "Hugo"};
@@ -101,19 +113,44 @@ public class SubscriberServiceTest
 			}
 		}
     		
+		String [] usersList = 
+			{	
+				"ydudicourt","pass","yann","dudicourt","true",
+				"fcardenas","password","francois","cardenas", null,
+				"jsadaoui", "password", "julien", "sadaoui", null
+			};
+		
+		for (int i = 0 ; i < usersList.length ; i=i+5)
+		{
+			try {
+	    		UserDTO userDTO = new UserDTO();
+		    	userDTO.setLogin(usersList[i]);
+		    	userDTO.setPassword(usersList[i+1]);
+		    	userDTO.setFirstName(usersList[i+2]);
+		    	userDTO.setLastName(usersList[i+3]);
+		    	if (usersList[i+1] == null) {
+		    		userDTO.setAdmin(false);
+		    	}
+		    	else {
+		    		userDTO.setAdmin(true);
+		    	}
+		    	userDTO = userService.createUser(userDTO);
+		    	
+		    	if (i == 0) {
+		    		admin = userDTO;
+		    	}
+		    	else {
+		    		users.add(userDTO);
+		    	}
+		    	
+			} catch (Exception e) {
+				fail(e.getMessage());
+			}
+		}
 		/*
 		 * 	Ajout d'un utilisateur
 		 */
-    	try {
-    		UserDTO userDTO = new UserDTO();
-	    	userDTO.setLogin("ydudicourt");
-	    	userDTO.setFirstName("yann");
-	    	userDTO.setLastName("dudicourt");
-	    	userDTO.setPassword("pass");
-	    	userDTO = userService.createUser(userDTO);
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
+    	
     }
     
     /**
@@ -146,6 +183,24 @@ public class SubscriberServiceTest
 				fail(e.getMessage());
 			}
 		}
+		
+		// supprime les utilisateurs ajoutés dans la base pour les tests
+		for (UserDTO userDTO : users)
+		{
+			try {
+				adminService.deleteUser(userDTO, admin);
+			} 
+			catch (Exception e) {
+				fail(e.getMessage());
+			}
+		}
+		
+		try {
+			adminService.deleteUser(admin, admin);
+		} 
+		catch (Exception e) {
+			fail(e.getMessage());
+		}
     }
     
     @Test
@@ -157,7 +212,8 @@ public class SubscriberServiceTest
 	    	userDTO.setFirstName("yann");
 	    	userDTO.setLastName("dudicourt");
 	    	userDTO.setPassword("pass");
-	    	assertNotNull(subscriberService.authentificate("ydudicourt", "pass"));
+	    	userDTO = subscriberService.authentificate("ydudicourt", "pass");
+	    	assertNotNull(userDTO);
 			subscriberService.updateUser(userDTO);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
