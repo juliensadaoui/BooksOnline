@@ -15,7 +15,8 @@ import com.insta.fjee.library.stock.service.EntityNotFoundException_Exception;
 import com.insta.fjee.library.stock.service.LibraryBean;
 
 /**
- * 	
+ * 	Tests unitaires réalisés sur le service web du stock de la librairie
+ * 	Contient l'ensemble des livres et des auteurs
  * 
  * @author julien
  *
@@ -24,12 +25,16 @@ public class TestLibraryBean
 {
 	// FIXME 1 - pour les recherches problemes de sensibilité à la casse
 	// FIXME 2 - attention à la contrainte d'intégrité un auteur unique(nom et prenom)
-	// FIXME  - un seul ISBN par livre
+	// FIXME 3 - un seul ISBN par livre
 	
+	
+	// service web de l'application de stock de la librairie
 	private static LibraryBean serviceBean;
 	
+	// jeu d'auteurs utilisés pour les tests unitaires
 	private static List<AuthorDTO> authors;
 	
+	// jeu de livres utilisés pour les tests unitaires
 	private static List<BookDTO> books;
 
 	@BeforeClass
