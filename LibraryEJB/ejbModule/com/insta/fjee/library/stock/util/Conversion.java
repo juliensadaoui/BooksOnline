@@ -79,18 +79,18 @@ public class Conversion
 		return result;
 	}
 
-	public Author fromDto(AuthorDTO authorDto) throws EntityNotFoundException
+	public Author fromDTO(AuthorDTO authorDTO) throws EntityNotFoundException
 	{
 		Author result  = new Author();
-		Integer id = authorDto.getId();
+		Integer id = authorDTO.getId();
 		if (Entity.isId(id)) {
 			result = authorEAO.findOrFail(id);
 		}
 		else {
 			result = new Author();
 		}
-		result.setLastName(authorDto.getLastName());
-		result.setFirstName(authorDto.getFirstName());
+		result.setLastName(authorDTO.getLastName());
+		result.setFirstName(authorDTO.getFirstName());
 
 		return result;
 	}

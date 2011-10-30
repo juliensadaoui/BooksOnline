@@ -57,7 +57,7 @@ public class LibraryBean implements ILibraryService
 	{
 		try {
 			authorDTO.setId(null); // on ne renseigne pas le id
-			Author author = conv.fromDto(authorDTO);
+			Author author = conv.fromDTO(authorDTO);
 			authorEAO.saveOrUpdate(author);
 			return conv.fromEntity(author);
 		} catch (EntityNotFoundException e) {
@@ -72,7 +72,7 @@ public class LibraryBean implements ILibraryService
 	@Override
 	public AuthorDTO updateAuthor(AuthorDTO authorDTO) throws EntityNotFoundException 
 	{
-		Author author = conv.fromDto(authorDTO);
+		Author author = conv.fromDTO(authorDTO);
 		authorEAO.saveOrUpdate(author);
 		return conv.fromEntity(author);
 	}
@@ -83,7 +83,7 @@ public class LibraryBean implements ILibraryService
 	@Override
 	public void deleteAuthor(AuthorDTO authorDTO) throws EntityNotFoundException 
 	{
-		Author author = conv.fromDto(authorDTO);
+		Author author = conv.fromDTO(authorDTO);
 		authorEAO.delete(author);
 	}
 
