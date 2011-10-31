@@ -1,0 +1,10 @@
+#wrapper #nav {
+    margin-bottom: 3em;
+}
+#wrapper #nav ul li a {
+    text-shadow: 2px 1px 0 #333333;
+}
+#nav li {
+    display: inline;
+    float: left;
+}
