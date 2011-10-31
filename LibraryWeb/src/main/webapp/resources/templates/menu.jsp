@@ -3,15 +3,15 @@
 <div id="nav">
 
 	<ul>
-		<li class="nav1 first">
-			<a href="/user/register" class="user-register-all" title="Home">Home </a>                
+		<li class="first">
+			<a href="/home.html" title="Home">Home </a>                
 		</li>
 		
-		<li class="nav1">
+		<li>
 			<a href="/livres">Livres</a>
 		</li>
 		
-		<li class="nav2">
+		<li>
 			<a href="/auteurs" class="active active">Auteurs</a>
 		</li>
 	</ul>

@@ -145,3 +145,105 @@ a {
     margin-right: 180px !important;
     width: auto;
 }
+
+#home-block ul li p {
+    color: #666666;
+    font-size: 11px;
+    text-align: justify;
+}
+p {
+    font-size: 12px;
+    padding: 0 0 1em;
+}
+
+#home-block ul li span.title {
+    color: #333333;
+    font-size: 14px;
+}
+
+#main {
+    width: 960px;
+}
+
+#main {
+    clear: both;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
+    z-index: 999;
+}
+
+.front {
+    width: 980px;
+}
+
+.editorial {
+    height: 180px;
+    padding-bottom: 30px;
+}
+
+.editorial_details {
+    float: left;
+    padding: 30px 10px 0;
+    width: 400px;
+}
+
+.editorial_title {
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.editorial_text {
+    color: black;
+    font-size: 13px;
+    line-height: 15px;
+    padding: 5px 0;
+    text-align: justify;
+}
+.editorial_img {
+    float: left;
+    padding: 10px 0 0 10px;
+}
+
+.homepage_title {
+    margin-bottom: 20px;
+}
+
+.editorial h2 {
+    border-bottom: 1px solid #DDDDDD;
+    color: #E47911;
+    font-size: 185%;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+
+#footer {
+	clear: both;
+    display: block;
+    margin: 0 auto;
+    width: 960px;
+    border-top: 4px solid #FF6600;
+    float: left;
+    margin: 30px 0 0;
+    width: 100%;
+}
+
+#footer ul.copyright {
+    display: inline;
+    float: left;
+}
+
+#footer ul.footer-menu {
+    display: inline;
+    float: right;
+}
+
+#footer ul li {
+    display: inline;
+    line-height: 2em;
+}
+

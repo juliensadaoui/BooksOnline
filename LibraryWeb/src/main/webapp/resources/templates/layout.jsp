@@ -17,15 +17,11 @@
 	<div id="wrapper">
 		<tiles:insertAttribute name="header" />
 		<tiles:insertAttribute name="menu" />
+		<div id="main" class="front">
+			<tiles:insertAttribute name="body" />
+		</div>
+		<tiles:insertAttribute name="footer" />
+
 	</div>
-<table border="1" cellpadding="2" cellspacing="2" align="center">
-	<tr>
-		<td width="350"><tiles:insertAttribute name="body" /></td>
-	</tr>
-	<tr>
-		<td height="30" colspan="2"><tiles:insertAttribute name="footer" />
-		</td>
-	</tr>
-</table>
 </body>
 </html>
