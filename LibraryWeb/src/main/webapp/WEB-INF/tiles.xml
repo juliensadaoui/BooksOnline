@@ -4,21 +4,21 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	<definition name="base.definition"
-		template="/WEB-INF/views/layout.jsp">
+		template="/resources/templates/layout.jsp">
 		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
+		<put-attribute name="header" value="/resources/templates/header.jsp" />
+		<put-attribute name="menu" value="/resources/templates/menu.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
-<!-- 		<put-list-attribute name="links" inherit="true" cascade="true"> -->
-<!--             <add-attribute type="string" value="/stles/default.css" /> -->
+		<put-attribute name="footer" value="/resources/templates/footer.jsp" />
+		<put-list-attribute name="links">
+            <add-attribute type="string" value="/resources/styles/default.css" />
 <!--             <add-attribute type="string" value="/styles/another.css" /> -->
-<!--         </put-list-attribute> -->
+        </put-list-attribute>
 	</definition>
 
 	<definition name="contact" extends="base.definition">
 		<put-attribute name="title" value="Contact Manager" />
-		<put-attribute name="body" value="/WEB-INF/views/contact.jsp" />
+		<put-attribute name="body" value="/resources/views/contact.jsp" />
 	</definition>
 
 </tiles-definitions>
