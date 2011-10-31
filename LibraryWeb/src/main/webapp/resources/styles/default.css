@@ -1,10 +1,147 @@
+
+
+#wrapper {
+    min-height: 525px;
+    position: relative;
+}
+
+#logo {
+    height: 115px;
+    left: 0;
+    position: relative;
+    top: 5px;
+    width: 303px;
+    z-index: 999;
+}
+
+input, button, a {
+    font-family: Arial,Helvetica,sans-serif;
+    outline: medium none;
+}
+
+a {
+    color: #333333;
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+#header {
+    height: 106px;
+    margin: 0 auto;
+    position: relative;
+    width: 880px;
+}
+
+#header input.form-text {
+    border: 1px solid #999999;
+    font-size: 13px;
+    margin: 10px 0 10px 10px;
+    padding: 3px 3px 5px;
+}
+
+
+
+#wrapper .form-item {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#search-input-text-container {
+  display: inline;
+  float: left;
+}
+
+#search-input-text {
+    color: #8B8E8D;
+    height: 19px;
+    width: 431px;
+}
+
+.search .btn-search, .search-ebook .form-submit {
+	background: no-repeat scroll 96% 50% #FF6600;
+    border: 0 none;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    height: 29px;
+    margin: 10px 0 11px 7px;
+    padding: 0 15px 4px 0;
+    width: 104px;
+}
+
+.search {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 3px 3px 3px 3px;
+    float: right;
+    height: 50px;
+    margin-top: 36px;
+    width: 570px;
+}
+
+
+.button-submit-container input {
+    float: right;
+    margin: 0 0 0 7px;
+}
+
+
+
+
+
 #wrapper #nav {
     margin-bottom: 3em;
 }
 #wrapper #nav ul li a {
     text-shadow: 2px 1px 0 #333333;
 }
+
+#nav {
+    background: none repeat scroll 0 0 #333333;
+    border: 1px solid #666666;
+    clear: both;
+    display: block;
+    height: 44px;
+}
+
+#nav ul {
+    margin: 0 auto;
+    overflow: visible;
+    padding: 0 0 0 80px;
+    position: relative;
+    width: 880px;
+    z-index: 999;
+}
+
 #nav li {
     display: inline;
     float: left;
+}
+
+#nav ul li {
+    display: inline;
+    font-size: 1.3em;
+    line-height: 44px;
+    margin: 0 10px 0 0;
+    padding: 0;
+    text-align: center;
+}
+
+#nav ul li a {
+    color: #FAF9F3;
+    display: block;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 15px;
+    text-decoration: none;
+}
+
+#nav .first {
+    float: left;
+    height: 44px;
+    margin-right: 180px !important;
+    width: auto;
 }
