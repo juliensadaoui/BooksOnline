@@ -87,8 +87,42 @@ a {
     margin: 0 0 0 7px;
 }
 
+#header .login {
+    width: 245px;
+}
 
+.login {
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 352px;
+    z-index: 1000;
+}
 
+#header .login ul {
+    position: relative;
+    z-index: 1000;
+}
+#header .login ul {
+    clear: both;
+    display: block;
+    float: right;
+    width: 245px;
+     margin: 0;
+}
+#header .login ul li {
+    display: inline;
+}
+#header .login ul li a.lnk_login {
+    font-size: 14px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
 
 
 #wrapper #nav {

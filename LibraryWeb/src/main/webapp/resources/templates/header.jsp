@@ -5,6 +5,18 @@
 		<img alt="Lecture en ligne, lire et partager ses lectures en ligne sur Lecteurs" 
 			src="${url_logo}">
 	</a>
+	
+	<div class="login">
+		<ul>
+			<li>
+				<a class="lnk_login" href="#">S'inscrire</a>
+			</li>
+			<li>|</li>
+			<li>
+				<a class="lnk_login" href="#">Mon compte</a>
+			</li>
+		</ul>
+	</div>
 
 	<div class="search">
 		<form method="post" accept-charset="UTF-8" action="/lecteurs">
