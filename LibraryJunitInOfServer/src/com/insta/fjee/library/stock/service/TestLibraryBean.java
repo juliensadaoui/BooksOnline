@@ -274,7 +274,8 @@ public class TestLibraryBean
 			book = serviceBean.findBookByISBN("ZOL568EMI");
 			assertEquals("LA CUREE", book.getName());
 			assertEquals("ZOL568EMI", book.getIsbn());
-			
+			assertEquals("Emile ZOLA", book.getAuthorName());
+			 
 		} catch (BookNotFoundException_Exception e) {
 			fail(e.getMessage());
 		}
@@ -295,12 +296,14 @@ public class TestLibraryBean
 		assertEquals("ZOL387EMI",book.getIsbn());
 		assertEquals("GERMINAL", book.getName());
 		assertEquals("ROMAN2", book.getGenre());
+		assertEquals("Emile ZOLA", book.getAuthorName());
 		
 		book = books.get(2);
 		assertNotNull(book);
 		assertEquals("ZOL897EMI",book.getIsbn());
 		assertEquals("LA DEBACLE", book.getName());
 		assertEquals("ROMAN2", book.getGenre());
+		assertEquals("Emile ZOLA", book.getAuthorName());
 	}
 	
 	/**
@@ -331,6 +334,7 @@ public class TestLibraryBean
 		assertEquals("ZOL573EMI",book.getIsbn());
 		assertEquals("La Terre", book.getName());
 		assertEquals("ROMAN", book.getGenre());
+		assertEquals("Victor Hugo", book.getAuthorName());
 	}
 	
 	/**
