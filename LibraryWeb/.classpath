@@ -10,5 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/library-core-subscriber.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/library-core-user.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/library-stock.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
