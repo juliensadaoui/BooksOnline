@@ -15,7 +15,8 @@
 	<http auto-config="true">
 		<intercept-url pattern='/home.html' filters='none' />
 		<intercept-url pattern='/contacts.html' access='ROLE_USER' />
-<!-- 		<form-login login-page='/login.html' default-target-url='/home.htm' always-use-default-target='true' /> -->
+		<form-login login-page='/login.html' default-target-url='/home.html' />
+<!-- 		 always-use-default-target='true' /> -->
 	</http>
 	
 <!-- 	<authentication-manager> -->
