@@ -281,7 +281,8 @@ p {
 }
 
 
-#container_account {
+#container_account,
+#container_login {
     float: left;
     margin-left: 30px;
     margin-right: 10px;
@@ -289,14 +290,14 @@ p {
     width: 430px;
 }
 
-#container_account .title {
+#container_account .title, #container_login .title {
     background-color:  #A29D9D;
     font-size: 14px;
     font-weight: bold;
     padding: 5px 0 5px 20px;
 }
 
-#container_account .content {
+#container_account .content, #container_login .content {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
     -moz-border-left-colors: none;
@@ -310,7 +311,7 @@ p {
     margin-bottom: 30px;
 }
 
-#container_account ul {
+#container_account ul, #container_login ul {
     list-style: none outside none;
     margin-top: 0;
     padding-left: 20px;
@@ -318,11 +319,11 @@ p {
     text-decoration: none;
 }
 
-#container_account li {
+#container_account li, #container_login li {
     padding-bottom: 20px;
 }
 
-#container_account li span {
+#container_account li span, #container_login li span {
     font-size: 13px;
     font-weight: bold;
 }
@@ -339,13 +340,14 @@ form input[type="text"], form input[type="password"], form input[type="submit"],
     border-radius: 3px 3px 3px 3px;
 }
 
-#container_account input {
+#container_account input,
+#container_login input {
     float: right;
     margin-right: 30px;
     width: 150px;
 }
 
-#container_account .form-submit
+#container_account .form-submit, #container_login .form-submit
 {
 	background: no-repeat scroll 96% 50% #FF6600;
     border: 0 none;
