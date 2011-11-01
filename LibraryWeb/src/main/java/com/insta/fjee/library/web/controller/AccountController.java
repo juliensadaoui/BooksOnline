@@ -47,6 +47,7 @@ public class AccountController
 		@ModelAttribute("userBean") UserBean userBean,
 		BindingResult result, SessionStatus status) {
 		
+		System.out.println(userBean.toString());
 		return "";
 	}
 	

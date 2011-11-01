@@ -57,7 +57,8 @@ a {
     width: 431px;
 }
 
-.search .btn-search, .search-ebook .form-submit {
+.search .form-submit
+{
 	background: no-repeat scroll 96% 50% #FF6600;
     border: 0 none;
     border-radius: 3px 3px 3px 3px;
@@ -333,7 +334,7 @@ input {
     padding-top: 4px;
 }
 
-form input[type="text"], form input[type="password"], form textarea {
+form input[type="text"], form input[type="password"], form input[type="submit"], form textarea {
     border: 1px solid #B9B9B9;
     border-radius: 3px 3px 3px 3px;
 }
@@ -342,6 +343,17 @@ form input[type="text"], form input[type="password"], form textarea {
     float: right;
     margin-right: 30px;
     width: 150px;
+}
+
+#container_account .form-submit
+{
+	background: no-repeat scroll 96% 50% #FF6600;
+    border: 0 none;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 

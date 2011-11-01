@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Inscription</title>
 </head>
 <body>
-    <h1>Créer un compte client</h1>
+    <h1>Créer un compte utilisateur</h1>
     <p>
         L'inscription sur Librairie.com permet d'accéder à votre compte personnel et de bénéficier à nombreux services:
             consultation de vos informations personnelles, location de livres et magazines d'actualités,
@@ -20,15 +20,15 @@
     
     <form:form modelAttribute="userBean" focus="firstName">
     <div id="container_account">
-    	<div class="title">Inscrivez vous c’est gratuit !</div>
+    	<div class="title"><fmt:message key="register.user.title" /></div>
     	<div class="content">
 			<ul>
 				<li>
 					<span>
-						<label><fmt:message key="register.user.firstname"/></label>
+						<label><fmt:message key="register.user.login"/></label>
 					</span>
-					<form:input path="firstName" size="15" maxlength="60"/>&#160;
-					<font color="red"><form:errors path="firstName"/></font>
+					<form:input path="login" size="15" maxlength="60"/>&#160;
+					<font color="red"><form:errors path="login"/></font>
 				</li>
 				<li>
 					<span>
@@ -59,6 +59,8 @@
 					<font color="red"><form:errors path="lastName"/></font>
 				</li>
 				<li>
+					<span><label></label></span>
+					<input class="form-submit" type="submit" value="<fmt:message key="register.form.submit"/>">
 				</li>
 			</ul>
 		</div>

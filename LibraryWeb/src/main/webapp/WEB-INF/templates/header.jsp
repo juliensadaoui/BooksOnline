@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="header">
-	<a id="logo" href="/">
+	<a id="logo" href="home.html">
 		<c:url value="/resources/images/librairie_logo.png" var="url_logo" />
 		<img alt="Lecture en ligne, lire et partager ses lectures en ligne sur Lecteurs" 
 			src="${url_logo}">
@@ -9,11 +9,11 @@
 	<div class="login">
 		<ul>
 			<li>
-				<a class="lnk_login" href="#">S'inscrire</a>
+				<a class="lnk_login" href="register.html">S'inscrire</a>
 			</li>
 			<li>|</li>
 			<li>
-				<a class="lnk_login" href="#">Mon compte</a>
+				<a class="lnk_login" href="login.html">Mon compte</a>
 			</li>
 		</ul>
 	</div>
@@ -28,7 +28,7 @@
 				</div>
 				
 				<div class="button-submit-container">
-					<input class="form-submit form-submit btn-search" 
+					<input class="form-submit" 
 							type="submit" value="rechercher" >
 				</div>
 			</div>
