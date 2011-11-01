@@ -34,14 +34,14 @@
 					<span>
 						<label><fmt:message key="register.user.password"/></label>
 					</span>
-					<form:input path="password" size="15" maxlength="60"/>&#160;
+					<form:password path="password" size="15" maxlength="60"/>&#160;
 					<span class="error"><form:errors path="password"/></span>
 				</li>
 				<li>
 					<span>
 						<label><fmt:message key="register.user.verifypassword"/></label>
 					</span>
-					<form:input path="verifyPassword" size="15" maxlength="60"/>&#160;
+					<form:password path="verifyPassword" size="15" maxlength="60"/>&#160;
 					<span class="error"><form:errors path="verifyPassword"/></span>
 				</li>
 				<li>

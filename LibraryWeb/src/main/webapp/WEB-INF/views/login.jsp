@@ -31,7 +31,7 @@
 					<input type="password" name="j_password" />
 				</li>
 				<li>
-					<input type="submit" name="<fmt:message key="login.form.submit"/>" />
+					<input type="submit" value="<fmt:message key="login.form.submit"/>" />
 				</li>
 			</ul>
 		</div>

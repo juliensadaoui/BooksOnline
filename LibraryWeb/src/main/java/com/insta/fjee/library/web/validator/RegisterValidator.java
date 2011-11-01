@@ -17,18 +17,25 @@ public class RegisterValidator implements Validator {
 		UserBean user = (UserBean) obj;
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "errors.required",
-				new Object[] {"login"}, "");
+				new Object[] {"nom utilisateur"}, "");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "errors.required",
-				new Object[] {"password"}, "");
+				new Object[] {"mot de passe"}, "");
 		
-	System.out.println(errors.hasErrors());
-	System.out.println("Firstname : " +user.getFirstName());
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "verifyPassword", "errors.required",
+				new Object[] {"mot de passe"}, "");
+
+		if (! user.getPassword().equals(user.getVerifyPassword()))
+		{
+			errors.rejectValue("verifyPassword", "error.passwordnotsame",
+					null, "");
+					
+		}
 		
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "errors.required",
-				new Object[] {"firstName"}, "");
+				new Object[] {"prénom"}, "");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "errors.required",
-				new Object[] {"lastName"}, "");
+				new Object[] {"nom"}, "");
 		
 		if (errors.hasErrors()) {
 			
