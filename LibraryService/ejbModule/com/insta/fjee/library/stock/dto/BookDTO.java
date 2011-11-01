@@ -16,6 +16,8 @@ public class BookDTO implements java.io.Serializable
 	private String name;
 	
 	private Integer authorId;
+	
+	private String authorName;
 
 	public Integer getId() {
 		return id;
@@ -57,10 +59,18 @@ public class BookDTO implements java.io.Serializable
 		this.authorId = authorId;
 	}
 
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
 	@Override
 	public String toString() {
-		return "BookDto [id=" + id + ", genre=" + genre + ", isbn=" + isbn
-				+ ", name=" + name + ", authorId=" + authorId + "]";
+		return "BookDTO [id=" + id + ", genre=" + genre + ", isbn=" + isbn
+				+ ", name=" + name + ", authorId=" + authorId + ", authorName="
+				+ authorName + "]";
 	}
-	
 }
