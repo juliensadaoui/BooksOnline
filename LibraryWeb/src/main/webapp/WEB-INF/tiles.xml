@@ -4,12 +4,12 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	<definition name="base.definition"
-		template="/resources/templates/layout.jsp">
+		template="/WEB-INF/templates/layout.jsp">
 		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/resources/templates/header.jsp" />
-		<put-attribute name="menu" value="/resources/templates/menu.jsp" />
+		<put-attribute name="header" value="/WEB-INF/templates/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/templates/menu.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/resources/templates/footer.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/templates/footer.jsp" />
 		<put-list-attribute name="links">
             <add-attribute type="string" value="/resources/styles/default.css" />
 <!--             <add-attribute type="string" value="/styles/another.css" /> -->
@@ -18,17 +18,17 @@
 
 	<definition name="contact" extends="base.definition">
 		<put-attribute name="title" value="Contact Manager" />
-		<put-attribute name="body" value="/resources/views/contact.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/contact.jsp" />
 	</definition>
 	
 	<definition name="home" extends="base.definition">
 		<put-attribute name="title" value="Home" />
-		<put-attribute name="body" value="/resources/views/home.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
 	
 		<definition name="login" extends="base.definition">
 		<put-attribute name="title" value="Login" />
-		<put-attribute name="body" value="/resources/views/login.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
 	</definition>
 
 </tiles-definitions>
