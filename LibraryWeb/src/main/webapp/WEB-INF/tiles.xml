@@ -26,9 +26,14 @@
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
 	
-		<definition name="login" extends="base.definition">
+	<definition name="login" extends="base.definition">
 		<put-attribute name="title" value="Login" />
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	</definition>
+	
+	<definition name="register" extends="base.definition">
+		<put-attribute name="title" value="Register" />
+		<put-attribute name="body" value="/WEB-INF/views/register.jsp" />
 	</definition>
 
 </tiles-definitions>

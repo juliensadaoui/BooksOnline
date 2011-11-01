@@ -9,10 +9,23 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
- 	<!-- Auto scan the components -->
- 	 <context:annotation-config />
- 	 <mvc:annotation-driven />
+	<!-- Using annotations -->
+	
+	<!-- Utilisation des annotations pour l’injection de dépendances 
+			(indépendante des annotations de bean). -->
+	<context:annotation-config />
+	
+	<!-- Auto scan the components  
+		Les paquetages (et implicitement récursivement les sous-packages) 
+		à parcourir et dans lesquels se trouvent les composants Spring MVC annotés -->
 	<context:component-scan base-package="com.insta.fjee.library.web" />
+	
+	<!--  Avec les beans DefaultAnnotationHandlerMapping et AnnotationMethodHandlerAdapter 
+			ceci permet entre autre l’utilisation des annotations Spring 3.0
+			(de gérer des validateurs sur des formats comme les dates, etc…). -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<mvc:annotation-driven />
       
      <!-- Handles HTTP GET requests for by efficiently serving up static resources -->
 	<mvc:resources mapping="/resources/styles/**" location="/resources/styles/" />
@@ -32,10 +45,11 @@
 			</list>
 		</property>
 	</bean>
-	
-<!-- 	<bean id="messageSource" -->
-<!--     class="org.springframework.context.support.ReloadableResourceBundleMessageSource"> -->
-<!--     	<property name="basename" value="classpath:messages" /> -->
-<!--     	<property name="defaultEncoding" value="UTF-8"/> -->
-<!-- 	</bean> -->
+		
+	<bean id="messageSource"
+	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	    
+	    <property name="basename" value="classpath:messages" />
+	    <property name="defaultEncoding" value="UTF-8"/>
+	</bean>
 </beans>

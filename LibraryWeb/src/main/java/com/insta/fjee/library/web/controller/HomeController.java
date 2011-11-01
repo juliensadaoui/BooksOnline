@@ -13,4 +13,9 @@ public class HomeController
 	public ModelAndView showHome() {
 		return new ModelAndView("home");
 	}
+	
+	@RequestMapping("/error")
+	public ModelAndView showError() {
+		return new ModelAndView("error");
+	}
 }
