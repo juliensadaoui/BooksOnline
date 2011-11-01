@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+   		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+   		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+	<!-- Accès a la ressources JDBC fourni par le serveur d'applications -->
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/LibraryCoreDB"/>
+
+	<!-- Bean des services web des visiteurs -->
+	<bean id="userService" class="com.insta.fjee.library.core.service.ws.UserServiceService" />
+
+	<!-- Bean des services web des abonnées -->
+	<bean id="subscriberService" class="com.insta.fjee.library.core.service.ws.SubscriberServiceService" />
+</beans>

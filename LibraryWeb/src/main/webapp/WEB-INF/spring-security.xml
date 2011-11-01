@@ -10,8 +10,6 @@
 			http://www.springframework.org/schema/security
 			http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 	
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/LibraryCoreDB"/>
-	
 	<http auto-config="true">
 		<intercept-url pattern='/home.html' filters='none' />
 		<intercept-url pattern='/contacts.html' access='ROLE_USER' />
