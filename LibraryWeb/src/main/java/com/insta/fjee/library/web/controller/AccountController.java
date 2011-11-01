@@ -11,6 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.insta.fjee.library.web.bean.UserBean;
+import com.insta.fjee.library.web.validator.RegisterValidator;
 
 @Controller
 @SessionAttributes
@@ -44,12 +45,16 @@ public class AccountController
 	 */
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String exectueCreate(
-		@ModelAttribute("userBean") UserBean userBean, ModelMap model,
-		BindingResult result, SessionStatus status) {
+		@ModelAttribute("userBean") UserBean userBean,
+		BindingResult result, SessionStatus status, ModelMap model) {
 		
 		System.out.println(userBean.toString());
-		model.addAttribute("login", userBean.getLogin());
-		return "register_ok";
+		(new RegisterValidator()).validate(userBean, result);
+		if (!result.hasErrors()) {
+			model.addAttribute("login", userBean.getLogin());
+			return "register_ok";
+		}
+		return "register";
 	}
 	
 }

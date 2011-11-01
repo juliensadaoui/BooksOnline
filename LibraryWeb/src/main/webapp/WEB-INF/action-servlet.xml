@@ -52,4 +52,17 @@
 	    <property name="basename" value="classpath:messages" />
 	    <property name="defaultEncoding" value="UTF-8"/>
 	</bean>
+	
+<!-- 	<bean id="validatorFactory" class="org.springmodules.commons.validator.DefaultValidatorFactory"> -->
+<!-- 		<property name="validationConfigLocations"> -->
+<!-- 			<list> -->
+<!-- 				<value>/WEB-INF/validator-rules.xml</value> -->
+<!-- 				<value>/WEB-INF/validation.xml</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="beanValidator" class="org.springmodules.commons.validator.DefaultBeanValidator"> -->
+<!-- 		<property name="validatorFactory" ref="validatorFactory"/> -->
+<!-- 	</bean> -->
 </beans>

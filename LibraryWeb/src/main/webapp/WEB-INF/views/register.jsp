@@ -28,35 +28,35 @@
 						<label><fmt:message key="register.user.login"/></label>
 					</span>
 					<form:input path="login" size="15" maxlength="60"/>&#160;
-					<font color="red"><form:errors path="login"/></font>
+					<span class="error"><form:errors path="login"/></span>
 				</li>
 				<li>
 					<span>
 						<label><fmt:message key="register.user.password"/></label>
 					</span>
 					<form:input path="password" size="15" maxlength="60"/>&#160;
-					<font color="red"><form:errors path="password"/></font>
+					<span class="error"><form:errors path="password"/></span>
 				</li>
 				<li>
 					<span>
 						<label><fmt:message key="register.user.verifypassword"/></label>
 					</span>
 					<form:input path="verifyPassword" size="15" maxlength="60"/>&#160;
-					<font color="red"><form:errors path="verifyPassword"/></font>
+					<span class="error"><form:errors path="verifyPassword"/></span>
 				</li>
 				<li>
 					<span>
 						<label><fmt:message key="register.user.firstname"/></label>
 					</span>
 					<form:input path="firstName" size="15" maxlength="60"/>&#160;
-					<font color="red"><form:errors path="firstName"/></font>
+					<span class="error"><form:errors path="firstName"/></span>
 				</li>
 				<li>
 					<span>
 						<label><fmt:message key="register.user.lastname"/></label>
 					</span>
 					<form:input path="lastName" size="15" maxlength="60"/>&#160;
-					<font color="red"><form:errors path="lastName"/></font>
+					<span class="error"><form:errors path="lastName"/></span>
 				</li>
 				<li>
 					<span><label></label></span>

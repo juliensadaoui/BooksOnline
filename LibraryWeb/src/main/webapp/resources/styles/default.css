@@ -358,6 +358,16 @@ form input[type="text"], form input[type="password"], form input[type="submit"],
     font-weight: bold;
 }
 
+#container_account span.error 
+{	
+	float: right;
+    color: red;
+    font-size: 12px;
+    padding-bottom: 0;
+    padding-right: 30px;
+    text-align: right;
+}
+
 
 
 #footer {
