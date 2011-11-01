@@ -44,11 +44,12 @@ public class AccountController
 	 */
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String exectueCreate(
-		@ModelAttribute("userBean") UserBean userBean,
+		@ModelAttribute("userBean") UserBean userBean, ModelMap model,
 		BindingResult result, SessionStatus status) {
 		
 		System.out.println(userBean.toString());
-		return "";
+		model.addAttribute("login", userBean.getLogin());
+		return "register_ok";
 	}
 	
 }
