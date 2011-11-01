@@ -43,7 +43,10 @@ public class Conversion
 		result.setGenre(book.getGenre());
 		result.setIsbn(book.getIsbn());
 		
-		result.setAuthorId(book.getAuthor().getId());
+		Author author = book.getAuthor();
+		result.setAuthorId(author.getId());
+		result.setAuthorName(author.getFirstName() +
+				" " + author.getLastName());
 		return result;
 	}
 	
