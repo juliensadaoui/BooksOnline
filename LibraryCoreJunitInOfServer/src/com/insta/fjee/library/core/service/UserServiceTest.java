@@ -288,12 +288,14 @@ public class UserServiceTest
 		assertEquals("ZOL387EMI",book.getIsbn());
 		assertEquals("GERMINAL", book.getName());
 		assertEquals("ROMAN2", book.getGenre());
+		assertEquals("Emile ZOLA", book.getAuthorName());
 		
 		book = books.get(2);
 		assertNotNull(book);
 		assertEquals("ZOL897EMI",book.getIsbn());
 		assertEquals("LA DEBACLE", book.getName());
 		assertEquals("ROMAN2", book.getGenre());
+		assertEquals("Emile ZOLA", book.getAuthorName());
 	}
 	
 	/**
@@ -324,6 +326,7 @@ public class UserServiceTest
 		assertEquals("ZOL573EMI",book.getIsbn());
 		assertEquals("La Terre", book.getName());
 		assertEquals("ROMAN", book.getGenre());
+		assertEquals("Victor Hugo", book.getAuthorName());
 	}
 	
 	/**
@@ -355,6 +358,7 @@ public class UserServiceTest
 		assertEquals("ZOL569EMI",book.getIsbn());
 		assertEquals("Le rouge et le noir", book.getName());
 		assertEquals("ROMAN", book.getGenre());
+		assertEquals("Victor Hugo", book.getAuthorName());
 		
 		
 		book = books.get(2);
@@ -362,6 +366,7 @@ public class UserServiceTest
 		assertEquals("ZOL571EMI",book.getIsbn());
 		assertEquals("Les misérables", book.getName());
 		assertEquals("ROMAN", book.getGenre());
+		assertEquals("Victor Hugo", book.getAuthorName());
 		
 	}
 	
