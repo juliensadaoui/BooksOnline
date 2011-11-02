@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -23,22 +24,44 @@ public class BookController
 		this.servicesAccess = servicesAccess;
 	}
 	
-	@RequestMapping("/searchbookbyname")
+	@RequestMapping("/searchbooks")
+	public String executeShow(ModelMap model)
+	{
+		model.addAttribute("search", "book");
+		return "searchbooks";
+	}
+	
+	@RequestMapping(value="/searchbookbyname", method=RequestMethod.POST)
 	public String executeSearchByName(
-			@RequestParam("name") String name,
+			@RequestParam("book_title") String name,
 			ModelMap model)
 	{
 		List<BookDTO> books = servicesAccess.getUserService().searchBookByName(name);
+		model.addAttribute("search", "book");
 		model.addAttribute("books", books);
 		return "books";
 	}
 	
-	@RequestMapping("/searchbookbygenre")
+	@RequestMapping(value="/searchbookbygenre", method=RequestMethod.POST)
 	public String executeSearchByGenre(
-			@RequestParam("genre") String genre,
+			@RequestParam("book_genre") String genre,
 			ModelMap model)
 	{
 		List<BookDTO> books = servicesAccess.getUserService().searchBookByGenre(genre);
+		model.addAttribute("search", "book");
+		model.addAttribute("books", books);
+		return "books";
+	}
+	// Liste des livres correspondant à votre recherche
+	
+	@RequestMapping(value="/searchbookbyauthor", method=RequestMethod.POST)
+	public String executeSearchByAuthor(
+			@RequestParam("author_firstname") String firstName,
+			@RequestParam("author_lastname") String lastName,
+			ModelMap model)
+	{
+		List<BookDTO> books = servicesAccess.getUserService().searchBookByAuthor(firstName, lastName);
+		model.addAttribute("search", "book");
 		model.addAttribute("books", books);
 		return "books";
 	}

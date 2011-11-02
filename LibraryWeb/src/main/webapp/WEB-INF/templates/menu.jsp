@@ -10,11 +10,11 @@
 		</li>
 		
 		<li>
-			<a href="/livres">Livres</a>
+			<a href="searchbooks.html" <c:if test="${search eq 'book'}" ><c:out value="class=active" /></c:if> >Livres</a>
 		</li>
 		
 		<li>
-			<a href="/auteurs" class="active active">Auteurs</a>
+			<a href="searchauthors.html" <c:if test="${search eq 'author'}" ><c:out value="class=active" /></c:if> >Auteurs</a>
 		</li>
 	</ul>
 </div>

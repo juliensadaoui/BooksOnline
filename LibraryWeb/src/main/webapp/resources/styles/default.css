@@ -82,6 +82,11 @@ a {
     width: 570px;
 }
 
+.button-submit-container {
+    clear: none;
+    display: inline;
+    float: left;
+}
 
 .button-submit-container input {
     float: right;
@@ -181,6 +186,11 @@ a {
     width: auto;
 }
 
+#nav ul li a.active {
+    background: none repeat scroll 0 0 #666666;
+    text-shadow: 0 0 1px #333333;
+}
+
 #home-block ul li p {
     color: #666666;
     font-size: 11px;
@@ -242,6 +252,7 @@ p {
 .editorial {
     height: 180px;
     padding-bottom: 30px;
+    padding-left: 40px;
 }
 
 .editorial_details {
@@ -284,7 +295,7 @@ p {
 #container_account,
 #container_login {
     float: left;
-    margin-left: 30px;
+    margin-left: 50px;
     margin-right: 10px;
     margin-top: 10px;
     width: 430px;
@@ -366,6 +377,77 @@ form input[type="text"], form input[type="password"], form input[type="submit"],
     padding-bottom: 0;
     padding-right: 30px;
     text-align: right;
+}
+
+.container_search 
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    float: left;
+    margin-left: 50px;
+    margin-bottom: 18px;
+    position: relative;
+    width: 688px;
+}
+
+.container_search_text
+{
+    float: left;
+    padding-left: 10px;
+    padding-top: 20px;
+}
+
+.container_search_text span
+{
+	float: right;
+    color: #FF6600;
+    font-size: 16px;
+    text-align: right;
+}
+
+.container_search_form 
+{
+	float: right;
+	background: none repeat scroll 0 0 #F9F9F9;
+    border: 1px solid #CCCCCC;
+    width: 248px;
+}
+
+.container_search_form form
+{
+	position: relative;
+}
+
+.container_search input.form-text {
+    border: 1px solid #999999;
+    color: #8B8E8D;
+    display: block;
+    height: 16px;
+    margin: 0 auto;
+    padding: 3px 2px;
+    width: 226px;
+}
+
+.container_search_form_input_text_1
+{
+	margin: 5px auto;		
+}
+
+.container_search .form-submit
+{
+    background: none repeat scroll 0 0 #FF6600;
+    border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: right;
+    font-size: 13px;
+    font-weight: bold;
+    height: 25px;
+    line-height: 22px;
+    margin: 7px 10px 5px 0;
+    padding: 0 0 2px;
+    position: relative;
+    width: 90px;
 }
 
 

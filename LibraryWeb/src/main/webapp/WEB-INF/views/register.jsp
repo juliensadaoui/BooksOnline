@@ -60,7 +60,7 @@
 				</li>
 				<li>
 					<span><label></label></span>
-					<input class="form-submit" type="submit" value="<fmt:message key="register.form.submit"/>">
+					<input type="submit" value="<fmt:message key="register.form.submit"/>">
 				</li>
 			</ul>
 		</div>
