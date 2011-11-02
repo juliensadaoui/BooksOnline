@@ -87,9 +87,9 @@ public class BookEAO implements IBookEAO
 	public Book findBookByISBN(String isbn) throws BookNotFoundException {
 		// run an EJBQL query
 		try {
-			String ejbql = "SELECT b FROM Book b WHERE b.isbn = :isbn";
+			String ejbql = "SELECT b FROM Book b WHERE lower(b.isbn) = :isbn";
 			Query query = em.createQuery(ejbql, Book.class);
-			query.setParameter("isbn", isbn);
+			query.setParameter("isbn", isbn.toLowerCase());
 			return (Book) query.getSingleResult();
 		} catch (NoResultException e) {
 			throw new BookNotFoundException(isbn);
@@ -99,28 +99,28 @@ public class BookEAO implements IBookEAO
 	@Override
 	public List<Book> findBookByName(String name) {
 		// run an EJBQL query using input parameters
-		String ejbql = "SELECT b FROM Book b WHERE b.name LIKE :pattern";
+		String ejbql = "SELECT b FROM Book b WHERE lower(b.name) LIKE :pattern";
 		Query query = em.createQuery(ejbql, Book.class);
-		query.setParameter("pattern", "%" + name + "%");
+		query.setParameter("pattern", "%" + name.toLowerCase() + "%");
 		return query.getResultList();
 	}
 
 	@Override
 	public List<Book> findBookByGenre(String genre) {
 		// run an EJBQL query using input parameters
-		String ejbql = "SELECT b FROM Book b WHERE b.genre LIKE :pattern";
+		String ejbql = "SELECT b FROM Book b WHERE lower(b.genre) LIKE :pattern";
 		Query query = em.createQuery(ejbql, Book.class);
-		query.setParameter("pattern", "%" + genre + "%");
+		query.setParameter("pattern", "%" + genre.toLowerCase() + "%");
 		return query.getResultList();
 	}
 
 	@Override
 	public List<Book> findBookByAuthor(String firstName, String lastName) {
 		// run an EJBQL query using input parameters
-		String ejbql = "SELECT b FROM Book b INNER JOIN b.author a WHERE a.firstName LIKE :pattern1 AND a.lastName LIKE :pattern2 ";
+		String ejbql = "SELECT b FROM Book b INNER JOIN b.author a WHERE lower(a.firstName) LIKE :pattern1 AND lower(a.lastName) LIKE :pattern2 ";
 		Query query = em.createQuery(ejbql, Book.class);
-		query.setParameter("pattern1",  "%" + firstName + "%");
-		query.setParameter("pattern2",  "%" + lastName + "%");
+		query.setParameter("pattern1",  "%" + firstName.toLowerCase() + "%");
+		query.setParameter("pattern2",  "%" + lastName.toLowerCase() + "%");
 		return query.getResultList();
 	}
 

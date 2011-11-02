@@ -86,9 +86,9 @@ public class AuthorEAO implements IAuthorEAO
 	@Override
 	public List<Author> findAuthorByFirstName(String firstName) {
 		// run an EJBQL query using input parameters
-		String ejbql = "SELECT a FROM Author a WHERE a.firstName LIKE :pattern";
+		String ejbql = "SELECT a FROM Author a WHERE lower(a.firstName) LIKE :pattern";
 		Query query = em.createQuery(ejbql, Author.class);
-		query.setParameter("pattern", "%" + firstName + "%");
+		query.setParameter("pattern", "%" + firstName.toLowerCase() + "%");
 		return query.getResultList();
 	}
 
@@ -101,9 +101,9 @@ public class AuthorEAO implements IAuthorEAO
 	@Override
 	public List<Author> findAuthorByLastName(String lastName) {
 		// run an EJBQL query using input parameters
-		String ejbql = "SELECT a FROM Author a WHERE a.lastName LIKE :pattern";
+		String ejbql = "SELECT a FROM Author a WHERE lower(a.lastName) LIKE :pattern";
 		Query query = em.createQuery(ejbql, Author.class);
-		query.setParameter("pattern", "%" + lastName + "%");
+		query.setParameter("pattern", "%" + lastName.toLowerCase() + "%");
 		return query.getResultList();
 	}
 	
@@ -116,9 +116,9 @@ public class AuthorEAO implements IAuthorEAO
 	@Override
 	public List<Author> findAuthorByBookName(String bookName) {
 		// run an EJBQL query using input parameters
-		String ejbql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.name LIKE :pattern";
+		String ejbql = "SELECT a FROM Author a INNER JOIN a.books b WHERE lower(b.name) LIKE :pattern";
 		Query query = em.createQuery(ejbql, Author.class);
-		query.setParameter("pattern", "%" + bookName + "%");
+		query.setParameter("pattern", "%" + bookName.toLowerCase() + "%");
 		return query.getResultList();
 	}
 }
