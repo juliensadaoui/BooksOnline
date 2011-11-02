@@ -57,10 +57,12 @@
 				<td class="genre">${book.genre}</td>
 				<td class="author">${book.authorName}</td>
 				<td class="rent">
-		             <form action="home.html" method="post">
+		             <form action="rentbook.html" method="post">
 		                <fieldset>
 			                <c:url value="/resources/images/rent.png" var="rent_book" />
 		                    <input type="image" src="${rent_book}" value="">
+		                    <input type="hidden" name="book_isbn" value="${book.isbn}" />
+							<input type="hidden" name="book_title" value="${book.name}" />
 		                    </fieldset>
 		            </form>
 		        </td>

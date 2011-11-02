@@ -11,10 +11,14 @@
 			http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 	
 	<http auto-config="true">
-		<intercept-url pattern='/home.html' filters='none' />
+<!-- 		<intercept-url pattern='/home.html' filters='none' /> -->
 		<intercept-url pattern='/contacts.html' access='ROLE_USER' />
+		<intercept-url pattern='/rentbook.html' access='ROLE_USER' />
 		<form-login login-page='/login.html' default-target-url='/home.html' />
 <!-- 		 always-use-default-target='true' /> -->
+		<logout logout-success-url="/home.html" 
+                 logout-url="/doLogout" 
+                 invalidate-session="false"/>
 	</http>
 	
 <!-- 	<authentication-manager> -->

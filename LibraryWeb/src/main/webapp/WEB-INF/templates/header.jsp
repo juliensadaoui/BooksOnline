@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <div id="header">
 	<a id="logo" href="home.html">
 		<c:url value="/resources/images/librairie_logo.png" var="url_logo" />
@@ -7,7 +8,9 @@
 	</a>
 	
 	<div class="login">
+	
 		<ul>
+			<security:authorize ifAnyGranted="ROLE_ANONYMOUS">
 			<li>
 				<a class="lnk_login" href="register.html">S'inscrire</a>
 			</li>
@@ -15,7 +18,16 @@
 			<li>
 				<a class="lnk_login" href="login.html">Mon compte</a>
 			</li>
+			</security:authorize>	
+			
+			<security:authorize ifAnyGranted="ROLE_USER">
+			<li>
+				<a class="lnk_login" href="/j_spring_security_logout">Logout</a>
+			</li>
+			</security:authorize>
 		</ul>
+		
+		
 	</div>
 
 	<div class="search">

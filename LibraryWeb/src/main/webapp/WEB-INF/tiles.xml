@@ -61,4 +61,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/authors.jsp" />
 	</definition>
 	
+	<definition name="rentbook_ok" extends="base.definition">
+		<put-attribute name="title" value="Books" />
+		<put-attribute name="body" value="/WEB-INF/views/rentbook_ok.jsp" />
+	</definition>
+	
 </tiles-definitions>

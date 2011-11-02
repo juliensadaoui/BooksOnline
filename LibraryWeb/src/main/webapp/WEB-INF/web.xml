@@ -42,6 +42,11 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<filter-mapping>
+	    <filter-name>springSecurityFilterChain</filter-name>
+	    <url-pattern>/j_spring_security_logout</url-pattern>
+	</filter-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
