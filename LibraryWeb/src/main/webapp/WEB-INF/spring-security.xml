@@ -16,9 +16,7 @@
 		<intercept-url pattern='/rentbook.html' access='ROLE_USER' />
 		<form-login login-page='/login.html' default-target-url='/home.html' />
 <!-- 		 always-use-default-target='true' /> -->
-		<logout logout-success-url="/home.html" 
-                 logout-url="/doLogout" 
-                 invalidate-session="false"/>
+		<logout />
 	</http>
 	
 <!-- 	<authentication-manager> -->

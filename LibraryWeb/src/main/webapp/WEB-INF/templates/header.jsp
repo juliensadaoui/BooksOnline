@@ -22,7 +22,7 @@
 			
 			<security:authorize ifAnyGranted="ROLE_USER">
 			<li>
-				<a class="lnk_login" href="/j_spring_security_logout">Logout</a>
+				<a class="lnk_login" href="j_spring_security_logout">Logout</a>
 			</li>
 			</security:authorize>
 		</ul>
