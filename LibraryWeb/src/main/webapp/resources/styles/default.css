@@ -293,7 +293,8 @@ p {
 
 
 #container_account,
-#container_login {
+#container_login,
+#container_author  {
     float: left;
     margin-left: 50px;
     margin-right: 10px;
@@ -301,14 +302,32 @@ p {
     width: 430px;
 }
 
-#container_account .title, #container_login .title {
+#container_author 
+{
+    width: 690px;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color #A29D9D #A29D9D;
+    border-radius: 0 0 5px 5px;
+    border-right: 1px solid #A29D9D;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+}
+
+#container_account .title, 
+#container_login .title,
+#container_author .title {
     background-color:  #A29D9D;
     font-size: 14px;
     font-weight: bold;
     padding: 5px 0 5px 20px;
 }
 
-#container_account .content, #container_login .content {
+#container_account .content, 
+#container_login .content {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
     -moz-border-left-colors: none;
@@ -320,6 +339,29 @@ p {
     border-style: none solid solid;
     border-width: 0 1px 1px;
     margin-bottom: 30px;
+}
+
+#container_author .content {
+	display: block;
+	min-height: 60px;
+    padding: 8px 0;
+    position: relative;
+    clear: both;
+}
+
+#container_author span.result {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 3px 3px 3px 3px;
+    color: #FF6600;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 19px;
+    min-width: 30px;
+    padding: 0 3px;
+    text-align: right;
+    text-shadow: 0 0 0 #FFFFFF;
 }
 
 #container_account ul, #container_login ul {
@@ -377,6 +419,51 @@ form input[type="text"], form input[type="password"], form input[type="submit"],
     padding-bottom: 0;
     padding-right: 30px;
     text-align: right;
+}
+
+.search_resume {
+	float: left;
+    background: none repeat scroll 0 0 #FFF7F2;
+    border: 1px solid #CCCCCC;
+    height: 21px;
+    margin: 0 0 1em;
+    padding: 8px 10px;
+    margin-left: 50px;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 670px;
+}
+
+.search_resume span {
+    font-size: 14px;
+    line-height: 21px;
+    color: #FF6600;
+    margin: 0 0 15px 15px;
+}
+strong {
+    color: #000000;
+}
+
+#container_author ul {    
+    clear: none;
+    float: right;
+    padding: 0;
+    width: 100%;
+}
+
+#container_author li {
+    ;height: auto;
+    ;min-height: 50px;
+    ;width: 127px;
+    display: inline-block;
+    float: left;
+    height: 180px;
+    margin: 0 0 5px 6px;
+    min-height: 115px;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    width: 135px;
 }
 
 .container_search 

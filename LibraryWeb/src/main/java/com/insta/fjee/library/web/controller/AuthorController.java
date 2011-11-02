@@ -38,6 +38,7 @@ public class AuthorController
 	{
 		List<AuthorDTO> authors = servicesAccess.getUserService().searchAuthorByFirstName(firstName);
 		model.addAttribute("search", "author");
+		model.addAttribute("criteria", firstName);
 		model.addAttribute("authors", authors);
 		return "authors";
 	}
@@ -47,8 +48,9 @@ public class AuthorController
 			@RequestParam("author_lastname") String lastName,
 			ModelMap model)
 	{
-		List<AuthorDTO> authors = servicesAccess.getUserService().searchAuthorByFirstName(lastName);
+		List<AuthorDTO> authors = servicesAccess.getUserService().searchAuthorByLastName(lastName);
 		model.addAttribute("search", "author");
+		model.addAttribute("criteria", lastName);
 		model.addAttribute("authors", authors);
 		return "authors";
 	}
@@ -60,6 +62,7 @@ public class AuthorController
 	{
 		List<AuthorDTO> authors = servicesAccess.getUserService().searchAuthorByBookName(bookName);
 		model.addAttribute("search", "author");
+		model.addAttribute("criteria", bookName);
 		model.addAttribute("authors", authors);
 		return "authors";
 	}
