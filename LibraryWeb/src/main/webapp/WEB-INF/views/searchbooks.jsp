@@ -23,7 +23,7 @@
 		<div class="container_search_form">
 			<form method="post" action="searchbookbyname.html" >
 				<div class="container_search_form_input_text_1">
-					<input class="form-text" type="text" title="Titre" name="book_title" value="" size="60" maxlength="128">
+					<input class="form-text" type="text" title="Titre" placeholder="Titre" name="book_title" value="" size="60" maxlength="128">
 				</div>
 				<input class="form-submit" type="submit" value="rechercher">
 			</form>
@@ -38,7 +38,7 @@
 		<div class="container_search_form">
 			<form method="post" action="searchbookbygenre.html" >
 				<div class="container_search_form_input_text_1">
-					<input class="form-text" type="text" title="Genre" name="book_genre" value="" size="60" maxlength="128">
+					<input class="form-text" type="text" title="Genre" placeholder="Genre" name="book_genre" value="" size="60" maxlength="128">
 				</div>
 				<input class="form-submit" type="submit" value="rechercher">
 			</form>
@@ -53,10 +53,10 @@
 		<div class="container_search_form">
 			<form method="post" action="searchbookbyauthor.html" >
 				<div class="container_search_form_input_text_1">
-					<input class="form-text" type="text" title="Prenom" name="author_firstname" value="" size="60" maxlength="128">
+					<input class="form-text" type="text" title="Prénom" placeholder="Prénom" name="author_firstname" value="" size="60" maxlength="128">
 				</div>
 				<div class="container_search_form_input_text_1">
-					<input class="form-text" type="text" title="Nom" name="author_lastname" value="" size="60" maxlength="128">
+					<input class="form-text" type="text" title="Nom" placeholder="Nom" name="author_lastname" value="" size="60" maxlength="128">
 				</div>
 				<input class="form-submit" type="submit" value="rechercher">
 			</form>

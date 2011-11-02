@@ -19,12 +19,13 @@
 	</div>
 
 	<div class="search">
-		<form method="post" accept-charset="UTF-8" action="/lecteurs">
+		<form method="post" accept-charset="UTF-8" action="searchbookbyname.html">
 			<div>
 				<div id="search-input-text-container" class="form-item">
 					<input id="search-input-text" class="form-text" type="text" 
-						title="Trouver un auteur, un lecteur, un livre ou un article..." 
-						value="" size="15" name="keywords" maxlength="128">
+						title="Trouver un livre à partir de son titre ..."
+						placeholder="Trouver un livre à partir de son titre ..." 
+						value="" size="15" name="book_title" maxlength="128">
 				</div>
 				
 				<div class="button-submit-container">
