@@ -38,6 +38,7 @@ public class BookController
 	{
 		List<BookDTO> books = servicesAccess.getUserService().searchBookByName(name);
 		model.addAttribute("search", "book");
+		model.addAttribute("criteria", name);
 		model.addAttribute("books", books);
 		return "books";
 	}
@@ -49,6 +50,7 @@ public class BookController
 	{
 		List<BookDTO> books = servicesAccess.getUserService().searchBookByGenre(genre);
 		model.addAttribute("search", "book");
+		model.addAttribute("criteria", genre);
 		model.addAttribute("books", books);
 		return "books";
 	}
@@ -59,8 +61,9 @@ public class BookController
 			@RequestParam("author_firstname") String firstName,
 			@RequestParam("author_lastname") String lastName,
 			ModelMap model)
-	{
-		List<BookDTO> books = servicesAccess.getUserService().searchBookByAuthor(firstName, lastName);
+	{		
+		List<BookDTO> books = servicesAccess.getUserService().searchBookByAuthor(lastName, firstName);
+		model.addAttribute("criteria", firstName + " " + lastName);
 		model.addAttribute("search", "book");
 		model.addAttribute("books", books);
 		return "books";

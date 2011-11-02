@@ -294,7 +294,9 @@ p {
 
 #container_account,
 #container_login,
-#container_author  {
+#container_author,
+#books
+{
     float: left;
     margin-left: 50px;
     margin-right: 10px;
@@ -442,6 +444,93 @@ form input[type="text"], form input[type="password"], form input[type="submit"],
 }
 strong {
     color: #000000;
+}
+
+
+#books {
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.books {
+    border-collapse: collapse;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    width: 760px;
+}
+
+.books tr.header {
+    border: 0 none;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.books tr.header th {
+    border-right: 1px solid #515151;
+}
+
+.books td.headerline {
+    background: none repeat scroll 0 0 #515151;
+    border-right: 2px solid #FFFFFF;
+    height: 7px;
+}
+
+.books tr.odd {
+    background-color: #F0F4F5;
+}
+
+.books tr.even {
+    background-color: #F3FAFC;
+}
+
+.books td {
+    border-bottom: 1px solid #999999;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 2px 5px;
+}
+
+.books td.isbn,
+.books td.title, 
+.books td.genre, 
+.books td.author {
+    border-right: 1px dotted #999999;
+}
+
+.books .image {
+    background-color: white;
+    border-right: 2px solid #999999;
+}
+
+.books .isbn {
+    text-align: center;
+    width: 10%;
+}
+
+.books .title {
+    width: 50%;
+    color: #E47911;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.books .genre {
+    text-align: center;
+    width: 10%;
+}
+
+.books .author {
+    text-align: center;
+    width: 10%;
+}
+.books .rent input {
+    background: no-repeat scroll center center transparent;
+    border: 0 none;
+    height: 50px;
+    width: 50px;
 }
 
 #container_author ul {    
