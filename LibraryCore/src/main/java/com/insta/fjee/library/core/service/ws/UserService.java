@@ -10,6 +10,7 @@ import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
 import com.insta.fjee.library.core.service.IUserService;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
+import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 import com.insta.fjee.library.stock.service.LibraryBeanService;
 
 //@WebService(endpointInterface = "com.insta.fjee.library.service.UserServiceWS")
@@ -56,6 +57,15 @@ public class UserService implements IUserService
 	public List<AuthorDTO> searchAuthorByFirstName(String firstName) 
 	{
 		return libraryBeanService.getLibraryBeanPort().searchAuthorByFirstName(firstName);
+	}
+	
+	/**
+	 *  @See {@link IUserService}
+	 */
+	@Override
+	public BookDTO findBookByISBN(String isbn) throws BookNotFoundException_Exception
+	{
+		return libraryBeanService.getLibraryBeanPort().findBookByISBN(isbn);
 	}
 
 	/**

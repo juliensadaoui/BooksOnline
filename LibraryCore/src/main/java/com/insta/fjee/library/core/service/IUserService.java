@@ -8,6 +8,7 @@ import com.insta.fjee.library.core.dto.UserDTO;
 import com.insta.fjee.library.core.exception.LoginAlreadyExistException;
 import com.insta.fjee.library.stock.service.AuthorDTO;
 import com.insta.fjee.library.stock.service.BookDTO;
+import com.insta.fjee.library.stock.service.BookNotFoundException_Exception;
 
 /**
  * 	Services web de l'application accessible par les visiteurs anonymes.
@@ -43,7 +44,7 @@ public interface IUserService {
 	 * @return list of authors
 	 */
 	public List<AuthorDTO> searchAuthorByFirstName(String firstName);
-
+	
 	/**
 	 * 	Search a author by book
 	 * 
@@ -51,6 +52,15 @@ public interface IUserService {
 	 * @return list of authors
 	 */
 	public List<AuthorDTO> searchAuthorByBookName(String bookName);
+	
+	/**
+	 * 	Search a book by ISBN	
+	 * 
+	 * @param isbn
+	 * @return
+	 * @throws BookNotFoundException_Exception 
+	 */
+	public BookDTO findBookByISBN(String isbn) throws BookNotFoundException_Exception;
 	
 	/**
 	 * 	Search a book by name
