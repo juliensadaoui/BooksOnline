@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Liste des auteurs</title>
 </head>
 <body>
     <h1>Liste des auteurs</h1>
@@ -27,7 +27,7 @@
     		<c:forEach var="author" items="${authors}" > 
 				<li>
 					<span>
-						<a href="">${author.firstName}, ${author.lastName}</a>
+						${author.firstName}, ${author.lastName}
 					</span>
 				</li>
     		</c:forEach>

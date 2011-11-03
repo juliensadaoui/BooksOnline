@@ -1,22 +1,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Liste des livres</title>
 </head>
 <body>
     <h1>Liste des livres</h1>
     <p>
-		Liste des livres correspondant aux critères de votre recherche
+    	<c:choose>
+			<c:when test="${fn:length(books)==0}"> ${fn:length(books)} livres correspondant aux critères de votre recherche </c:when>
+			<c:otherwise>
+				Aucun livre correspondant aux critères de votre recherche
+			</c:otherwise>
+		</c:choose>
     </p>
-    
+<!--    Aucun article ne correspond à votre recherche -->
+<%--     ${ fn:length(authors) } --%>
     <div class="search_resume">
 		<span><strong>Vous recherchez : </strong>${criteria}</span>
 	</div>
 
+	<c:choose>
+		<c:when test="${fn:length(books)!=0}"> 
 	<div id="books">
   		<table class="books">
         	<thead>
@@ -68,8 +76,10 @@
 		        </td>
 		        </tr>
 			</c:forEach>
-         </tbody>
-  </table>
-</div>
+         	</tbody>
+  		</table>
+	</div>
+		</c:when>
+	</c:choose>
 </body>
 </html>

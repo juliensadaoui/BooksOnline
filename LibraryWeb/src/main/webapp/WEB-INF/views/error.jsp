@@ -4,13 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Location d'un livre</title>
+<title>Erreur</title>
 </head>
 <body>
-	<h1>Location du livre réussie !</h1>
- 	<p>
-  		Vous avez loué le livre ${book_name}
-  	<br /><br />
- 	</p>
+    <h1>Erreur !</h1>
+    <p>
+		Une erreur s'est produite au chargement de la page !
+    </p>
 </body>
 </html>

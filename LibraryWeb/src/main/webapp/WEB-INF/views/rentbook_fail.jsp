@@ -7,9 +7,9 @@
 <title>Location d'un livre</title>
 </head>
 <body>
-	<h1>Location du livre réussie !</h1>
+	<h1>Echec de la location du livre !</h1>
  	<p>
-  		Vous avez loué le livre ${book_name}
+  		Aucun exemplaire du livre ${book_name} est disponible !
   	<br /><br />
  	</p>
 </body>

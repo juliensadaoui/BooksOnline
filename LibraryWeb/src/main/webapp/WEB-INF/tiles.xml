@@ -15,15 +15,15 @@
 <!--             <add-attribute type="string" value="/styles/another.css" /> -->
         </put-list-attribute>
 	</definition>
-
-	<definition name="contact" extends="base.definition">
-		<put-attribute name="title" value="Contact Manager" />
-		<put-attribute name="body" value="/WEB-INF/views/contact.jsp" />
-	</definition>
 	
 	<definition name="home" extends="base.definition">
 		<put-attribute name="title" value="Home" />
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+	</definition>
+	
+	<definition name="error" extends="base.definition">
+		<put-attribute name="title" value="Contact Manager" />
+		<put-attribute name="body" value="/WEB-INF/views/error.jsp" />
 	</definition>
 	
 	<definition name="login" extends="base.definition">
@@ -64,6 +64,16 @@
 	<definition name="rentbook_ok" extends="base.definition">
 		<put-attribute name="title" value="Books" />
 		<put-attribute name="body" value="/WEB-INF/views/rentbook_ok.jsp" />
+	</definition>
+	
+	<definition name="rentbook_fail" extends="base.definition">
+		<put-attribute name="title" value="Books" />
+		<put-attribute name="body" value="/WEB-INF/views/rentbook_fail.jsp" />
+	</definition>
+	
+	<definition name="rentbooks" extends="base.definition">
+		<put-attribute name="title" value="Books" />
+		<put-attribute name="body" value="/WEB-INF/views/rentbooks.jsp" />
 	</definition>
 	
 	<definition name="showaccount" extends="base.definition">

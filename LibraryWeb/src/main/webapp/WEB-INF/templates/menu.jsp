@@ -24,7 +24,7 @@
 			</li>
 			
 			<li>
-				<a href="" <c:if test="${account eq 'rent'}" ><c:out value="class=active" /></c:if> >Mes locations</a>
+				<a href="showrentbooks.html" <c:if test="${account eq 'rent'}" ><c:out value="class=active" /></c:if> >Mes locations</a>
 			</li>	
 		</security:authorize>
 	</ul>

@@ -13,7 +13,7 @@
     <p>
         Cette interface vous permet de modifier toutes les informations de votre compte. 
 		Vous pouvez modifier votre mot de passe ainsi que votre nom et votre prénom <br /><br />
-
+		La modification de votre mot de passe nécessite une reconnexion.
         <br /><br />Les champs avec le caractère * sont obligatoires.
     </p>
     

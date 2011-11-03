@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -37,9 +36,6 @@ public class AccountController
 	
 	@Autowired
 	private Conversion conversion;
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
 
 	public void setServicesAccess(WebServicesAccess servicesAccess) {
 		this.servicesAccess = servicesAccess;
@@ -47,11 +43,6 @@ public class AccountController
 
 	public void setConversion(Conversion conversion) {
 		this.conversion = conversion;
-	}
-
-	
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
 	}
 
 	@RequestMapping("/login")
