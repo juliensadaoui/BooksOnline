@@ -151,30 +151,30 @@ public class UserServiceTest
     @AfterClass
     public static void tearDown()
     {
-    	for (BookDTO bookDTO : books) 
-    	{
-			try {
-				ExemplaryDTO exemplaryDTO = new ExemplaryDTO();
-				exemplaryDTO.setIsbn(bookDTO.getIsbn());
-				exemplaryDTO.setNb(2);
-				serviceBean.deleteExemplary(exemplaryDTO);
-				
-			} catch (BookNotFoundException_Exception e) {
-				fail(e.getMessage());
-			}
-			catch (EntityNotFoundException_Exception e) {
-				fail(e.getMessage());
-			}
-    	}
-    	
-		for (AuthorDTO authorDTO : authors)
-		{
-			try {
-				serviceBean.deleteAuthor(authorDTO);
-			} catch (EntityNotFoundException_Exception e) {
-				fail(e.getMessage());
-			}
-		}
+//    	for (BookDTO bookDTO : books) 
+//    	{
+//			try {
+//				ExemplaryDTO exemplaryDTO = new ExemplaryDTO();
+//				exemplaryDTO.setIsbn(bookDTO.getIsbn());
+//				exemplaryDTO.setNb(2);
+//				serviceBean.deleteExemplary(exemplaryDTO);
+//				
+//			} catch (BookNotFoundException_Exception e) {
+//				fail(e.getMessage());
+//			}
+//			catch (EntityNotFoundException_Exception e) {
+//				fail(e.getMessage());
+//			}
+//    	}
+//    	
+//		for (AuthorDTO authorDTO : authors)
+//		{
+//			try {
+//				serviceBean.deleteAuthor(authorDTO);
+//			} catch (EntityNotFoundException_Exception e) {
+//				fail(e.getMessage());
+//			}
+//		}
 
 		// supprime tous les utilisateurs
 		for (UserDTO user : users) 
