@@ -1,6 +1,8 @@
 package com.insta.fjee.library.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -76,6 +78,7 @@ public class AccountController
 			UserDTO userDTO = conversion.fromBean(userBean);
 			try {
 				servicesAccess.getUserService().createUser(userDTO);
+				status.setComplete();
 				return "register_ok";
 			} catch (LoginAlreadyExistException e) {
 				result.rejectValue("login", "error.loginalreadyexist",
@@ -84,6 +87,44 @@ public class AccountController
 			
 		}
 		return "register";
+	}
+	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/showaccount")
+	public String executeShow(ModelMap model) 
+	{
+		// recupere les informations de l'utilisateur en session
+		UserDetails userDetails =
+				 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDTO userDTO = servicesAccess.getSubscriberService().authentificate(
+				userDetails.getUsername(), userDetails.getPassword());
+		
+		model.addAttribute("account", "info");
+		model.addAttribute("user", userDTO);
+		return "showaccount";
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/editaccount")
+	public String executeEdit(ModelMap model)
+	{
+		UserDetails userDetails =
+				 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDTO userDTO = servicesAccess.getSubscriberService().authentificate(
+				userDetails.getUsername(), userDetails.getPassword());
+		UserBean userBean = conversion.fromDTO(userDTO);
+		
+		model.addAttribute("account", "info");
+		model.addAttribute("userBean", userBean);
+		return "editaccount";
 	}
 	
 }

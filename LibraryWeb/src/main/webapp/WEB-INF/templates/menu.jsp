@@ -20,7 +20,7 @@
 		
 		<security:authorize ifAnyGranted="ROLE_USER">
 			<li>
-				<a href="" <c:if test="${account eq 'info'}" ><c:out value="class=active" /></c:if> >Mes informations</a>
+				<a href="showaccount.html" <c:if test="${account eq 'info'}" ><c:out value="class=active" /></c:if> >Mes informations</a>
 			</li>
 			
 			<li>
