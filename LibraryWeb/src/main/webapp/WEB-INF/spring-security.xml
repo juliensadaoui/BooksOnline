@@ -14,9 +14,11 @@
 <!-- 		<intercept-url pattern='/home.html' filters='none' /> -->
 		<intercept-url pattern='/contacts.html' access='ROLE_USER' />
 		<intercept-url pattern='/rentbook.html' access='ROLE_USER' />
-		<form-login login-page='/login.html' default-target-url='/home.html' />
+		<form-login login-page='/login.html' default-target-url='/showaccount.html' />
 <!-- 		 always-use-default-target='true' /> -->
-		<logout />
+		<logout invalidate-session="true"
+			logout-success-url="/login.html"
+			logout-url="/j_spring_security_logout" />
 	</http>
 	
 <!-- 	<authentication-manager> -->

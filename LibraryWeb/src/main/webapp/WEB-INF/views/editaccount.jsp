@@ -19,7 +19,7 @@
     
     <form:form modelAttribute="userBean">
     <div id="container_account">
-    	<div class="title"><fmt:message key="register.user.title" /></div>
+    	<div class="title">Informations personnelles</div>
     	<div class="content">
 			<ul>
 				<li>
@@ -52,7 +52,8 @@
 				</li>
 				<li>
 					<span><label></label></span>
-					<input type="submit" value="<fmt:message key="register.form.submit"/>">
+					<input type="submit" value="Modifier votre compte" />
+					<input type="hidden" name="user_id" value="${user_id}" />
 					<form:hidden path="login" />
 				</li>
 			</ul>
